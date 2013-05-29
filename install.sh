@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 /bin/cp ./zshrc ~/.zshrc
 /bin/cp ./shell_aliases ~/.shell_aliases
