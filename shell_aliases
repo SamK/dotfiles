@@ -1,0 +1,32 @@
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+
+alias vncserver='x11vnc -localhost -display :0'
+alias interwebz='ssh 10.2.5.4 -D 127.0.0.1:63210'
+# When using sudo, use alias expansion (otherwise sudo ignores your aliases)
+alias sudo='sudo '
+
+function cl() { cd "$@" && /bin/ls -lh --color  ;}
+
+# command alias
+alias ls='ls -F --color=auto'
+alias ll='ls -lh'
+alias grep='grep --color=auto'
+
+
