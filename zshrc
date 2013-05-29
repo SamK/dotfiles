@@ -30,6 +30,11 @@ compinit
 # aliases
 #########
 
+
+if [ -f ~/.shell_aliases ]; then
+  source ~/.shell_aliases
+fi
+
 # command alias
 alias ls='ls -F --color=auto' 
 alias ll='ls -lh'

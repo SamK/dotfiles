@@ -28,5 +28,6 @@ function cl() { cd "$@" && /bin/ls -lh --color  ;}
 alias ls='ls -F --color=auto'
 alias ll='ls -lh'
 alias grep='grep --color=auto'
+alias cleanconf="sed -e 's/#.*//;/^\s*$/d' "$@""
 
 
