@@ -1,14 +1,5 @@
-# skrieg
 
-
-# example of background colour
-# foreground white = 37
-# background red = 41
-fgwhitebgred="%{^[[0;37;41m%}"
-
-
-
-# Lines configured by zsh-newuser-install
+# History
 
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -24,24 +15,13 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-
-
 #########
 # aliases
 #########
 
-
 if [ -f ~/.shell_aliases ]; then
   source ~/.shell_aliases
 fi
-
-# command alias
-alias ls='ls -F --color=auto' 
-alias ll='ls -lh'
-alias grep='grep --color=auto' 
-
-
-
 
 ########
 # Prompt
@@ -55,7 +35,6 @@ function loadavg1 {
 # colors: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#SEC59
 autoload -U colors && colors
 
-
 if [[ "$terminfo[colors]" -ge 8 ]]; then
   if [[ "$EUID" = "0" ]] || [[ "$USER" = 'root' ]]
   then
@@ -65,22 +44,22 @@ if [[ "$terminfo[colors]" -ge 8 ]]; then
   fi
 fi
 
-
 setopt PROMPT_SUBST
 setopt promptsubst
 setopt promptpercent
 
-
 PROMPT=""
+
 # return status (in colors plz!)
 # http://stackoverflow.com/a/4466959/238913
 # http://zshwiki.org/home/scripting/paramflags
 
-# test1
-#write exit code if not zero
+# display exit code if not 0
 local e_code="%(?..%F{red}%? %f)"
 PROMPT=$e_code
-local smiley="%(?,%{$fg[green]%}:)%{$reset_color%},%{$fg[red]%}:(%{$reset_color%})"
+
+# PuTTy does not support utf :(
+#local smiley="%(?,%{$fg[green]%}:)%{$reset_color%},%{$fg[red]%}:(%{$reset_color%})"
 #PROMPT=$smiley
 
 # [time]
@@ -97,3 +76,4 @@ PROMPT=${PROMPT}"$username_color%n%f@%M%f:"
 PROMPT=$PROMPT"%F{blue}%~%f ${username_color}%#%f "
 # right prompt
 RPROMPT="$(loadavg1)"
+
