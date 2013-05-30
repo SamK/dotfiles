@@ -1,4 +1,5 @@
 
+local enable_git_prompt='1'
 # History
 
 HISTFILE=~/.histfile
@@ -27,10 +28,18 @@ fi
 # Prompt
 ########
 
+if [[ "$enable_git_prompt" == "1" ]]  ; then
+  # file from https://github.com/olivierverdier/zsh-git-prompt
+  local zshrc_sh=~/.zsh/git-prompt/zshrc.sh
+  [ -f $zshrc_sh ] && source "$zshrc_sh" || echo "File \"$zshrc_sh\" not found"
+fi
+
 function loadavg1 {
     awk '{print  $1}' /proc/loadavg
 }
-# couleurs
+
+# define colors
+
 # valid colors: Red, Blue, Green, Cyan, Yellow, Magenta, Black 
 # colors: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#SEC59
 autoload -U colors && colors
@@ -44,9 +53,12 @@ if [[ "$terminfo[colors]" -ge 8 ]]; then
   fi
 fi
 
+# do some stuff...
 setopt PROMPT_SUBST
 setopt promptsubst
 setopt promptpercent
+
+# define left prompt
 
 PROMPT=""
 
@@ -72,8 +84,16 @@ PROMPT=${PROMPT}%{${GREY}%}[%*]%{${NORMAL}%}
 
 # user@hostname
 PROMPT=${PROMPT}"$username_color%n%f@%M%f:"
-# current directory and shell opening: %=user , #=root
-PROMPT=$PROMPT"%F{blue}%~%f ${username_color}%#%f "
-# right prompt
-RPROMPT="$(loadavg1)"
+
+# current directory
+PROMPT=${PROMPT}"%F{blue}%~%f "
+
+# git
+PROMPT="${PROMPT}"
+
+# shell opening: %=user , #=root
+PROMPT=${PROMPT}"${username_color}%#%f "
+
+# define right prompt
+RPROMPT='$(git_super_status)'" $(loadavg1)"
 
