@@ -62,7 +62,12 @@ if [ -f ~/.shell_aliases ]; then
     . ~/.shell_aliases
 fi
 
+if [ -f ~/.shell_aliases.local ]; then
+    . ~/.shell_aliases
+fi
+
 if [ -f ~/.bash_aliases ]; then
+    echo "Attention! le fichier .bash_aliases j'aime pas. Il faut mettre dans .shell_aliases."
     . ~/.bash_aliases
 fi
 

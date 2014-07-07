@@ -1,7 +1,7 @@
 
 local enable_git_prompt='1'
-# History
 
+# History
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -24,6 +24,11 @@ if [ -f ~/.shell_aliases ]; then
   source ~/.shell_aliases
 fi
 
+if [ -f ~/.shell_aliases.local ]; then
+  source ~/.shell_aliases.local
+fi
+
+
 ########
 # Prompt
 ########
@@ -31,7 +36,12 @@ fi
 if [[ "$enable_git_prompt" == "1" ]]  ; then
   # file from https://github.com/olivierverdier/zsh-git-prompt
   local zshrc_sh=~/.zsh/git-prompt/zshrc.sh
-  [ -f $zshrc_sh ] && source "$zshrc_sh" || echo "File \"$zshrc_sh\" not found"
+  if [ -f $zshrc_sh ]; then
+     source "$zshrc_sh"
+  else
+    echo "File \"$zshrc_sh\" not found" 1>&2
+    local enable_git_prompt='0'
+  fi
 fi
 
 function loadavg1 {
@@ -95,5 +105,7 @@ PROMPT="${PROMPT}"
 PROMPT=${PROMPT}"${username_color}%#%f "
 
 # define right prompt
-RPROMPT='$(git_super_status)'" $(loadavg1)"
+if [[ "$enable_git_prompt" == "1" ]] ; then
+    RPROMPT='$(git_super_status)'" $(loadavg1)"
+fi
 
