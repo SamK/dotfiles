@@ -20,7 +20,6 @@ function cl() { cd "$@" && /bin/ls -lh --color ;}
 
 
 alias vncserver='x11vnc -localhost -display :0'
-alias interwebz='ssh 10.2.5.4 -D 127.0.0.1:63210'
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
 
