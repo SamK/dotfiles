@@ -12,6 +12,10 @@ zstyle :compinstall filename '/home/skrieg/.zshrc'
 
 setopt interactivecomments
 
+autoload -U select-word-style
+select-word-style bash
+
+
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
