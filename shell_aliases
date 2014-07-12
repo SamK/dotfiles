@@ -14,9 +14,9 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-alias la='ls -A'
-alias l='ls -CF'
 alias ll='ls -lh'
+alias l='ll'
+alias la='ll -A'
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
 
