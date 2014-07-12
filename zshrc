@@ -1,4 +1,5 @@
-
+# NE PAS EDITER!
+# Source: https://github.com/samyboy/dotfiles/
 local enable_git_prompt='1'
 
 # History

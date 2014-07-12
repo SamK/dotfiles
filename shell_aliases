@@ -1,3 +1,5 @@
+# NE PAS EDITER
+# Source: https://github.com/samyboy/dotfiles/
 
 # color support
 if [ -x /usr/bin/dircolors ]; then
