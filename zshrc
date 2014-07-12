@@ -1,6 +1,9 @@
 # NE PAS EDITER!
 # Source: https://github.com/samyboy/dotfiles/
 
+# influences
+# http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
+
 # History
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -64,8 +67,6 @@ if [[ -d $git_prompt_path ]]; then
   fi
 fi
 
-echo d
-
 function loadavg1 {
     awk '{print  $1}' /proc/loadavg
 }
@@ -118,7 +119,8 @@ PROMPT=${PROMPT}%{${GREY}%}[%*]%{${NORMAL}%}
 PROMPT=${PROMPT}"$username_color%n%f@%M%f:"
 
 # current directory
-PROMPT=${PROMPT}"%F{blue}%~%f "
+#PROMPT=${PROMPT}"%F{blue}%~%f "
+PROMPT=${PROMPT}"%F{blue}%1~%f "
 
 # git
 PROMPT="${PROMPT}"
