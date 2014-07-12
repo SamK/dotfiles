@@ -120,7 +120,7 @@ PROMPT=${PROMPT}"$username_color%n%f@%M%f:"
 
 # current directory
 #PROMPT=${PROMPT}"%F{blue}%~%f "
-PROMPT=${PROMPT}"%F{blue}%1~%f "
+PROMPT=${PROMPT}"%F{blue}%1~%f"
 
 # git
 PROMPT="${PROMPT}"
