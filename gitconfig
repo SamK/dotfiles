@@ -1,0 +1,8 @@
+[include]
+    path = .gitconfig.local
+[diff "odf"]
+	textconv = odf2prettytxt
+[color]
+	ui = true
+[core]
+	editor = vim
