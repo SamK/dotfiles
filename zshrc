@@ -1,6 +1,5 @@
 # NE PAS EDITER!
 # Source: https://github.com/samyboy/dotfiles/
-local enable_git_prompt='1'
 
 # History
 HISTFILE=~/.histfile
@@ -15,7 +14,6 @@ setopt interactivecomments
 
 autoload -U select-word-style
 select-word-style bash
-
 
 autoload -Uz compinit
 compinit
@@ -38,16 +36,35 @@ fi
 # Prompt
 ########
 
-if [[ "$enable_git_prompt" == "1" ]]  ; then
-  # file from https://github.com/olivierverdier/zsh-git-prompt
+# zsh-git-prompt
+local git_prompt_name="zsh-git-prompt"
+local git_prompt_dir="git-prompt"
+local zshdir_path=~/.zsh
+local git_prompt_path=$zshdir_path/$git_prompt_dir
+# do not want!
+local git_prompt_no=~/.git-prompt-no
+# download url
+local git_prompt_url="https://github.com/olivierverdier/zsh-git-prompt.git"
+
+install_zsh_git_prompt () {
+  echo "Installing \"$git_prompt_name\" from \"$git_prompt_url\" into \"$git_prompt_path\""
+  mkdir -p $zshdir_path
+  git clone $git_prompt_url $git_prompt_path
+}
+
+
+if [[ -d $git_prompt_path ]]; then
   local zshrc_sh=~/.zsh/git-prompt/zshrc.sh
   if [ -f $zshrc_sh ]; then
-     source "$zshrc_sh"
+    source "$zshrc_sh"
+    local zsh_git_prompt='1'
   else
-    echo "File \"$zshrc_sh\" not found" 1>&2
-    local enable_git_prompt='0'
+    echo "File \"$zshrc_sh\" not found! Everything will fail!" 1>&2
+    local zsh_git_prompt='0'
   fi
 fi
+
+echo d
 
 function loadavg1 {
     awk '{print  $1}' /proc/loadavg
@@ -110,7 +127,7 @@ PROMPT="${PROMPT}"
 PROMPT=${PROMPT}"${username_color}%#%f "
 
 # define right prompt
-if [[ "$enable_git_prompt" == "1" ]] ; then
+if [[ "$zsh_git_prompt" == '1'  ]] ; then
     RPROMPT='$(git_super_status)'" $(loadavg1)"
 fi
 
