@@ -20,14 +20,13 @@ alias la='ll -A'
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
 
-
-alias vncserver='x11vnc -localhost -display :0'
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
 
 # command aliases
 function cl() { cd "$@" && /bin/ls -lh --color  ;}
 alias cleanconf="sed -e 's/#.*//;/^\s*$/d' "$@""
+
 # desktop application "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
