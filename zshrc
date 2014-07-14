@@ -4,6 +4,8 @@
 # influences
 # http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
+PATH=~/.usr/bin:"$PATH"
+
 # History
 HISTFILE=~/.histfile
 HISTSIZE=1000
