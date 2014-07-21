@@ -1,6 +1,15 @@
 {% macro graph(name) -%}
 $color1${{ '{' }}{{ name }} $template2,0 $template1 }$color
 {%- endmacro -%}
+{% macro graph_small(name) -%}
+$color1${{ '{' }}{{ name }} 24,150  $template1}$color
+{%- endmacro -%}
+{% macro def(name, value) -%}
+${color1}{{ name }}$color {{ value }}$alignr$color1${cpubar}
+{%- endmacro -%}
+
+
+
 alignment top_right
 background yes
 border_width 1
@@ -70,7 +79,7 @@ ${color1}/$color ${fs_used /}/${fs_size /}$alignr${color1}${fs_bar /}$color
 ${color grey}Core 0:$color ${hwmon 1 temp 2}°C $alignr${color grey}Core 1:$color ${hwmon 1 temp 3}°C$color
 ${color1}/dev/sda:$color ${hddtemp /dev/sda}°C
 
-$color1${diskiograph_read /dev/sda 24,150  $template1}$alignr${diskiograph_write /dev/sda 24,150 $template1}
+{{ graph_small("diskiograph_read /dev/sda") }}$alignr{{ graph_small("diskiograph_write /dev/sda") }}
 ${color grey}I/O Read:$color $diskio_read$alignr${color grey}I/O Write:$color $diskio_write
 
 ${color $template0}ESSID:$color ${wireless_essid wlan0} (${addrs wlan0})
