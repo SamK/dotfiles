@@ -1,7 +1,10 @@
+{% macro graph(name) -%}
+$color1${{ '{' }}{{ name }} $template2,0 $template1 }$color
+{%- endmacro -%}
 alignment top_right
 background yes
 border_width 1
-maximum_width 640
+maximum_width {{ maximum_width }}
 cpu_avg_samples 2
 default_color white
 default_outline_color red
@@ -49,7 +52,7 @@ $color$alignc$nodename - $sysname $kernel
 $hr
 ${color1}Batterie: ${color}$battery $battery_time $alignr$color1$alignr${battery_bar 12,155}
 ${color grey}Load:$color $loadavg $alignr${color1}${alignr}Processes:$color $running_processes/$processes
-$color1${cpugraph cpu0 $template2,0 $template1 }$color
+{{ graph("cpugraph cpu0") }}
 
 ${color1}CPU$color ${cpu}%$alignr$color1${cpubar}
 ${color1}RAM:$color $memperc%$alignr$color1${membar}
