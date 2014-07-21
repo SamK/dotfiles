@@ -58,7 +58,8 @@ def get_filesystems():
     filesystems = []
     fname = '/etc/mtab'
     exclude = ['debugfs', 'sysfs', 'fusectl', 'binfmt_misc', 'proc',
-               'securityfs', 'devpts', 'tmpfs', 'devtmpfs', 'fuse.gvfs-fuse-daemon']
+               'securityfs', 'devpts', 'tmpfs', 'devtmpfs', 'fuse.gvfs-fuse-daemon',
+               'pstore', 'fuse.gvfsd-fuse', 'cgroup', 'rpc_pipefs']
     with open(fname) as f:
         content = f.readlines()
     for line in content:
