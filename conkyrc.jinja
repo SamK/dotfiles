@@ -1,19 +1,23 @@
-{% macro graph(name) -%}
-$color1${{ '{' }}{{ name }} $template2,0 $template1 }$color
-{%- endmacro -%}
-{% macro graph_small(name) -%}
-$color1${{ '{' }}{{ name }} 24,150  $template1}$color
-{%- endmacro -%}
-{% macro def(name, value) -%}
-${color1}{{ name }}$color {{ value }}$alignr$color1${cpubar}
-{%- endmacro -%}
+<% macro graph(name) -%>
+${color1}${<< name >> << graph_height >>,0 <<color_graph1>> <<color_graph2>> }${color}
+<%- endmacro -%>
+<% macro graph_small(name) -%>
+${color1}${<< name >> << graph_height_small>>,<< graph_width_small>> <<color_graph1>> <<color_graph2>> }${color}
+<%- endmacro -%>
+<% macro defbar(name, value, barname) -%>
+${color1}<< name >>${color} << value >>${alignr}${color1}${<<barname>>}
+<%- endmacro -%>
+<% macro definition(name, value) -%>
+${color1}<< name >>${color} << value >>${color}
+<%- endmacro -%>
 
 
 
+# Template Header
+#################
 alignment top_right
-background yes
 border_width 1
-maximum_width {{ maximum_width }}
+maximum_width << maximum_width >>
 cpu_avg_samples 2
 default_color white
 default_outline_color red
@@ -36,57 +40,87 @@ extra_newline no
 own_window yes
 own_window_colour black
 own_window_class Conky
-own_window_type override
 stippled_borders 0
 update_interval 1.0
-update_interval_on_battery 60
+<% if not battery %>#<% endif %>update_interval_on_battery 60
 uppercase no
 use_spacer none
 show_graph_scale no
 show_graph_range no
 default_bar_size 155 12
 default_graph_size 150 24
+<% if bg_transparent %>
+# The background must be transparent
+own_window_type normal
+own_window_argb_visual yes
+own_window_argb_value 255
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+<% else %>
+# The background is not transparent
+background yes
+own_window_type override
 
+<%endif %>
 # 
 template0 grey
 # graph params: width,height colour1 colour2
-template1 000000 F700FF
-# hauteur des graphs (default_graph_size apres la virgule)
-template2 24
+template1 FFFFFF F700FF
 
-color1 grey
+color1 << color1 >>
+color2 << color2 >>
 
 TEXT
 $color$alignc$nodename - $sysname $kernel
 $hr
+<% if battery -%>
 ${color1}Batterie: ${color}$battery $battery_time $alignr$color1$alignr${battery_bar 12,155}
-${color grey}Load:$color $loadavg $alignr${color1}${alignr}Processes:$color $running_processes/$processes
-{{ graph("cpugraph cpu0") }}
+<% else -%>
+# no battery
+<% endif -%>
+<< definition("Load:", '${loadavg}')>>$alignr<< definition("Processes:", '$running_processes/$processes') >>
+<< graph("cpugraph cpu0") >>
+<< defbar("CPU", '${cpu}%', "cpubar") >>
+<< defbar("RAM", '${memperc}%', "membar") >>
+<< defbar("Swap:", '${swapperc}%', "swapbar") >>
 
-${color1}CPU$color ${cpu}%$alignr$color1${cpubar}
-${color1}RAM:$color $memperc%$alignr$color1${membar}
-${color1}Swap:$color $swapperc% $alignr$color1${swapbar}
-${color1}/$color ${fs_used /}/${fs_size /}$alignr${color1}${fs_bar /}$color
-# hwmon [dev] type n [factor offset]
-# Hwmon sensor from sysfs (Linux 2.6).
-# Parameter dev may be omitted if you have only one hwmon device.
-# Parameter type is either 'in' or 'vol' meaning voltage; 'fan' meaning fan; 'temp' meaning temperature.
-# Parameter n is number of the sensor. See /sys/class/hwmon/ on your local computer.
-# The optional arguments 'factor' and 'offset' allow precalculation of the raw input, 
-# which is being modified as follows: 'input = input * factor + offset'. 
-# Note that they have to be given as decimal values (i.e. contain at least one decimal place).
+<% for fs in filesystems -%>
+<< defbar(fs.mountpoint, '${fs_used ' + fs.mountpoint + '}/${fs_size ' + fs.mountpoint + '}', 'fs_bar ' + fs.mountpoint) >>
+<% endfor -%>
 #${color grey}ACPI:$color $acpitemp°C (${hwmon 0 temp 1}°C) ${color grey}Physical id 0:$color ${hwmon 1 temp 1}
+<% if hwmon -%>
 ${color grey}Core 0:$color ${hwmon 1 temp 2}°C $alignr${color grey}Core 1:$color ${hwmon 1 temp 3}°C$color
-${color1}/dev/sda:$color ${hddtemp /dev/sda}°C
+<% else -%>
+# hwmon not supported
+<% endif -%>
+<% if hddtemp -%>
+<% for drive in drives -%>
+${color1}<< drive>>>:$color ${hddtemp <<drive>>}°C
+<% endfor -%>
+<% else -%>
+# hddtemp not supported
+<% endif -%>
+#
+<% for drive in drives -%>
+<< graph_small("diskiograph_read " + drive) >>$alignr<< graph_small("diskiograph_write " + drive) >>
+<< drive >>: ${color grey}I/O Read:$color ${diskio_read << drive >>}$alignr${color grey}I/O Write:$color ${diskio_write << drive >>}
+<% endfor -%>
+#
+$hr
+#
+<% for iface in interfaces -%>
+################################## interface << iface >>
+<< graph_small("upspeedgraph " + iface) >>$alignr<< graph_small("downspeedgraph " + iface) >>
+${color1}<<iface>> ${if_match "${addrs <<iface>>}" == "0.0.0.0"}DOWN\
+$else(${addrs <<iface>>}) \
+<% if iface.startswith("wlan") %>ESSID:$color ${wireless_essid << iface >>}<%endif%> \
+<< definition("Up:", '${upspeed ' +iface+ '}') >>$alignr<< definition("Down:", '${downspeed ' + iface + '}') >>\
+$endif
+<% endfor -%>
+#
 
-{{ graph_small("diskiograph_read /dev/sda") }}$alignr{{ graph_small("diskiograph_write /dev/sda") }}
-${color grey}I/O Read:$color $diskio_read$alignr${color grey}I/O Write:$color $diskio_write
-
-${color $template0}ESSID:$color ${wireless_essid wlan0} (${addrs wlan0})
-$color1${upspeedgraph wlan0 24,150 $template1}$alignr${downspeedgraph wlan0 24,150 $template1}
-${color $template0}Up:$color ${upspeed wlan0}$alignr${color grey}Down:$color ${downspeed wlan0}
-
-${font DejaVu Sans Mono:size=10}${color $template0}TOP                PID   CPU%   MEM%$color
+#
+${font DejaVu Sans Mono:size=10}${color1}TOP                PID   CPU%   MEM%$color
 ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
 ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
 ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
