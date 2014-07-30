@@ -4,7 +4,7 @@
 # influences
 # http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
-PATH=~/.usr/bin:"$PATH"
+PATH=~/.local/bin:"$PATH"
 
 # History
 HISTFILE=~/.histfile
