@@ -1,6 +1,8 @@
 # NE PAS EDITER
 # Source: https://github.com/samyboy/dotfiles/
 
+export VISUAL=vim
+
 # color support
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
