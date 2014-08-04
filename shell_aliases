@@ -36,3 +36,5 @@ alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || ech
 # mistype aliases
 alias gerp='grep'
 
+# subversion
+svn-diff() { svn diff "${@}" | colordiff | less -R }
