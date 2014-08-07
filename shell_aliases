@@ -33,6 +33,9 @@ alias cleanconf="sed -e 's/#.*//;/^\s*$/d' "$@""
 #   sleep 10; alert
 alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+# nice history
+alias hist='fc -liD 1 | less -R +G'
+
 # mistype aliases
 alias gerp='grep'
 
