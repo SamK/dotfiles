@@ -66,3 +66,7 @@ TMOUT=1
 TRAPALRM() {
     zle reset-prompt
 }
+
+# auto completion
+fpath=(~/.zsh $fpath)
+
