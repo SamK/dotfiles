@@ -22,6 +22,12 @@ alias la='ll -A'
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
 
+# find
+findxsvn () {
+    local searchdir=$1
+    shift
+    find $searchdir -not -iwholename ".svn" $@
+}
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
 
