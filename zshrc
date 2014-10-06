@@ -60,3 +60,9 @@ setopt promptpercent
 # liquidprompt
 [ -d ~/.zsh/liquidprompt ] && source ~/.zsh/liquidprompt/liquidprompt
 
+# show right prompt with date
+RPROMPT='[%D{%H:%M:%S}]'
+TMOUT=1
+TRAPALRM() {
+    zle reset-prompt
+}
