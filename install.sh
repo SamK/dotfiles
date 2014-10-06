@@ -9,5 +9,8 @@
 
 # zsh
 /bin/cp ./zshrc ~/.zshrc
+
+# https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.zsh
 /bin/cp git-completion.zsh ~/.zsh/_git
+# https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.bash
 /bin/cp git-completion.bash ~/.zsh/
