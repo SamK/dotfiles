@@ -32,6 +32,12 @@ set showcmd             " show (partial) command in status line
 
 "set wrap               " Affiche les lignes trop longues sur plusieurs lignes
 
+" themes
+" ------------
+let g:solarized_termcolors=16
+set background=dark
+colorscheme solarized
+
 " coloration syntaxique
 " ---------------
 
