@@ -34,6 +34,7 @@ set showcmd             " show (partial) command in status line
 
 " themes
 " ------------
+set t_Co=256
 let g:solarized_termcolors=16
 set background=dark
 colorscheme solarized
