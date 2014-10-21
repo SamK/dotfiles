@@ -49,3 +49,7 @@ alias gerp='grep'
 
 # subversion
 svn-diff() { svn diff "${@}" | colordiff | less -R; }
+
+if [ -f ~/.shell_aliases.local ]; then
+    source ~/.shell_aliases.local
+fi
