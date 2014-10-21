@@ -81,3 +81,5 @@ autocmd FileType python,c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
 "set linebreak
 " note trailing space at end of next line
 set showbreak=>\ \ \
+
+source ~/.vimrc.bepo
