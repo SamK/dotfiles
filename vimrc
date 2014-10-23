@@ -4,6 +4,8 @@
 " Annuel la compat. avec l'ancetre Vi.
 set nocompatible
 
+" active la souris
+set mouse=a
 
 " -- development
 " --------------
