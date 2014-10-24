@@ -7,13 +7,13 @@
 /bin/cp ./gitignore-global ~/.gitignore-global
 ./conkyrc.py > ~/.conkyrc
 
+# https://github.com/seebi/dircolors-solarized
+/bin/cp dircolors.ansi-dark ~/.dircolors
+
 # zsh
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
-
 /bin/cp ./zshrc ~/.zshrc
-
 liqp=~/.zsh/liquidprompt/ 
-
 if [ -d $liqp ]; then
     cd $liqp 
     git pull
@@ -30,7 +30,6 @@ fi
 /bin/cp git-completion.bash ~/.zsh/
 
 # Vim
-
 if [ -d solarized ]; then
     cd solarized
     git pull
@@ -38,10 +37,8 @@ if [ -d solarized ]; then
 else
     git clone https://github.com/altercation/solarized.git
 fi
-
 mkdir -p ~/.vim/
 /bin/cp -a ./solarized/vim-colors-solarized/colors ~/.vim/
 
 
-# https://github.com/seebi/dircolors-solarized
-/bin/cp dircolors.ansi-dark ~/.dircolors
+
