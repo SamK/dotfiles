@@ -93,4 +93,7 @@ match OverLength /\%120v.\+/   " 120
 " configure expanding of tabs 
 au BufRead,BufNewFile *.py set expandtab
 
+" folding
+set foldmethod=indent
+set foldnestmax=2
 
