@@ -29,5 +29,19 @@ fi
 # https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.bash
 /bin/cp git-completion.bash ~/.zsh/
 
+# Vim
+
+if [ -d solarized ]; then
+    cd solarized
+    git pull
+    cd ..
+else
+    git clone https://github.com/altercation/solarized.git
+fi
+
+mkdir -p ~/.vim/
+/bin/cp -a ./solarized/vim-colors-solarized/colors ~/.vim/
+
+
 # https://github.com/seebi/dircolors-solarized
 /bin/cp dircolors.ansi-dark ~/.dircolors
