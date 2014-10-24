@@ -40,5 +40,5 @@ fi
 mkdir -p ~/.vim/
 /bin/cp -a ./solarized/vim-colors-solarized/colors ~/.vim/
 
-
+echo "setup completed."
 
