@@ -8,7 +8,21 @@
 ./conkyrc.py > ~/.conkyrc
 
 # zsh
+[ ! -d ~/.zsh ] && mkdir -p ~/.zsh
+
 /bin/cp ./zshrc ~/.zshrc
+
+liqp=~/.zsh/liquidprompt/ 
+
+if [ -d $liqp ]; then
+    cd $liqp 
+    git pull
+    cd -
+else
+    cd ~/.zsh
+    git clone https://github.com/nojhan/liquidprompt.git
+    cd -
+fi
 
 # https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.zsh
 /bin/cp git-completion.zsh ~/.zsh/_git
