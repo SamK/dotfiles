@@ -50,6 +50,36 @@ alias gerp='grep'
 # subversion
 svn-diff() { svn diff "${@}" | colordiff | less -R; }
 
+# git
+# #################
+
+# configure git selon un fichier local
+gitconfig-local () {
+    cdir=$HOME
+    prefix='.gitconfig.local'
+    current=$(readlink $cdir/$prefix)
+    if [ -z "$1" ]; then
+        for filename in $( /bin/ls -1 $cdir/${prefix}.* ); do
+            f=$( basename $filename )
+            f=$( echo "$f" | sed "s/$prefix//" | sed 's/^\.//' )
+            echo -n "$f"
+            if [[ "$filename" == "$current" ]]; then
+                echo -n '*'
+            fi
+            echo ''
+        done
+    else
+        if [ ! -f "${cdir}/${prefix}.${1}" ] ; then
+            echo "Notice: The file "${cdir}/${prefix}.${1}" does not exist." >&2
+        fi
+        ln -f  -s ${cdir}/${prefix}.${1} ${cdir}/.gitconfig.local
+    fi
+}
+
+# END
+#
 if [ -f ~/.shell_aliases.local ]; then
     source ~/.shell_aliases.local
 fi
+
+
