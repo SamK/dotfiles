@@ -4,7 +4,12 @@
 # influences
 # http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
+export VISUAL=vi
+export EDITOR=vi
 set -o vi
+bindkey -v
+bindkey -M viins '^r' history-incremental-search-backward
+bindkey -M vicmd '^r' history-incremental-search-backward
 
 PATH=~/.local/bin:"$PATH"
 
@@ -12,7 +17,7 @@ PATH=~/.local/bin:"$PATH"
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-bindkey -e
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/skrieg/.zshrc'

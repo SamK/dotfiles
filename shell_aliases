@@ -1,9 +1,6 @@
 # NE PAS EDITER
 # Source: https://github.com/samyboy/dotfiles/
 
-export VISUAL=vim
-export EDITOR=vim
-
 alias tmux='TERM=xterm-256color /usr/bin/tmux'
 
 # color support
