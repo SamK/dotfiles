@@ -4,6 +4,8 @@
 # influences
 # http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
+set -o vi
+
 PATH=~/.local/bin:"$PATH"
 
 # History
