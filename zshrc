@@ -67,7 +67,27 @@ setopt promptpercent
 # liquidprompt
 [ -d ~/.zsh/liquidprompt ] && source ~/.zsh/liquidprompt/liquidprompt
 
+# display current mode in zsh (vi style)
+#
+# http://superuser.com/questions/151803/how-do-i-customize-zshs-vim-mode
+vim_ins_mode="[INS]"
+vim_cmd_mode="[CMD]"
+vim_mode=$vim_ins_mode
 
+function zle-keymap-select {
+    vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
+    RPROMPT='${vim_mode}'
+    zle reset-prompt
+}
+zle -N zle-keymap-select
+
+function zle-line-finish {
+    vim_mode=$vim_ins_mode
+    RPROMPT='${vim_mode}'
+}
+zle -N zle-line-finish
+
+# return length of a string including only printable chars
 strlen () {
     FOO=$1
     local zero='%([BSUbfksu]|([FB]|){*})'
