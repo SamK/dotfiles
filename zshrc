@@ -11,6 +11,7 @@ bindkey -v
 bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
 bindkey "^?" backward-delete-char
+bindkey "^U" backward-kill-line
 
 PATH=~/.local/bin:"$PATH"
 
