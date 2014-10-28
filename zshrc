@@ -12,6 +12,11 @@ bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
 bindkey "^?" backward-delete-char
 bindkey "^U" backward-kill-line
+bindkey -M viins '^u'    backward-kill-line
+bindkey -M viins '^w'    backward-kill-word # Ctrl+w
+bindkey -M viins '\ef'   forward-word      # Alt-f
+bindkey -M viins '\eb'   backward-word     # Alt-b
+bindkey -M viins '\ed'   kill-word         # Alt-d
 
 PATH=~/.local/bin:"$PATH"
 
