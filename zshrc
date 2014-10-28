@@ -18,6 +18,9 @@ bindkey -M viins '\ef'   forward-word      # Alt-f
 bindkey -M viins '\eb'   backward-word     # Alt-b
 bindkey -M viins '\ed'   kill-word         # Alt-d
 
+bbindkey -M vicmd '^[^?' backward-kill-word  # alt-backspace
+bbindkey -M viins '^[^?' backward-kill-word  # alt-backspace
+
 PATH=~/.local/bin:"$PATH"
 
 # History
