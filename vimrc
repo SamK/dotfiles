@@ -15,9 +15,6 @@
 " Annuel la compat. avec l'ancetre Vi.
 set nocompatible
 
-" active la souris
-set mouse=a
-
 " recherche
 set ignorecase " Ignore la casse lors d’une recherche
 set smartcase  " Si une recherche contient une majuscule,
