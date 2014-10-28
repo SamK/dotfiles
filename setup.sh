@@ -5,6 +5,7 @@
 /bin/cp ./vimrc ~/.vimrc
 /bin/cp ./gitconfig ~/.gitconfig
 /bin/cp ./gitignore-global ~/.gitignore-global
+/bin/cp ./tmux.conf ~/.tmux.conf
 ./conkyrc.py > ~/.conkyrc
 
 # https://github.com/seebi/dircolors-solarized
