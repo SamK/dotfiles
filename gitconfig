@@ -11,6 +11,7 @@ lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
     lg3 = log --graph --abbrev-commit --decorate --date=relative --color --all
     lg = !"git lg1"
     uncommit = reset --soft HEAD~1
+    unmerge = reset --merge ORIG_HEAD
 [credential]
    helper = cache --timeout=3600
 [push]
