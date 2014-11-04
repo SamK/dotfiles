@@ -17,6 +17,7 @@
     st = status
     pl = pull
     ps = push
+    ph = push
     ci = commit
     co = checkout
     br = branch
