@@ -6,13 +6,20 @@
     editor = vim
     excludesfile = ~/.gitignore-global
 [alias]
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --date=relative --color --all
     lg = !"git lg1"
     uncommit = reset --soft HEAD~1
     unmerge = reset --merge ORIG_HEAD
     root = rev-parse --show-toplevel
+    st = status
+    pl = pull
+    ps = push
+    ci = commit
+    co = checkout
+    br = branch
 [credential]
    helper = cache --timeout=3600
 [push]
