@@ -22,6 +22,9 @@ bindkey -M viins '\ed'   kill-word         # Alt-d
 bindkey -M vicmd '^[^?' backward-kill-word  # alt-backspace
 bindkey -M viins '^[^?' backward-kill-word  # alt-backspace
 
+bindkey "^[[A" up-line-or-search     # up arrow
+bindkey "^[[B" down-line-or-search   # down arrow
+
 PATH=~/.local/bin:"$PATH"
 
 # History
