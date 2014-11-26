@@ -1,26 +1,30 @@
 # NE PAS EDITER
 # Source: https://github.com/SamK/dotfiles/
 
-alias tmux='TERM=xterm-256color /usr/bin/tmux'
+# TOC:
+#
+# 1. correction aliases
+# 2. daily aliases and commands
+# 4. color support
+# 5. final
 
-# color support
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+# 1. correction aliases
+alias gerp='grep'
+alias iv='vi'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+#
+# 2. daily aliases and commands
+#
 
 # ls
 alias ll='ls -lh'
 alias l='ll'
 alias la='ll -A'
+
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
+
+alias tmux='TERM=xterm-256color /usr/bin/tmux'
 
 # find
 findxsvn () {
@@ -28,11 +32,14 @@ findxsvn () {
     shift
     find $searchdir -not -iwholename ".svn" $@
 }
+
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
 
-# command aliases
+# cd + ls = cl
 function cl() { cd "$@" && /bin/ls -lh --color  ;}
+
+#
 alias cleanconf="sed -e 's/#.*//;/^\s*$/d' "$@""
 
 # desktop application "alert" alias for long running commands.  Use like so:
@@ -42,14 +49,8 @@ alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || ech
 # nice history (zsh only)
 alias hist='fc -liD 1 | less -R +G'
 
-# mistype aliases
-alias gerp='grep'
-
 # subversion
 svn-diff() { svn diff "${@}" | colordiff | less -R; }
-
-# git
-# #################
 
 # configure git selon un fichier local
 gitconfig-local () {
@@ -74,10 +75,30 @@ gitconfig-local () {
     fi
 }
 
-# END
 #
+# 4. color support
+#
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# 5. Final
+
 if [ -f ~/.shell_aliases.local ]; then
     source ~/.shell_aliases.local
 fi
+
+#
+# END
+#
+
 
 
