@@ -22,6 +22,9 @@
     ci = commit
     co = checkout
     br = branch
+    diff-chars = diff --color-words --word-diff-regex=.
+    diff-words = diff --color-words
+    merge-log = merge --log --no-ff
 [credential]
    helper = cache --timeout=3600
 [push]
