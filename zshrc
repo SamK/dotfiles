@@ -6,6 +6,13 @@
 
 export VISUAL=vi
 export EDITOR=vi
+
+# options
+
+# do word splitting for unquoted parameter expansions
+# source: http://stackoverflow.com/a/6715447/238913
+setopt SH_WORD_SPLIT
+
 # The same for Bash "set -o vi"
 bindkey -v
 
