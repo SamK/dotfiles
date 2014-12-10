@@ -11,7 +11,7 @@ export EDITOR=vi
 
 # do word splitting for unquoted parameter expansions
 # source: http://stackoverflow.com/a/6715447/238913
-ENABLE_SH_WORD_SPLIT="no"
+ENABLE_SH_WORD_SPLIT="yes"
 
 [[ "$ENABLE_SH_WORD_SPLIT" == "yes" ]] && setopt SH_WORD_SPLIT
 
@@ -112,12 +112,10 @@ zle -N zle-line-finish
 
 # return length of a string including only printable chars
 strlen () {
-    [[ "$ENABLE_SH_WORD_SPLIT" == "yes" ]] && unsetopt SH_WORD_SPLIT
-    FOO="$*"
+    FOO="$1"
     local zero='%([BSUbfksu]|([FB]|){*})'
-    LEN=${#${(S%%)FOO//$~zero/}}
+    LEN="${#${(S%%)FOO//$~zero/}}"
     echo $LEN
-    [[ "$ENABLE_SH_WORD_SPLIT" == "yes" ]] && setopt SH_WORD_SPLIT
 }
 
 # show right prompt with date ONLY when command is executed
