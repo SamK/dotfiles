@@ -113,7 +113,7 @@ zle -N zle-line-finish
 # return length of a string including only printable chars
 strlen () {
     [[ "$ENABLE_SH_WORD_SPLIT" == "yes" ]] && unsetopt SH_WORD_SPLIT
-    FOO=$1
+    FOO="$*"
     local zero='%([BSUbfksu]|([FB]|){*})'
     LEN=${#${(S%%)FOO//$~zero/}}
     echo $LEN
