@@ -7,6 +7,9 @@
 export VISUAL=vi
 export EDITOR=vi
 
+# disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
+export KEYTIMEOUT=10
+
 # options
 
 # do word splitting for unquoted parameter expansions
