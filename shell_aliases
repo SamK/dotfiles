@@ -39,7 +39,7 @@ alias sudo='sudo '
 # cd + ls = cl
 function cl() { cd "$@" && /bin/ls -lh --color  ;}
 
-#
+# Remove comments from config file
 alias cleanconf="sed -e 's/#.*//;/^\s*$/d' "$@""
 
 # desktop application "alert" alias for long running commands.  Use like so:
