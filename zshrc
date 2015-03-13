@@ -65,11 +65,6 @@ if [ -f ~/.shell_aliases ]; then
   source ~/.shell_aliases
 fi
 
-if [ -f ~/.shell_aliases.local ]; then
-  source ~/.shell_aliases.local
-fi
-
-
 ########
 # Prompt
 ########
