@@ -79,6 +79,10 @@ gitconfig-local () {
     fi
 }
 
+# yaml validation
+function yaml-check-py { python -c "import yaml;yaml.load(open('$1','r'),Loader=yaml.CLoader)"; }
+function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
+
 #
 # 4. color support
 #
