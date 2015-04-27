@@ -15,11 +15,6 @@
     unmerge = reset --merge ORIG_HEAD
     root = rev-parse --show-toplevel
     st = status
-    pl = pull
-    ps = push
-    ph = push
-    ci = commit
-    co = checkout
     br = branch
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
