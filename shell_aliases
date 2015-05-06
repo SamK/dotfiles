@@ -25,6 +25,7 @@ alias la='ll -A'
 function cl() { cd "$@" && /bin/ls -lh --color ;}
 
 alias tmux='TERM=xterm-256color /usr/bin/tmux'
+alias ack='ack-grep'
 
 # find
 findxsvn () {
