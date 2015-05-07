@@ -1,3 +1,11 @@
---type-add
-puppet=.pp
---sort-files
+# General Ack Settings
+####################################################################
+# only search with case sensitivity if there is mixed case
+--smart-case
+# follow symlinks
+--follow
+
+--type-set=puppet=.pp
+
+# add markdown, textile, and reStructuredText
+--type-set=plaintext=.md,.mdown,.markdown,.mkdn,.textile,.rst,.txt
