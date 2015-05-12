@@ -18,7 +18,7 @@
     br = branch
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
-    merge-log = merge --log --no-ff
+    merge-log = merge --log=100 --no-ff
     refresh-remote-branches = remote update origin --prune
 [credential]
    helper = cache --timeout=3600
