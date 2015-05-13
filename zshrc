@@ -30,6 +30,7 @@ bindkey -M viins '^w'    backward-kill-word # Ctrl+w
 bindkey -M viins '\ef'   forward-word      # Alt-f
 bindkey -M viins '\eb'   backward-word     # Alt-b
 bindkey -M viins '\ed'   kill-word         # Alt-d
+bindkey    "^[[3~"          delete-char    # Delete
 
 bindkey -M vicmd '^[^?' backward-kill-word  # alt-backspace
 bindkey -M viins '^[^?' backward-kill-word  # alt-backspace
