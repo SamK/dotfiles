@@ -1,6 +1,10 @@
 # Original: https://gist.github.com/octocat/9257657 #
 #####################################################
 
+# Editors #
+###########
+.*.swp
+
 # Compiled source #
 ###################
 *.com
