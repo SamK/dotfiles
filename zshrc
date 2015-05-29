@@ -60,6 +60,9 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+# menu selection
+zstyle ':completion:*' menu select
+
 #########
 # aliases
 #########
