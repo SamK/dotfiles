@@ -15,6 +15,9 @@
 # zsh
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 /bin/cp ./zshrc ~/.zshrc
+
+# liquid prompt
+liqp_branch='develop'
 liqp=~/.zsh/liquidprompt/ 
 if [ -d $liqp ]; then
     cd $liqp 
@@ -22,7 +25,7 @@ if [ -d $liqp ]; then
     cd -
 else
     cd ~/.zsh
-    git clone https://github.com/nojhan/liquidprompt.git
+    git clone -b $liqp_branch https://github.com/nojhan/liquidprompt.git
     cd -
 fi
 
