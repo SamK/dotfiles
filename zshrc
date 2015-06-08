@@ -44,8 +44,8 @@ PATH=~/.local/bin:"$PATH"
 
 # History
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+SAVEHIST=10000
+HISTSIZE=$SAVEHIST
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
