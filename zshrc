@@ -129,7 +129,7 @@ strlen () {
 }
 
 # show right prompt with date ONLY when command is executed
-show_exec_time() {
+show_exec_date() {
     DATE=$( date +"[%H:%M:%S]" )
     local len_right=$( strlen "$DATE" )
     len_right=$(( $len_right+1 ))
@@ -150,8 +150,24 @@ show_exec_time() {
     fi
 }
 
+show_runtime () {
+  LP_RUNTIME_THRESHOLD=60
+  if [ $runtime_start ]; then
+    runtime=$(($SECONDS - $runtime_start))
+    if [ $runtime -gt $LP_RUNTIME_THRESHOLD ]; then
+      export RPROMPT="%F{cyan}${runtime}s%{$reset_color%}"
+    fi
+    unset runtime_start
+  fi
+}
+
+precmd () {
+    show_runtime
+}
+
 preexec () {
-    show_exec_time "$@"
+    show_exec_date "$@"
+    runtime_start=${timer:-$SECONDS}
 }
 
 # auto completion
