@@ -150,8 +150,24 @@ show_exec_date() {
     fi
 }
 
+show_runtime () {
+  LP_RUNTIME_THRESHOLD=60
+  if [ $runtime_start ]; then
+    runtime=$(($SECONDS - $runtime_start))
+    if [ $runtime -gt $LP_RUNTIME_THRESHOLD ]; then
+      export RPROMPT="%F{cyan}${runtime}s%{$reset_color%}"
+    fi
+    unset runtime_start
+  fi
+}
+
+precmd () {
+    show_runtime
+}
+
 preexec () {
     show_exec_date "$@"
+    runtime_start=${timer:-$SECONDS}
 }
 
 # auto completion
