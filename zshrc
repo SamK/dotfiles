@@ -129,7 +129,7 @@ strlen () {
 }
 
 # show right prompt with date ONLY when command is executed
-show_exec_time() {
+show_exec_date() {
     DATE=$( date +"[%H:%M:%S]" )
     local len_right=$( strlen "$DATE" )
     len_right=$(( $len_right+1 ))
@@ -151,7 +151,7 @@ show_exec_time() {
 }
 
 preexec () {
-    show_exec_time "$@"
+    show_exec_date "$@"
 }
 
 # auto completion
