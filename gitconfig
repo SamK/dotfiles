@@ -11,7 +11,7 @@
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --date=relative --color --all
     log-day = "!f() { git log --after=\"$1 00:00\" --before=\"$1 23:59\"; }; f"
-    changelog = log --pretty='format:  * %s (%an)'
+    changelog = log  --no-merges --format='  * %s (%an)'
     uncommit = reset --soft HEAD~1
     unmerge = reset --merge ORIG_HEAD
     root = rev-parse --show-toplevel
