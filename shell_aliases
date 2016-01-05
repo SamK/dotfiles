@@ -111,6 +111,15 @@ colorz () {
     ' "$@"
 }
 
+function lesscolor () {
+    if [ -x /usr/bin/dircolors ]; then
+        ccze -A < "$1" | less -R;
+    else
+        echo "Colors do not seem to be supported on this terminal." >&2
+        return 127
+    fi
+}
+
 # 5. Final
 
 if [ -f ~/.shell_aliases.local ]; then
