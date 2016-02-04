@@ -24,10 +24,15 @@
 *.gz
 *.iso
 *.jar
+*.war
 *.rar
 *.tar
 *.zip
- 
+
+# Disk files #
+##############
+*.qcow2
+
 # Logs and databases #
 ######################
 *.log
