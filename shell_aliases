@@ -11,6 +11,7 @@
 # 1. correction aliases
 alias gerp='grep'
 alias iv='vi'
+alias sudp='sudo'
 
 #
 # 2. daily aliases and commands
