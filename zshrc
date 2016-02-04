@@ -97,8 +97,9 @@ setopt PROMPT_SUBST
 setopt promptsubst
 setopt promptpercent
 
-# liquidprompt
-[ -d ~/.zsh/liquidprompt ] && source ~/.zsh/liquidprompt/liquidprompt
+# liquidprompt:
+# Only load Liquid Prompt in interactive shells
+[ -d ~/.zsh/liquidprompt ] && [[ $- = *i* ]] && source ~/.zsh/liquidprompt/liquidprompt
 
 # display current mode in zsh (vi style)
 #
