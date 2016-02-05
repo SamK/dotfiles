@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Installing files..."
+
 /bin/cp ./shell_aliases ~/.shell_aliases
 /bin/cp ./bashrc ~/.bashrc
 /bin/cp ./vimrc ~/.vimrc
@@ -24,6 +26,7 @@ if [ -d $liqp ]; then
     git pull
     cd -
 else
+    echo "Installing liquidprompt in ~/.zsh ..."
     cd ~/.zsh
     git clone -b $liqp_branch https://github.com/nojhan/liquidprompt.git
     cd -
@@ -36,14 +39,17 @@ fi
 
 # Vim
 if [ -d solarized ]; then
+    echo "Updating solarized..."
     cd solarized
     git pull
     cd ..
 else
+    echo "Installing solarized..."
     git clone https://github.com/altercation/solarized.git
 fi
+
 mkdir -p ~/.vim/
 /bin/cp -a ./solarized/vim-colors-solarized/colors ~/.vim/
 
-echo "setup completed."
+echo "Setup completed."
 
