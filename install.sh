@@ -20,7 +20,8 @@ echo "Installing files..."
 
 # liquid prompt
 liqp_branch='develop'
-liqp_commit='282359a'
+# Le commit 282359a a cassé l'affichage [INS] [CMD] dans zshrc
+liqp_commit='b53e53b'
 liqp=~/.zsh/liquidprompt/
 if [ -d $liqp ]; then
     if [ -n $liqp_commit ]; then
