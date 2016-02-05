@@ -20,15 +20,28 @@ echo "Installing files..."
 
 # liquid prompt
 liqp_branch='develop'
-liqp=~/.zsh/liquidprompt/ 
+liqp_commit='282359a'
+liqp=~/.zsh/liquidprompt/
 if [ -d $liqp ]; then
-    cd $liqp 
-    git pull
+    if [ -n $liqp_commit ]; then
+        echo "Updating to commit $liqp_commit..."
+        cd $liqp
+        git fetch
+        git checkout $liqp_commit
+    else
+        echo "Updating liquidprompt (branch $liqp_branch) in ~/.zsh ..."
+        cd $liqp
+        git pull
+    fi
     cd -
 else
     echo "Installing liquidprompt in ~/.zsh ..."
     cd ~/.zsh
     git clone -b $liqp_branch https://github.com/nojhan/liquidprompt.git
+    if [ -n $liqp_commit ]; then
+        echo "Checking out commit $liqp_commit..."
+        git checkout $liqp_commit
+    fi
     cd -
 fi
 
