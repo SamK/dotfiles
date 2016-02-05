@@ -16,10 +16,6 @@
 #
 #  fpath=(~/.zsh $fpath)
 
-echo "_______________"
-echo $(dirname ${funcsourcetrace[1]%:*})
-echo "________________"
-
 complete ()
 {
 	# do nothing
