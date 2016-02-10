@@ -1,7 +1,5 @@
 [diff "odf"]
 	textconv = odf2prettytxt
-[color]
-	ui = true
 [core]
     editor = vim
     excludesfile = ~/.gitignore-global
@@ -28,3 +26,23 @@
 # 1.7.10+
 [include]
     path = .gitconfig.local
+# colors
+# http://blog.kmelia.net/testing/changer-les-couleurs-de-git/243
+[color]
+    ui = true
+[color "status"]
+    header    = white
+    added     = green
+    changed   = red
+    untracked = yellow
+    branch    = bold white
+    # never seen
+    nobranch  = reverse magenta
+
+[color "branch"]
+    current  = reverse green
+    local    = white
+    remote   = cyan
+    upstream = cyan
+    # never seen
+    plain    = reverse cyan
