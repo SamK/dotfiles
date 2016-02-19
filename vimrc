@@ -7,7 +7,7 @@
 " 3. Theme
 " 4. coloration syntaxique
 " 5. Programming
-
+" 6. Plugins
 
 " 1. General configuration
 " ------------------------
@@ -100,4 +100,11 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" 6. Plugins
+" ------------------------
+
+call plug#begin('~/.vim/plugged')
+Plug 'pearofducks/ansible-vim'
+call plug#end()
 

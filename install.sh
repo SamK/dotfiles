@@ -4,12 +4,15 @@ echo "Installing files..."
 
 /bin/cp ./shell_aliases ~/.shell_aliases
 /bin/cp ./bashrc ~/.bashrc
-/bin/cp ./vimrc ~/.vimrc
 /bin/cp ./gitconfig ~/.gitconfig
 /bin/cp ./gitignore-global ~/.gitignore-global
 /bin/cp ./tmux.conf ~/.tmux.conf
 /bin/cp ./ackrc ~/.ackrc
 ./conkyrc.py > ~/.conkyrc
+
+/bin/cp ./vimrc ~/.vimrc
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # https://github.com/seebi/dircolors-solarized
 /bin/cp dircolors.ansi-dark ~/.dircolors
