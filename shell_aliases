@@ -85,6 +85,11 @@ gitconfig-local () {
 function yaml-check-py { python -c "import yaml;yaml.load(open('$1','r'),Loader=yaml.CLoader)"; }
 function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
 
+# network 
+
+alias stracenet="strace -f -e trace=network -s 10000"
+alias resolveip="resolveip -s"
+
 #
 # 4. color support
 #
