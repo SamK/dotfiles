@@ -52,33 +52,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 /bin/cp ./zshrc ~/.zshrc
 
-# liquid prompt
-liqp_branch='develop'
-# Le commit 282359a a cassé l'affichage [INS] [CMD] dans zshrc
-liqp_commit='b53e53b'
-liqp=~/.zsh/liquidprompt/
-if [ -d $liqp ]; then
-    if [ -n $liqp_commit ]; then
-        echo "Updating to commit $liqp_commit..."
-        cd $liqp
-        git fetch
-        git checkout $liqp_commit
-    else
-        echo "Updating liquidprompt (branch $liqp_branch) in ~/.zsh ..."
-        cd $liqp
-        git pull
-    fi
-    cd -
-else
-    echo "Installing liquidprompt in ~/.zsh ..."
-    cd ~/.zsh
-    git clone -b $liqp_branch https://github.com/nojhan/liquidprompt.git
-    if [ -n $liqp_commit ]; then
-        echo "Checking out commit $liqp_commit..."
-        git checkout $liqp_commit
-    fi
-    cd -
-fi
+gitget https://github.com/nojhan/liquidprompt.git ~/.zsh/liquidprompt b53e53b
 
 # https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.zsh
 /bin/cp git-completion.zsh ~/.zsh/_git
