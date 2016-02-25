@@ -4,6 +4,33 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+gitget() {
+    url=$1
+    folder=$2
+    git_ref=$3
+
+    if [ -d $folder ]; then
+        if [ -n $git_ref ]; then
+            echo "Updating to commit $git_ref..."
+            cd $folder
+            git fetch
+            git checkout $git_ref
+        else
+            cd $folder
+            git pull
+        fi
+    else
+        if [ -n "$git_ref" ]; then
+            BOPT=" -b $git_ref "
+        else
+            BOPT=
+        fi
+        git clone $BOPT $url $folder
+    fi
+
+    cd $DIR
+}
+
 echo "Installing files..."
 
 /bin/cp ./shell_aliases ~/.shell_aliases
