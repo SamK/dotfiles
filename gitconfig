@@ -1,5 +1,7 @@
 [diff "odf"]
 	textconv = odf2prettytxt
+    # http://stackoverflow.com/questions/28017249/what-does-diff-mnemonicprefix-do
+    mnemonicprefix = true
 [core]
     editor = vim
     excludesfile = ~/.gitignore-global
