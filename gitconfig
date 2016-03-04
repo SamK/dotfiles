@@ -1,26 +1,47 @@
+# My global git config. Source:  https://github.com/SamK/dotfiles
+#
+# Nice docs:
+# - http://nuclearsquid.com/writings/git-tricks-tips-workflows/
+#
 [diff "odf"]
-	textconv = odf2prettytxt
+    # diff for OpenDocument files
+    textconv = odf2prettytxt
     # http://stackoverflow.com/questions/28017249/what-does-diff-mnemonicprefix-do
     mnemonicprefix = true
 [core]
     editor = vim
     excludesfile = ~/.gitignore-global
 [alias]
+    # Log aliases
+    # ###########
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    # Git tree
     lg = log --graph --abbrev-commit --decorate --date=iso --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --date=relative --color --all
+    # Log all commits between wo days
     log-day = "!f() { git log --after=\"$1 00:00\" --before=\"$1 23:59\"; }; f"
+    # Display a changelog
     changelog = log  --no-merges --format='  * %s (%an)'
+
+    # Operation
     uncommit = reset --soft HEAD~1
     unmerge = reset --merge ORIG_HEAD
+    # Merge with all log messages
+    merge-log = merge --log=100 --no-ff --edit
+
+    # Nice commands
     root = rev-parse --show-toplevel
-    st = status
-    br = branch
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
-    merge-log = merge --log=100 --no-ff --edit
     refresh-remote-branches = remote update origin --prune
+
+    # Faster typing
+    st = status
+    br = branch
+    ci = commit
+    pl = pull
+    fe = fetch
 [credential]
    helper = cache --timeout=3600
 [push]
@@ -40,7 +61,6 @@
     branch    = bold white
     # never seen
     nobranch  = reverse magenta
-
 [color "branch"]
     current  = reverse green
     local    = white
@@ -48,3 +68,5 @@
     upstream = cyan
     # never seen
     plain    = reverse cyan
+
+### EOF ###
