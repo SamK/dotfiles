@@ -28,6 +28,7 @@ set smartcase " ... but smart
 " Cache les fichiers lors de l’ouverture d’autres fichiers
 set hidden
 
+set history=100 " Keep 100 undo
 
 " Remove trailing spaces on save
 "http://vim.wikia.com/wiki/Remove_unwanted_spaces
