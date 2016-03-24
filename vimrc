@@ -1,5 +1,9 @@
 " VIM Configuration -- Samuel Krieg
-" Sources: Vincent Jousse
+"
+" Sources:
+" Vincent Jousse
+" https://github.com/sd65/MiniVim
+" http://www.oualline.com/vim/10/top_10.html
 
 " 1. General configuration
 " 2. Insertion
