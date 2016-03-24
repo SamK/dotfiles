@@ -48,6 +48,9 @@ set tabstop=4           " use 4 spaces to represent tab
 set softtabstop=4
 set shiftwidth=4        " number of spaces to use for auto indent
 
+set showmatch " When a bracket is inserted, briefly jump to the matching one
+set matchtime=3 " ... during this time
+
 " make backspaces usable
 set backspace=indent,eol,start
 
