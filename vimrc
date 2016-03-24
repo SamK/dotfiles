@@ -63,6 +63,10 @@ se nu                   " (number)
 set ruler               " show line and column number
 set showcmd             " show (partial) command in status line
 "set wrap               " Affiche les lignes trop longues sur plusieurs lignes
+set scrolloff=10 " Always keep 10 lines after or before when scrolling
+set sidescrolloff=5 " Always keep 5 lines after or before when side scrolling
+set showtabline=2 " Always show tabs
+set laststatus=2 " Always show status bar
 
 " 3. Theme
 " ------------------------
