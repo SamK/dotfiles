@@ -22,6 +22,8 @@ set smartcase  " Si une recherche contient une majuscule,
 set incsearch  " Surligne les resultats de recherche pendant la
                " saisie
 set hlsearch   " Surligne les resultat
+set ignorecase " Search insensitive
+set smartcase " ... but smart
 
 " Cache les fichiers lors de l’ouverture d’autres fichiers
 set hidden
