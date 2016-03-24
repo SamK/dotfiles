@@ -1,5 +1,9 @@
 " VIM Configuration -- Samuel Krieg
-" Sources: Vincent Jousse
+"
+" Sources:
+" Vincent Jousse
+" https://github.com/sd65/MiniVim
+" http://www.oualline.com/vim/10/top_10.html
 
 " 1. General configuration
 " 2. Insertion
@@ -22,10 +26,13 @@ set smartcase  " Si une recherche contient une majuscule,
 set incsearch  " Surligne les resultats de recherche pendant la
                " saisie
 set hlsearch   " Surligne les resultat
+set ignorecase " Search insensitive
+set smartcase " ... but smart
 
 " Cache les fichiers lors de l’ouverture d’autres fichiers
 set hidden
 
+set history=100 " Keep 100 undo
 
 " Remove trailing spaces on save
 "http://vim.wikia.com/wiki/Remove_unwanted_spaces
@@ -45,6 +52,9 @@ set tabstop=4           " use 4 spaces to represent tab
 set softtabstop=4
 set shiftwidth=4        " number of spaces to use for auto indent
 
+set showmatch " When a bracket is inserted, briefly jump to the matching one
+set matchtime=3 " ... during this time
+
 " make backspaces usable
 set backspace=indent,eol,start
 
@@ -57,6 +67,10 @@ se nu                   " (number)
 set ruler               " show line and column number
 set showcmd             " show (partial) command in status line
 "set wrap               " Affiche les lignes trop longues sur plusieurs lignes
+set scrolloff=10 " Always keep 10 lines after or before when scrolling
+set sidescrolloff=5 " Always keep 5 lines after or before when side scrolling
+set showtabline=2 " Always show tabs
+set laststatus=2 " Always show status bar
 
 " 3. Theme
 " ------------------------
