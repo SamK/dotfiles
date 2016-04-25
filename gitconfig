@@ -2,6 +2,7 @@
 #
 # Nice docs:
 # - http://nuclearsquid.com/writings/git-tricks-tips-workflows/
+# - http://gggritso.com/human-git-aliases
 #
 [diff "odf"]
     # diff for OpenDocument files
@@ -23,18 +24,25 @@
     log-day = "!f() { git log --after=\"$1 00:00\" --before=\"$1 23:59\"; }; f"
     # Display a changelog
     changelog = log  --no-merges --format='  * %s (%an)'
+    # historic graph of last 10 commits
+    graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
 
-    # Operation
+    # Human commands
     uncommit = reset --soft HEAD~1
     unmerge = reset --merge ORIG_HEAD
+    unstage = reset -q HEAD --
     # Merge with all log messages
     merge-log = merge --log=100 --no-ff --edit
+    precommit = diff --cached --diff-algorithm=minimal -w
+    root = rev-parse --show-toplevel
 
     # Nice commands
-    root = rev-parse --show-toplevel
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
     refresh-remote-branches = remote update origin --prune
+    branches = branch -a
+    tags = tag
+    stashes = stash list
 
     # Faster typing
     st = status
@@ -42,6 +50,7 @@
     ci = commit
     pl = pull
     fe = fetch
+    ps = push
 [credential]
    helper = cache --timeout=3600
 [push]
