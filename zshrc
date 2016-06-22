@@ -47,6 +47,10 @@ HISTFILE=~/.histfile
 SAVEHIST=10000
 HISTSIZE=$SAVEHIST
 
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt share_history
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/skrieg/.zshrc'
