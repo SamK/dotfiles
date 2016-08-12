@@ -35,7 +35,7 @@
     root = rev-parse --show-toplevel
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
-    refresh-remote-branches = remote update origin --prune
+    refresh-remote-branches = "!for r in $(git remote) ; do git remote update $r --prune ; done"
 
     # Faster typing
     st = status
