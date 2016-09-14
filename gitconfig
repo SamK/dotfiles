@@ -13,6 +13,9 @@
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     # Git tree
     lg = log --graph --abbrev-commit --decorate --date=iso --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset)' --all
+    # git tree without remotes
+    lgl = log --graph --abbrev-commit --decorate --date=iso --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset)'  --branches=*
+    # git tree style 2 (aero)
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --date=relative --color --all
     # Log all commits between wo days
