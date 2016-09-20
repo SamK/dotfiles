@@ -27,7 +27,7 @@
     graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
 
     # Human commands
-    tags = tag
+    tags = tag -n9
     branches = branch -a
     stashes = stash list
     uncommit = reset --soft HEAD~1
