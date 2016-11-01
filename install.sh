@@ -45,7 +45,9 @@ echo "Installing files..."
 /bin/cp ./gitignore-global ~/.gitignore-global
 /bin/cp ./tmux.conf ~/.tmux.conf
 /bin/cp ./ackrc ~/.ackrc
+set +e # ignore jinja2 import errors
 ./conkyrc.py > ~/.conkyrc
+set -e
 
 /bin/cp ./vimrc ~/.vimrc
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
