@@ -10,22 +10,28 @@ gitget() {
     git_ref=$3
 
     if [ -d $folder ]; then
-        if [ -n $git_ref ]; then
-            echo "Updating to commit $git_ref..."
-            cd $folder
-            git fetch
-            git checkout $git_ref
-        else
-            cd $folder
-            git pull
-        fi
+        echo "Updating from \"${url}\" into \"${folder}\"..."
+        cd $folder
+        git fetch
     else
-        if [ -n "$git_ref" ]; then
-            BOPT=" -b $git_ref "
-        else
-            BOPT=
+        echo "Downloading from $url into $folder..."
+        git clone $url $folder
+        cd $folder
+    fi
+    if [ -n "$git_ref" ]; then
+        found="no"
+        for refname in $(git for-each-ref --format='%(refname)' refs/remotes/origin refs/tags/); do
+            if [ "refs/remotes/origin/$git_ref" == "$refname" ]; then
+                found="yes"
+                echo "Checking out to branch $git_ref"
+                git reset --hard "origin/$git_ref"
+                break
+            fi
+        done
+        if [ "$found" == "no" ]; then
+            echo "Checking out ref \"$git_ref\"."
+            git reset --hard "$git_ref"
         fi
-        git clone $BOPT $url $folder
     fi
 
     cd $DIR
