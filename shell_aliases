@@ -81,6 +81,9 @@ gitconfig-local () {
     fi
 }
 
+# initalias a git repo with an empty commit
+alias git-init='git init && git commit --allow-empty -m "first empty commit"'
+
 # yaml validation
 function yaml-check-py { python -c "import yaml;yaml.load(open('$1','r'),Loader=yaml.CLoader)"; }
 function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
