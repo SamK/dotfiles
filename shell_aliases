@@ -18,7 +18,7 @@ alias sudp='sudo'
 #
 
 # ls
-alias ll='ls -lh'
+alias ll='ls -lhFC'
 alias l='ll'
 alias la='ll -A'
 
