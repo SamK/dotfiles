@@ -82,7 +82,7 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY
 
 # re-read history file each time
-setopt share_history
+setopt NO_SHARE_HISTORY
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
