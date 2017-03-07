@@ -73,8 +73,15 @@ HISTFILE=~/.histfile
 SAVEHIST=10000
 HISTSIZE=$SAVEHIST
 
+# ZSH options index: http://zsh.sourceforge.net/Doc/Release/Options-Index.html
+
+# Save each command’s beginning timestam
 setopt EXTENDED_HISTORY
+
+# immediate write the history
 setopt INC_APPEND_HISTORY
+
+# re-read history file each time
 setopt share_history
 
 # End of lines configured by zsh-newuser-install
