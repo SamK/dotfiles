@@ -5,15 +5,21 @@
 " https://github.com/sd65/MiniVim
 " http://www.oualline.com/vim/10/top_10.html
 
-" 1. General configuration
-" 2. Insertion
-" 2. Display
-" 3. Theme
-" 4. coloration syntaxique
-" 5. Programming
-" 6. Plugins
+" 1. Plugins
+" 2. General configuration
+" 3. Insertion
+" 4. Display
+" 5. Theme
+" 6. coloration syntaxique
+" 7. Programming
 
-" 1. General configuration
+
+" 1. Plugins
+" ------------------------
+
+
+
+" 2. General configuration
 " ------------------------
 
 " Annuel la compat. avec l'ancetre Vi.
@@ -43,7 +49,7 @@ autocmd FileType python,c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
 set showbreak=>\ \ \
 
 
-" 2. Insertion
+" 3. Insertion
 " ------------------------
 
 " tabs + indentation
@@ -58,7 +64,7 @@ set matchtime=3 " ... during this time
 " make backspaces usable
 set backspace=indent,eol,start
 
-" 2. Display
+" 4. Display
 " ------------------------
 
 " display line numbers
@@ -72,7 +78,7 @@ set sidescrolloff=5 " Always keep 5 lines after or before when side scrolling
 set showtabline=2 " Always show tabs
 set laststatus=2 " Always show status bar
 
-" 3. Theme
+" 5. Theme
 " ------------------------
 
 " I want to user Solarized
@@ -81,7 +87,7 @@ let g:solarized_termcolors=16
 set background=dark
 colorscheme solarized
 
-" 4. coloration syntaxique
+" 6. coloration syntaxique
 " ------------------------
 
 syntax enable          " (sy on) syntax highlighting
@@ -97,7 +103,7 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%80v.\+/    " 80
 match OverLength /\%120v.\+/   " 120
 
-" 5. Programming
+" 7. Programming
 " ------------------------
 
 " configure expanding of tabs 
@@ -115,10 +121,4 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" 6. Plugins
-" ------------------------
-
-call plug#begin('~/.vim/plugged')
-Plug 'pearofducks/ansible-vim'
-call plug#end()
-
+" END
