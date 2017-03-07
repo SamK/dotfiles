@@ -17,13 +17,33 @@
 " 1. Plugins
 " ------------------------
 
+" Annuel la compat. avec l'ancetre Vi.
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
+"Enable Vundle https://github.com/VundleVim/Vundle.vim
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
+" Active les comportements specifiques aux types de fichiers comme
+" la syntaxe et l’indentation
+"filetype plugin on
+"filetype indent on
 
 " 2. General configuration
 " ------------------------
-
-" Annuel la compat. avec l'ancetre Vi.
-set nocompatible
 
 " recherche
 set ignorecase " Ignore la casse lors d’une recherche
@@ -91,11 +111,6 @@ colorscheme solarized
 " ------------------------
 
 syntax enable          " (sy on) syntax highlighting
-" Active les comportements specifiques aux types de fichiers comme
-" la syntaxe et l’indentation
-filetype on
-filetype plugin on
-filetype indent on
 
 " Displays characters in red when line lenghts goes over 80
 " http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns

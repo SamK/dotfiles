@@ -50,8 +50,8 @@ set +e # ignore jinja2 import errors
 set -e
 
 /bin/cp ./vimrc ~/.vimrc
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+gitget https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
 
 # https://github.com/seebi/dircolors-solarized
 /bin/cp dircolors.ansi-dark ~/.dircolors
