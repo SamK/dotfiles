@@ -130,12 +130,14 @@ autoload -U colors && colors
 
 # do some stuff...
 setopt PROMPT_SUBST
-setopt promptsubst
 setopt promptpercent
 
 # liquidprompt:
 # Only load Liquid Prompt in interactive shells
 [ -d ~/.zsh/liquidprompt ] && [[ $- = *i* ]] && source ~/.zsh/liquidprompt/liquidprompt
+
+# This is required for the [VI] tag and must be after liquidprompt
+setopt promptsubst
 
 # display current mode in zsh (vi style)
 #
