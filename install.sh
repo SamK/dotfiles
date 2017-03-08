@@ -60,7 +60,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 /bin/cp ./zshrc ~/.zshrc
 
-gitget https://github.com/nojhan/liquidprompt.git ~/.zsh/liquidprompt b53e53b
+gitget https://github.com/nojhan/liquidprompt.git ~/.zsh/liquidprompt develop
 
 curl --silent --show-error https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.zsh > ~/.zsh/_git
 curl --silent --show-error https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.bash > ~/.zsh/git-completion.bash
