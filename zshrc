@@ -94,7 +94,6 @@ autoload -U select-word-style
 select-word-style bash
 
 autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 
 # menu selection
@@ -196,3 +195,7 @@ preexec () {
 # auto completion
 fpath=(~/.zsh/zsh-completions/src $fpath)
 
+# compinit must be executed after definition of fpath
+compinit
+
+### EOF ###
