@@ -94,11 +94,10 @@ autoload -U select-word-style
 select-word-style bash
 
 autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 
 # menu selection
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu yes select
 
 # ssh known_hosts completion: http://www.masterzen.fr/2009/04/19/in-love-with-zsh-part-one/
 # The directive HashKnownHosts must be No
@@ -194,5 +193,9 @@ preexec () {
 }
 
 # auto completion
-fpath=(~/.zsh $fpath)
+fpath=(~/.zsh/zsh-completions/src $fpath)
 
+# compinit must be executed after definition of fpath
+compinit
+
+### EOF ###

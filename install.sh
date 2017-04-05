@@ -62,8 +62,8 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 gitget https://github.com/nojhan/liquidprompt.git ~/.zsh/liquidprompt develop
 
-curl --silent --show-error https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.zsh > ~/.zsh/_git
-curl --silent --show-error https://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.bash > ~/.zsh/git-completion.bash
+# A lot of completion features for ZSH
+gitget https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
 
 # Vim
 if [ -d solarized ]; then
