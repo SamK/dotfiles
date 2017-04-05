@@ -98,7 +98,7 @@ compinit
 # End of lines added by compinstall
 
 # menu selection
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu yes select
 
 # ssh known_hosts completion: http://www.masterzen.fr/2009/04/19/in-love-with-zsh-part-one/
 # The directive HashKnownHosts must be No
