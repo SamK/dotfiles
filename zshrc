@@ -194,5 +194,5 @@ preexec () {
 }
 
 # auto completion
-fpath=(~/.zsh $fpath)
+fpath=(~/.zsh/zsh-completions/src ~/.zsh $fpath)
 
