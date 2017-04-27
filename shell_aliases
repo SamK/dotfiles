@@ -81,6 +81,8 @@ gitconfig-local () {
     fi
 }
 
+# typo correction
+alias qgit='git'
 # initalias a git repo with an empty commit
 alias git-init='git init && git commit --allow-empty -m "first empty commit"'
 # clean a string to make it compatible with a branch name
