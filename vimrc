@@ -58,6 +58,9 @@ set matchtime=3 " ... during this time
 " make backspaces usable
 set backspace=indent,eol,start
 
+" map key F10 for paste toggle
+set pastetoggle=<F10>
+
 " 2. Display
 " ------------------------
 
