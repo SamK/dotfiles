@@ -122,9 +122,6 @@ autocmd BufWinLeave * call clearmatches()
 " 6. Plugins
 " ------------------------
 
-call plug#begin('~/.vim/plugged')
-Plug 'pearofducks/ansible-vim'
-call plug#end()
-
+" other
 :set list
 :set listchars=tab:>-,trail:~,extends:>,precedes:<
