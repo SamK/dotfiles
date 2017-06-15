@@ -122,3 +122,5 @@ call plug#begin('~/.vim/plugged')
 Plug 'pearofducks/ansible-vim'
 call plug#end()
 
+:set list
+:set listchars=tab:>-,trail:~,extends:>,precedes:<
