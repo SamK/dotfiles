@@ -58,6 +58,9 @@ set matchtime=3 " ... during this time
 " make backspaces usable
 set backspace=indent,eol,start
 
+" map key F10 for paste toggle
+set pastetoggle=<F10>
+
 " 2. Display
 " ------------------------
 
@@ -102,6 +105,7 @@ match OverLength /\%120v.\+/   " 120
 
 " configure expanding of tabs 
 au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.pp set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 
 " folding
 set foldmethod=indent
@@ -118,7 +122,6 @@ autocmd BufWinLeave * call clearmatches()
 " 6. Plugins
 " ------------------------
 
-call plug#begin('~/.vim/plugged')
-Plug 'pearofducks/ansible-vim'
-call plug#end()
-
+" other
+:set list
+:set listchars=tab:>-,trail:~,extends:>,precedes:<
