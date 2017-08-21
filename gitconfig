@@ -27,6 +27,10 @@
     # historic graph of last 10 commits
     graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
 
+    branch-todo =  branch  --sort=-committerdate --no-merged
+    branch-todel =  branch  --sort=-committerdate --merged
+    branch-bydate = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(author    >  \name) (%(color:green)%(committerdate:relative)%(color:reset))'
+
     # Human commands
     tags = tag -n9
     branches = branch -a
