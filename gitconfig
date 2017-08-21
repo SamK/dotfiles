@@ -64,6 +64,8 @@
     textconv = odf2prettytxt
     # http://stackoverflow.com/questions/28017249/what-does-diff-mnemonicprefix-do
     mnemonicprefix = true
+[diff]
+    algorithm = histogram
 # 1.7.10+
 [include]
     path = .gitconfig.local
