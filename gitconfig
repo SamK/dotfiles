@@ -29,7 +29,7 @@
 
     branch-todo =  branch  --sort=-committerdate --no-merged
     branch-todel =  branch  --sort=-committerdate --merged
-    branch-bydate = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(author    >  \name) (%(color:green)%(committerdate:relative)%(color:reset))'
+    branch-bydate = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorame) (%(color:green)%(committerdate:relative)%(color:reset))'
 
     # Human commands
     tags = tag -n9
