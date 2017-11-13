@@ -10,7 +10,9 @@ export EDITOR=vi
 # disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
 export KEYTIMEOUT=10
 
-# options
+# disable hashing
+# https://unix.stackexchange.com/questions/5609/how-do-i-clear-bashs-cache-of-paths-to-executables/218681#218681
+set +h
 
 # do word splitting for unquoted parameter expansions
 # source: http://stackoverflow.com/a/6715447/238913
