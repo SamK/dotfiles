@@ -46,6 +46,7 @@
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
     refresh-remote-branches = "!for r in $(git remote) ; do git remote update $r --prune ; done"
+    fetch-prune = fetch --prune
 
     # Faster typing
     st = status
