@@ -107,7 +107,6 @@ alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
 
 alias stracenet="strace -f -e trace=network -s 10000"
 alias resolveip="resolveip -s"
-alias dig="dig +noadflag"
 
 #
 # 4. color support
