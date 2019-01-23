@@ -19,9 +19,9 @@ alias sudp='sudo'
 
 # ls
 alias ll='ls -lhF'
-alias l='ll'
-alias la='ll -A'
 alias tree='LC_COLLATE=C tree --dirsfirst -F'
+alias l='ls --color=auto -hlF --group-directories-first'
+alias la='LC_COLLATE="C" l -A'
 
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
