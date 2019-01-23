@@ -66,7 +66,7 @@ if [ -f ~/.shell_aliases ]; then
 fi
 
 if [ -f ~/.shell_aliases.local ]; then
-    . ~/.shell_aliases
+    . ~/.shell_aliases.local
 fi
 
 if [ -f ~/.bash_aliases ]; then

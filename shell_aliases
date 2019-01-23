@@ -85,7 +85,7 @@ gitconfig-local () {
 # typo correction
 alias qgit='git'
 alias ggit='git'
-alias gti ='git'
+alias gti='git'
 # initalias a git repo with an empty commit
 alias git-init='git init && git commit --allow-empty -m "First empty commit"'
 alias gap="git add --patch"
