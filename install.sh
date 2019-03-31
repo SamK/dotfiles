@@ -62,6 +62,9 @@ gitget https://github.com/nojhan/liquidprompt.git ~/.zsh/liquidprompt develop
 # A lot of completion features for ZSH
 gitget https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
 
+curl https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
+> ~/.zsh/zsh-completions/src/_borg
+
 # Vim
 if [ -d solarized ]; then
     echo "Updating solarized..."
