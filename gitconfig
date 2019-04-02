@@ -89,5 +89,6 @@
     upstream = cyan
     # never seen
     plain    = reverse cyan
-
+[grep]
+    lineNumber = true
 ### EOF ###
