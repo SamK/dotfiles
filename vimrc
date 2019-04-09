@@ -108,8 +108,8 @@ au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.pp set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 
 " folding
-set foldmethod=indent
-set foldnestmax=2
+"set foldmethod=indent
+"set foldnestmax=2
 
 " Highlight trailing spaces http://stackoverflow.com/a/13795287
 highlight ExtraWhitespace ctermbg=red guibg=red
