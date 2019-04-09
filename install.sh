@@ -49,9 +49,6 @@ set +e # ignore jinja2 import errors
 ./conkyrc.py > ~/.conkyrc
 set -e
 
-/bin/cp ./vimrc ~/.vimrc
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # https://github.com/seebi/dircolors-solarized
 /bin/cp dircolors.ansi-dark ~/.dircolors
@@ -69,6 +66,14 @@ curl https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_compl
 > ~/.zsh/zsh-completions/src/_borg
 
 # Vim
+
+/bin/cp ./vimrc ~/.vimrc
+mkdir -p ~/.vim/
+
+# VIM-Plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Vim solarized
 if [ -d solarized ]; then
     echo "Updating solarized..."
     cd solarized
@@ -78,8 +83,6 @@ else
     echo "Installing solarized..."
     git clone https://github.com/altercation/solarized.git
 fi
-
-mkdir -p ~/.vim/
 /bin/cp -a ./solarized/vim-colors-solarized/colors ~/.vim/
 
 echo "Setup completed."
