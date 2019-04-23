@@ -131,7 +131,7 @@ Plug 'pearofducks/ansible-vim'
 "Plug 'chase/vim-ansible-yaml'
 " Python syntax highlight
 Plug 'hdima/python-syntax'
-Plug 'rodjek/vim-puppet'
+Plug 'samk/vim-puppet', { 'branch': 'colon-is-not-a-keyword' }
 call plug#end()
 
 :set list
