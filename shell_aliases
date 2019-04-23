@@ -102,6 +102,7 @@ alias git-name-branch="sed -r -e 's/[^A-Za-z0-9/\-]/ /g' -e 's/\s+/_/g' -e 's/^[
 function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
 # reads stdin
 alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
+alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
 
 # network 
 

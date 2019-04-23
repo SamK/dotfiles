@@ -106,10 +106,12 @@ match OverLength /\%120v.\+/   " 120
 " configure expanding of tabs 
 au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.pp set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
+au BufRead,BufNewFile *.{yaml,yml} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
+"au BufRead,BufNewFile {Jenkinsfile,*.jenkinsfile,*.jenkins,*.jk} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 
 " folding
-set foldmethod=indent
-set foldnestmax=2
+"set foldmethod=indent
+"set foldnestmax=2
 
 " Highlight trailing spaces http://stackoverflow.com/a/13795287
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -122,6 +124,15 @@ autocmd BufWinLeave * call clearmatches()
 " 6. Plugins
 " ------------------------
 
-" other
+call plug#begin('~/.vim/plugged')
+" Ansible
+Plug 'pearofducks/ansible-vim'
+" Ansible alternative
+"Plug 'chase/vim-ansible-yaml'
+" Python syntax highlight
+Plug 'hdima/python-syntax'
+Plug 'rodjek/vim-puppet'
+call plug#end()
+
 :set list
 :set listchars=tab:>-,trail:~,extends:>,precedes:<

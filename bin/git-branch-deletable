@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+BRANCH=$1
+E=0
+
+if [ -z "$BRANCH" ];then
+  echo "you specify 1 branch please2"
+  exit 127
+fi
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+CURRENT_BRANCH_ID=$(git show-ref -s refs/heads/${CURRENT_BRANCH})
+TMP_BRANCH="temp/git-branch-deletable"
+
+# Move to temp branch
+git checkout --quiet -b $TMP_BRANCH $BRANCH
+
+# Try to rebase temp branch
+if ! git rebase --quiet $CURRENT_BRANCH 2>/dev/null > /dev/null; then
+  git rebase --abort
+fi
+BRANCH_ID=$(git show-ref -s refs/heads/${TMP_BRANCH})
+
+# Move back
+git checkout --quiet $CURRENT_BRANCH
+
+if [ "${CURRENT_BRANCH_ID}" = "${BRANCH_ID}" ];then
+  echo "You can delete the branch '$BRANCH'."
+  echo
+  echo "These commits are part of the current branch in '$CURRENT_BRANCH':"
+  git cherry -v $BRANCH $CURRENT_BRANCH | grep '^-'
+
+else
+  echo "NO: The branch \"${BRANCH}\" is not part of your current branch!"
+  E=1
+fi
+
+git branch --quiet -D $TMP_BRANCH
+
+exit $E
