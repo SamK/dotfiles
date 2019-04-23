@@ -106,6 +106,7 @@ match OverLength /\%120v.\+/   " 120
 " configure expanding of tabs 
 au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.pp set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
+au BufRead,BufNewFile *.{yaml,yml} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 
 " folding
 "set foldmethod=indent
