@@ -124,7 +124,13 @@ autocmd BufWinLeave * call clearmatches()
 " ------------------------
 
 call plug#begin('~/.vim/plugged')
+" Ansible
 Plug 'pearofducks/ansible-vim'
+" Ansible alternative
+"Plug 'chase/vim-ansible-yaml'
+" Python syntax highlight
+Plug 'hdima/python-syntax'
+Plug 'rodjek/vim-puppet'
 call plug#end()
 
 :set list
