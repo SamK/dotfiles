@@ -69,7 +69,7 @@ gitget https://gist.github.com/$GIST.git ~/.local/bin/$GIST
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 /bin/cp ./zshrc ~/.zshrc
 
-gitget https://github.com/nojhan/liquidprompt.git ~/.zsh/liquidprompt develop
+gitget https://github.com/SamK/liquidprompt.git ~/.zsh/liquidprompt fix/do-not-redeclare
 
 # A lot of completion features for ZSH
 gitget https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
