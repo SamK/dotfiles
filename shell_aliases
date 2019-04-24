@@ -82,7 +82,8 @@ gitconfig-local () {
     fi
 }
 
-# typo correction
+# Git aliases
+alias g='git'
 alias qgit='git'
 alias ggit='git'
 alias gti='git'
