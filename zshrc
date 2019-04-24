@@ -133,9 +133,29 @@ autoload -U colors && colors
 setopt PROMPT_SUBST
 setopt promptpercent
 
-# liquidprompt:
-# Only load Liquid Prompt in interactive shells
-[ -d ~/.zsh/liquidprompt ] && [[ $- = *i* ]] && source ~/.zsh/liquidprompt/liquidprompt
+# Oh my ZSH
+export ZSH="$HOME/.zsh/oh-my-zsh"
+plugins=(
+    ansible
+    branch
+    git
+    tmux
+    vi-mode
+)
+
+# Required feautres of theme:
+# 1. CVS status
+# 2. exit code
+# 3. vi status
+# 4. tmux status
+ZSH_THEME="rkj-repos"
+ZSH_THEME="amuse"
+ZSH_THEME="bira" # no exit code
+ZSH_THEME=bureau
+ZSH_THEME=avit  # pas mal mais 3 lignes
+ZSH_THEME=flazz
+
+source $ZSH/oh-my-zsh.sh
 
 # This is required for the [VI] tag and must be after liquidprompt
 setopt promptsubst
