@@ -21,7 +21,7 @@ ENABLE_SH_WORD_SPLIT="yes"
 [[ "$ENABLE_SH_WORD_SPLIT" == "yes" ]] && setopt SH_WORD_SPLIT
 
 # The same for Bash "set -o vi"
-bindkey -v
+#bindkey -v
 
 bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
@@ -88,7 +88,7 @@ setopt NO_SHARE_HISTORY
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/skrieg/.zshrc'
+#zstyle :compinstall filename '/home/skrieg/.zshrc'
 
 setopt interactivecomments
 
@@ -127,7 +127,7 @@ function loadavg1 {
 
 # valid colors: Red, Blue, Green, Cyan, Yellow, Magenta, Black 
 # colors: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#SEC59
-autoload -U colors && colors
+#autoload -U colors && colors
 
 # do some stuff...
 setopt PROMPT_SUBST
@@ -158,7 +158,7 @@ ZSH_THEME=flazz
 source $ZSH/oh-my-zsh.sh
 
 # This is required for the [VI] tag and must be after liquidprompt
-setopt promptsubst
+#setopt promptsubst
 
 # display current mode in zsh (vi style)
 #
@@ -167,18 +167,18 @@ vim_ins_mode="[INS]"
 vim_cmd_mode="[CMD]"
 vim_mode=$vim_ins_mode
 
-function zle-keymap-select {
+function zle-keymap-select_ {
     vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
     RPROMPT='${vim_mode}'
     zle reset-prompt
 }
-zle -N zle-keymap-select
+#zle -N zle-keymap-select
 
-function zle-line-finish {
+function zle-line-finish_ {
     vim_mode=$vim_ins_mode
     RPROMPT='${vim_mode}'
 }
-zle -N zle-line-finish
+#zle -N zle-line-finish
 
 # return length of a string including only printable chars
 strlen () {
@@ -210,9 +210,9 @@ show_exec_date() {
     fi
 }
 
-preexec () {
-    show_exec_date "$@"
-}
+#preexec () {
+#    show_exec_date "$@"
+#}
 
 # auto completion
 fpath=(~/.zsh/zsh-completions/src $fpath)
