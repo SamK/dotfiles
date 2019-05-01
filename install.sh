@@ -20,6 +20,7 @@ gitget() {
     fi
     if [ -n "$git_ref" ]; then
         found="no"
+        # we are looking for a branch name
         for refname in $(git for-each-ref --format='%(refname)' refs/remotes/origin refs/tags/); do
             if [ "refs/remotes/origin/$git_ref" == "$refname" ]; then
                 found="yes"
@@ -28,6 +29,7 @@ gitget() {
                 break
             fi
         done
+        # branch name not found, this must be a commit hash
         if [ "$found" == "no" ]; then
             echo "Checking out ref \"$git_ref\"."
             git reset --hard "$git_ref"
