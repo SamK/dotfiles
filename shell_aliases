@@ -27,6 +27,7 @@ alias la='LC_COLLATE="C" l -A'
 function cl() { cd "$@" && /bin/ls -lh --color ;}
 
 alias tmux='TERM=xterm-256color /usr/bin/tmux'
+alias tmux-reattach='tmux a -d -t'
 alias ack='ack-grep'
 
 # find
