@@ -94,7 +94,7 @@ alias git-init='git init && git commit --allow-empty -m "First empty commit"'
 alias git-branch='git rev-parse --abbrev-ref HEAD'
 alias gapa="git add --patch"
 alias gl="git lgl"
-# clean a string to make it compatible with a branch name
+# reads a string from stdin and make it compatible with a branch name
 alias git-name-branch="sed -r -e 's/[^A-Za-z0-9/\-]/ /g' -e 's/\s+/_/g' -e 's/^[^A-Za-z0-9]+//g' -e 's/[^a-zA-Z0-9]+$//g'"
                                  # remplacer les caracteres mal aimés par des espaces
                                                             # les espaces deviennent des underscore
