@@ -90,6 +90,8 @@ alias ggit='git'
 alias gti='git'
 # initalias a git repo with an empty commit
 alias git-init='git init && git commit --allow-empty -m "First empty commit"'
+# display the current branch name
+alias git-branch='git rev-parse --abbrev-ref HEAD'
 alias gapa="git add --patch"
 alias gl="git lgl"
 # clean a string to make it compatible with a branch name
