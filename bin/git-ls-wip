@@ -1,0 +1,48 @@
+#!/bin/bash
+
+function current_ref(){
+    ref_name=$(git symbolic-ref -q HEAD)
+    R=$?
+    if [ "$R" == "0" ]; then
+        echo "$ref_name"
+    else
+        git rev-parse --short HEAD
+    fi
+}
+
+function is_wip(){
+
+    if [ ! -d .git ]; then
+        return
+    fi
+
+    local messages=()
+    local ref
+    ref=$(current_ref)
+    ref=${ref##refs/heads/}
+
+    if [ "$ref" != "master" ]; then
+        messages+=("HEAD is on \"$ref\"")
+    fi
+
+    uncommited_count=$(git status --porcelain | wc -l)
+    if [ "$uncommited_count" != "0" ]; then
+        messages+=("$uncommited_count uncommited files")
+    fi
+
+    messages_count=${#messages[@]}
+    if [ "$messages_count" != "0" ]; then
+        echo "$repo"
+        for i in "${messages[@]}"; do
+            echo "    $i"
+        done
+    fi
+}
+
+for repo in *; do
+    if [ -d "$repo" ]; then
+        pushd "$repo" > /dev/null
+        is_wip
+        popd > /dev/null
+    fi
+done
