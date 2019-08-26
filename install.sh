@@ -54,11 +54,6 @@ set -e
 mkdir -p ~/.local/bin
 /bin/cp ./bin/* ~/.local/bin
 
-GIST="b024758c51c66b421651c1aa112b4950"
-CMD="git-status-all"
-gitget https://gist.github.com/$GIST.git ~/.local/bin/$GIST
-[ -f ~/.local/bin/$CMD ] || ln -s $GIST/$CMD ~/.local/bin/$CMD
-
 GIST="eef091d73879f8d0d5661efc834e69dc"
 CMD="git-fetch-all"
 gitget https://gist.github.com/$GIST.git ~/.local/bin/$GIST
