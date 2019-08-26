@@ -1,13 +1,11 @@
 #!/bin/bash
 
-function current_ref(){
-    ref_name=$(git symbolic-ref -q HEAD)
-    R=$?
-    if [ "$R" == "0" ]; then
-        echo "$ref_name"
-    else
-        git rev-parse --short HEAD
-    fi
+function branch_name(){
+    # determine the branch name (http://stackoverflow.com/a/1593487)
+    local branch
+    branch="$(git symbolic-ref HEAD 2>/dev/null)" || branch_name=$(git rev-parse --short HEAD)
+    branch=${branch##refs/heads/}
+    echo $branch
 }
 
 function is_wip(){
@@ -18,16 +16,20 @@ function is_wip(){
 
     local messages=()
     local ref
-    ref=$(current_ref)
-    ref=${ref##refs/heads/}
+    ref=$(branch_name)
 
     if [ "$ref" != "master" ]; then
-        messages+=("HEAD is on \"$ref\"")
+        messages+=("Current branch is \"$ref\"")
     fi
 
     uncommited_count=$(git status --porcelain | wc -l)
     if [ "$uncommited_count" != "0" ]; then
         messages+=("$uncommited_count uncommited files")
+    fi
+
+    unmerged_count=$(git branch --no-merged | wc -l)
+    if [ "$uncommited_count" != "0" ]; then
+        messages+=("$uncommited_count unmerged branches")
     fi
 
     messages_count=${#messages[@]}
