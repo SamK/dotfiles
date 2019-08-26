@@ -3,6 +3,7 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CP="/bin/cp -av"
 
 gitget() {
     url=$1
@@ -41,18 +42,19 @@ gitget() {
 
 echo "Installing files..."
 
-/bin/cp ./shell_aliases ~/.shell_aliases
-/bin/cp ./bashrc ~/.bashrc
-/bin/cp ./gitconfig ~/.gitconfig
-/bin/cp ./gitignore-global ~/.gitignore-global
-/bin/cp ./tmux.conf ~/.tmux.conf
-/bin/cp ./ackrc ~/.ackrc
+$CP ./shell_aliases ~/.shell_aliases
+$CP ./bashrc ~/.bashrc
+$CP ./gitconfig ~/.gitconfig
+$CP ./gitignore-global ~/.gitignore-global
+$CP ./tmux.conf ~/.tmux.conf
+$CP ./ackrc ~/.ackrc
+
 set +e # ignore jinja2 import errors
 ./conkyrc.py > ~/.conkyrc
 set -e
 
 mkdir -p ~/.local/bin
-/bin/cp ./bin/* ~/.local/bin
+$CP ./bin/* ~/.local/bin
 
 GIST="eef091d73879f8d0d5661efc834e69dc"
 CMD="git-fetch-all"
@@ -64,7 +66,7 @@ gitget https://gist.github.com/$GIST.git ~/.local/bin/$GIST
 
 # zsh
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
-/bin/cp ./zshrc ~/.zshrc
+$CP ./zshrc ~/.zshrc
 
 gitget https://github.com/SamK/liquidprompt.git ~/.zsh/liquidprompt fix/do-not-redeclare
 
@@ -76,7 +78,7 @@ curl https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_compl
 
 # Vim
 
-/bin/cp ./vimrc ~/.vimrc
+$CP ./vimrc ~/.vimrc
 mkdir -p ~/.vim/
 
 
