@@ -40,6 +40,16 @@ gitget() {
     cd $DIR
 }
 
+function gist() {
+    set -x
+    cmd=$1
+    gist_id=$2
+    echo Downloading Gist $gist_id as $cmd...
+    gitget https://gist.github.com/$gist_id.git ~/.local/bin/$gist_id
+    [ -f ~/.local/bin/$cmd ] || ln -s $gist_id/$cmd ~/.local/bin/$cmd
+
+}
+
 echo "Installing files..."
 
 $CP ./shell_aliases ~/.shell_aliases
@@ -56,10 +66,7 @@ set -e
 mkdir -p ~/.local/bin
 $CP ./bin/* ~/.local/bin
 
-GIST="eef091d73879f8d0d5661efc834e69dc"
-CMD="git-fetch-all"
-gitget https://gist.github.com/$GIST.git ~/.local/bin/$GIST
-[ -f ~/.local/bin/$CMD ] || ln -s $GIST/$CMD ~/.local/bin/$CMD
+gist "git-fetch-all" "eef091d73879f8d0d5661efc834e69dc"
 
 # https://github.com/seebi/dircolors-solarized
 /bin/cp dircolors.ansi-dark ~/.dircolors
