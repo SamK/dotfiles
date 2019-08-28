@@ -1,0 +1,84 @@
+#!/bin/bash
+show_help(){
+    cat <<EOF
+    git-branches-author: List branches and the related author
+
+    Useful to figure out who in your team is not cleaning old branches.
+
+    Options:
+    -r         reverse the order
+    -h,--help  show this help
+    --no-pager no pager
+EOF
+}
+
+# Constants
+###########
+
+FORMAT='%ci %h %Cblue%d%Creset %Cgreen%cn%Creset (%s)'
+# to figure out the prefix: for-each-ref | grep <commit>
+IGNORE="refs/remotes/origin/hold/ refs/heads/hold/"
+
+# Variables
+###########
+SORT_BY='-authordate'
+NO_PAGER="no"
+
+# Parse arguments
+#################
+
+for arg in "$@"; do
+    case "${arg}" in
+    "-r")
+        SORT_BY='authordate'
+        ;;
+    "--no-pager")
+        NO_PAGER=yes
+        ;;
+    "-h" | "--help")
+        show_help
+        exit 0
+        ;;
+    *)
+        >&2 echo "unknown argument: $arg"
+        exit 127
+    esac
+done
+
+function branches(){
+    for branch in $(git for-each-ref --format '%(refname)' --sort=${SORT_BY} refs/heads refs/remotes); do
+        ignored="no"
+        if [ -n "$IGNORE" ]; then
+            for ignore in $IGNORE; do
+                if [[ "$branch" == ${ignore}* ]]; then
+                    ignored=yes
+                    break
+                fi
+            done
+        fi
+        [ "$ignored" == "no" ] && echo $branch
+    done
+}
+
+function show() {
+    local commit
+    commit=$1
+    git --no-pager show $commit --color --no-patch --format="${FORMAT}"
+}
+
+function main(){
+previous=""
+for branch in $(branches); do
+    commit=$(git show $branch --format="%H")
+    if [ "$commit" != "$previous" ]; then
+        show $commit
+    fi
+    previous=$commit
+done
+}
+
+if [ "$NO_PAGER" == "yes" ]; then
+    main
+else
+    main | less
+fi
