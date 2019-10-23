@@ -1,1 +1,4 @@
-solarized
+tmp
+.conkyrc
+.zsh/liquidprompt
+.zsh/zsh-completions

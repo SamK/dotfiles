@@ -3,6 +3,55 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+EXIT_CODE=0
+
+error() {
+    MESSAGE="$*"
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    echo -e "${RED} ERROR: ${MESSAGE}${NC}"
+    EXIT_CODE=63
+}
+
+create_dotlink() {
+    FILE=$1
+    SYMLINK=$HOME/$1
+    TARGET="$DIR/$1"
+
+    # Checking repo health
+    if [ ! -e $FILE ]; then
+        error "\"$FILE\" does not exist in you repo?!"
+        return 1
+    fi
+
+    # Checking symlink health
+    if [ -f $SYMLINK ] && [ ! -L $SYMLINK ]; then
+        if ! diff -qr "$SYMLINK" "$TARGET" > /dev/null ; then
+            echo "WARNING: Skipping locally edited file: \"$SYMLINK\""
+            return 0
+        fi
+    fi
+
+    mime=$(file --no-dereference  --mime-type  --brief $SYMLINK)
+
+    if [ "$mime" = "inode/directory" ]; then
+        error "ERROR creating $SYMLINK: I am not replacing a folder"
+        return 1
+    fi
+
+    # Install symlink
+    if [ "$mime" != "inode/symlink" ]; then
+        if [ -f $SYMLINK ]; then
+            echo "Forcing creation of $SYMLINK"
+            /bin/rm  "$SYMLINK"
+        fi
+        ln --verbose -s "$TARGET" "$SYMLINK"
+    else
+        echo $SYMLINK already installed
+    fi
+
+}
+
 CP="/bin/cp -av"
 
 # This is a nice title
@@ -52,68 +101,72 @@ gitget() {
     cd $DIR
 }
 
-# Clone a Gist file (from Github") and put it as a command in the .local/bin directory
+# Clone a Gist file (from Github") into the tmp directory
 # Arguments:
-# 1. The target command name
-# 2. The Gist ID
+# - The Gist ID
 function gist() {
-    cmd=$1
-    gist_id=$2
-    echo Downloading Gist $gist_id as $cmd...
-    gitget https://gist.github.com/$gist_id.git ~/.local/bin/$gist_id
-    [ -f ~/.local/bin/$cmd ] || ln -s $gist_id/$cmd ~/.local/bin/$cmd
+    gist_id=$1
+    if [ -n "$2" ]; then
+        echo "wtf gist \"$2\" ( $* )"
+        return 1
+    fi
 
+    echo Downloading Gist $gist_id
+    mkdir -p ./tmp
+    gitget https://gist.github.com/$gist_id.git ./tmp/$gist_id
 }
 
 title "Installing dot files..."
 
-$CP ./shell_aliases ~/.shell_aliases
-$CP ./bashrc ~/.bashrc
-$CP ./gitconfig ~/.gitconfig
-$CP ./gitignore-global ~/.gitignore-global
-$CP ./tmux.conf ~/.tmux.conf
-$CP ./ackrc ~/.ackrc
-# For nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
-$CP dircolors.ansi-dark ~/.dircolors
-set +e # ignore jinja2 import errors
-./conkyrc.py > ~/.conkyrc
-set -e
+create_dotlink .shell_aliases
+create_dotlink .bashrc
+create_dotlink .gitconfig
+create_dotlink .gitignore-global
+create_dotlink .tmux.conf
+create_dotlink .ackrc
+## For nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
+create_dotlink .dircolors
+#set +e # ignore jinja2 import errors
+./conkyrc.py > .conkyrc
+create_dotlink .conkyrc
 
 title "Install files in .local/bin"
 
 mkdir -p ~/.local/bin
-$CP ./bin/* ~/.local/bin
+create_dotlink .local/bin/git-branch-deletable
+create_dotlink .local/bin/git-branches-authors
+create_dotlink .local/bin/git-find-md5
+create_dotlink .local/bin/git-ls-wip
 
-gist "git-fetch-all" "eef091d73879f8d0d5661efc834e69dc"
+set -e
+
+gist "eef091d73879f8d0d5661efc834e69dc"
+create_dotlink .local/bin/git-fetch-all
 
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
-$CP ./zshrc ~/.zshrc
+create_dotlink .zshrc
 
 # LiquidPrompt
-gitget https://github.com/SamK/liquidprompt.git ~/.zsh/liquidprompt fix/do-not-redeclare
+gitget https://github.com/SamK/liquidprompt.git .zsh/liquidprompt fix/do-not-redeclare
+create_dotlink .zsh/liquidprompt
 
 # A lot of completion features for ZSH
-gitget https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
+gitget https://github.com/zsh-users/zsh-completions.git .zsh/zsh-completions
+create_dotlink .zsh/zsh-completions
 
-curl https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
-> ~/.zsh/zsh-completions/src/_borg
+curl --show-error --silent https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
+> .zsh/zsh-completions/src/_borg
 
 title Vim
-$CP ./vimrc ~/.vimrc
+
+create_dotlink .vimrc
 mkdir -p ~/.vim/
 
 # TODO: tmpdir
-if [ -d solarized ]; then
-    echo "Updating solarized theme for Vim..."
-    cd solarized
-    git pull
-    cd ..
-else
-    echo "Installing solarized theme for Vim..."
-    git clone https://github.com/altercation/solarized.git
-fi
-$CP ./solarized/vim-colors-solarized/colors ~/.vim/
+echo "Installing solarized theme for Vim..."
+gitget https://github.com/altercation/solarized.git tmp/solarized
+create_dotlink .vim/colors
 
 echo VIM-Plug...
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -121,3 +174,5 @@ echo Installing Vim plugins...
 vim +PlugInstall +qall
 
 echo "Setup completed."
+
+exit $EXIT_CODE
