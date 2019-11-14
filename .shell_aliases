@@ -112,6 +112,7 @@ alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_loa
 
 alias stracenet="strace -f -e trace=network -s 10000"
 alias resolveip="resolveip -s"
+alias digs="dig +short"
 
 #
 # 4. color support
