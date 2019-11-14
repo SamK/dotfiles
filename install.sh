@@ -13,14 +13,13 @@ error() {
     EXIT_CODE=63
 }
 
-create_dotlink() {
-    FILE=$1
-    SYMLINK=$HOME/$1
-    TARGET="$DIR/$1"
+create_symlink() {
+    TARGET="$1"
+    SYMLINK="$2"
 
     # Checking repo health
-    if [ ! -e $FILE ]; then
-        error "\"$FILE\" does not exist in you repo?!"
+    if [ ! -e "$TARGET" ]; then
+        error "\"$TARGET\" does not exist ?!"
         return 1
     fi
 
@@ -50,6 +49,13 @@ create_dotlink() {
         echo $SYMLINK already installed
     fi
 
+}
+
+
+create_dotlink() {
+    SYMLINK=$HOME/$1
+    TARGET="$DIR/$1"
+    create_symlink "$TARGET" "$SYMLINK"
 }
 
 CP="/bin/cp -av"
@@ -142,6 +148,14 @@ set -e
 
 gist "eef091d73879f8d0d5661efc834e69dc"
 create_dotlink .local/bin/git-fetch-all
+
+# git-wtf
+gitget https://github.com/DanielVartanov/willgit.git ./tmp/willgit
+create_symlink $PWD/tmp/willgit/bin/git-wtf ~/.local/bin/git-wtf
+
+# git-when-merged
+gitget https://github.com/mhagger/git-when-merged.git ./tmp/git-when-merged
+create_symlink $PWD/tmp/git-when-merged/bin/git-when-merged ~/.local/bin/git-when-merged
 
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
