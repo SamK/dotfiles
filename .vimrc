@@ -58,6 +58,9 @@ set matchtime=3 " ... during this time
 " make backspaces usable
 set backspace=indent,eol,start
 
+" auto comment, voir ":help fo-table" pour la doc
+set formatoptions=tcqr
+
 " map key F10 for paste toggle
 set pastetoggle=<F10>
 
