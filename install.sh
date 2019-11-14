@@ -153,6 +153,10 @@ create_dotlink .local/bin/git-fetch-all
 gitget https://github.com/DanielVartanov/willgit.git ./tmp/willgit
 create_symlink $PWD/tmp/willgit/bin/git-wtf ~/.local/bin/git-wtf
 
+# git-when-merged
+gitget https://github.com/mhagger/git-when-merged.git ./tmp/git-when-merged
+create_symlink $PWD/tmp/git-when-merged/bin/git-when-merged ~/.local/bin/git-when-merged
+
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 create_dotlink .zshrc
