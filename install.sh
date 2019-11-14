@@ -149,6 +149,10 @@ set -e
 gist "eef091d73879f8d0d5661efc834e69dc"
 create_dotlink .local/bin/git-fetch-all
 
+# git-wtf
+gitget https://github.com/DanielVartanov/willgit.git ./tmp/willgit
+create_symlink $PWD/tmp/willgit/bin/git-wtf ~/.local/bin/git-wtf
+
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 create_dotlink .zshrc
