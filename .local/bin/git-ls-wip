@@ -31,7 +31,7 @@ function is_wip(){
     local ref
     ref=$(branch_name)
 
-    if [ "$ref" != "master" ]; then
+    if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
         messages+=("Current branch is \"$ref\"")
     fi
 
