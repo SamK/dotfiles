@@ -36,6 +36,7 @@
 # Logs and databases #
 ######################
 *.log
+*.retry
 
 # OS generated files #
 ######################
