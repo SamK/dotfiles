@@ -41,8 +41,8 @@ function is_wip(){
     fi
 
     unmerged_count=$(git branch --no-merged | wc -l)
-    if [ "$uncommited_count" != "0" ]; then
-        messages+=("$uncommited_count unmerged branches")
+    if [ "$unmerged_count" != "0" ]; then
+        messages+=("$unmerged_count unmerged branches")
     fi
 
     messages_count=${#messages[@]}
