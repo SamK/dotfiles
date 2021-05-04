@@ -27,10 +27,11 @@ BRANCH_ID=$(git show-ref -s refs/heads/${TMP_BRANCH})
 git checkout --quiet $CURRENT_BRANCH
 
 if [ "${CURRENT_BRANCH_ID}" = "${BRANCH_ID}" ];then
-  echo "You can delete the branch '$BRANCH'."
+  echo "Yes, you can delete this branch with:"
+  echo "git branch -D $BRANCH"
   echo
-  echo "These commits are part of the current branch in '$CURRENT_BRANCH':"
-  git cherry -v $BRANCH $CURRENT_BRANCH | grep '^-'
+  echo "The branch $CURRENT_BRANCH already contains these commits:"
+  git cherry -v $BRANCH $CURRENT_BRANCH | grep '^-' || true
 
 else
   echo "NO: The branch \"${BRANCH}\" is not part of your current branch!"
