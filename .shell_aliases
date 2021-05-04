@@ -27,8 +27,12 @@ alias la='LC_COLLATE="C" l -A'
 function cl() { cd "$@" && /bin/ls -lh --color ;}
 
 alias tmux='TERM=xterm-256color /usr/bin/tmux'
-alias tmux-reattach='tmux a -d -t'
 alias ack='ack-grep'
+
+tmux-reattach () {
+    AS=$(tmux ls -F '#{session_attached} #{session_name}' | grep -v '^0' | cut -d ' ' -f 2-)
+    tmux a -d -t "$AS"
+}
 
 # find
 findxsvn () {
@@ -100,6 +104,12 @@ alias git-name-branch="sed -r -e 's/[^A-Za-z0-9/\-]/ /g' -e 's/\s+/_/g' -e 's/^[
                                                             # les espaces deviennent des underscore
                                                                            # Nettoyer le debut de la chaine
                                                                                                      # nettoyer la fin de la chaine
+
+git-diff-raw(){
+    COMMIT1=$1
+    COMMIT2=$2
+    diff <(git show --format=raw $COMMIT1) <(git show --format=raw $COMMIT2)
+}
 
 # yaml validation
 # requires a file as argument

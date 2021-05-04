@@ -124,6 +124,9 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" git commits
+au FileType gitcommit set tw=72
+
 " 6. Plugins
 " ------------------------
 

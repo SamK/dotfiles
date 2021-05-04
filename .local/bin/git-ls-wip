@@ -1,5 +1,18 @@
 #!/bin/bash
 
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+function warning(){
+    echo -e "${RED}${*}${NC}"
+}
+
+function message_ok(){
+    echo -e "${GREEN}${*}${NC}"
+}
+
 function branch_name(){
     # determine the branch name (http://stackoverflow.com/a/1593487)
     local branch
@@ -18,7 +31,7 @@ function is_wip(){
     local ref
     ref=$(branch_name)
 
-    if [ "$ref" != "master" ]; then
+    if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
         messages+=("Current branch is \"$ref\"")
     fi
 
@@ -28,17 +41,20 @@ function is_wip(){
     fi
 
     unmerged_count=$(git branch --no-merged | wc -l)
-    if [ "$uncommited_count" != "0" ]; then
-        messages+=("$uncommited_count unmerged branches")
+    if [ "$unmerged_count" != "0" ]; then
+        messages+=("$unmerged_count unmerged branches")
     fi
 
     messages_count=${#messages[@]}
     if [ "$messages_count" != "0" ]; then
-        echo "$repo"
+        echo "./$repo:"
         for i in "${messages[@]}"; do
-            echo "    $i"
+            warning "    $i"
         done
+    else
+        echo -e "./${repo}: ${GREEN}OK${NC}"
     fi
+
 }
 
 for repo in *; do

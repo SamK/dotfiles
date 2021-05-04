@@ -31,6 +31,7 @@
     branch-todel =  branch  --sort=-committerdate --merged
     branch-bydate-asc = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     branch-bydate-desc = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+    code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
 
     # Human commands
     tags = tag -n9
@@ -47,7 +48,6 @@
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words
     refresh-remote-branches = "!for r in $(git remote) ; do git remote update $r --prune ; done"
-    fetch-prune = fetch --prune
 
     # Faster typing
     st = status
@@ -57,6 +57,15 @@
     pl = pull
     fe = fetch
     ps = push
+    re = rebase
+    fp = fetch --prune
+
+    # even fastr
+    p = pull origin HEAD --rebase --prune --ff-only --stat
+    # if origin/HEAD does not exist, create it like this:
+    # git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
+    # source: https://stackoverflow.com/a/17639471
+    ri = rebase -i origin/HEAD
 [credential]
    helper = cache --timeout=3600
 [push]
