@@ -133,8 +133,6 @@ create_dotlink .ackrc
 ## For nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
 create_dotlink .dircolors
 #set +e # ignore jinja2 import errors
-./conkyrc.py > .conkyrc
-create_dotlink .conkyrc
 
 title "Install files in .local/bin"
 
