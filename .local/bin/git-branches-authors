@@ -3,10 +3,13 @@ show_help(){
     cat <<EOF
     git-branches-author: List branches and the related author
 
+    This script shows a list of branches in descendant order.
     Useful to figure out who in your team is not cleaning old branches.
 
+    The branches starting with "hold/" are ignored.
+
     Options:
-    -r         reverse the order
+    -r         Order by ascendant date (oldes first)
     -h,--help  show this help
     --no-pager no pager
 EOF
