@@ -31,6 +31,7 @@
     branch-todel =  branch  --sort=-committerdate --merged
     branch-bydate-asc = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     branch-bydate-desc = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+    code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
 
     # Human commands
     tags = tag -n9
