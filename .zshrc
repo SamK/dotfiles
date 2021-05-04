@@ -7,6 +7,10 @@
 export VISUAL=vi
 export EDITOR=vi
 
+
+export MOLECULE_NO_LOG=false
+export ANSIBLE_STDOUT_CALLBACK=yaml
+
 # disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
 export KEYTIMEOUT=10
 
