@@ -70,14 +70,14 @@ function show() {
 }
 
 function main(){
-previous=""
-for branch in $(branches); do
-    commit=$(git show $branch --format="%H")
-    if [ "$commit" != "$previous" ]; then
-        show $commit
-    fi
-    previous=$commit
-done
+    previous=""
+    for branch in $(branches); do
+        commit=$(git show $branch --format="%H")
+        if [ "$commit" != "$previous" ]; then
+            show $commit
+        fi
+        previous=$commit
+    done
 }
 
 if [ "$NO_PAGER" == "yes" ]; then
