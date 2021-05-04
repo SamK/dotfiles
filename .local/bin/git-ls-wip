@@ -1,5 +1,18 @@
 #!/bin/bash
 
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+function warning(){
+    echo -e "${RED}${*}${NC}"
+}
+
+function message_ok(){
+    echo -e "${GREEN}${*}${NC}"
+}
+
 function branch_name(){
     # determine the branch name (http://stackoverflow.com/a/1593487)
     local branch
