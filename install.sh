@@ -128,6 +128,7 @@ create_dotlink .shell_aliases
 create_dotlink .bashrc
 create_dotlink .gitconfig
 create_dotlink .gitignore-global
+create_dotlink .ssh/config
 create_dotlink .tmux.conf
 create_dotlink .ackrc
 ## For nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
