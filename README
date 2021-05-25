@@ -1,1 +1,9 @@
-Kitty solarized: https://github.com/altercation/solarized/blob/master/putty-colors-solarized/solarized_dark_puttytray.txt
+## Kitty solarized
+
+https://github.com/altercation/solarized/blob/master/putty-colors-solarized/solarized_dark_puttytray.txt
+
+## tig
+
+    ./configure
+    make prefix=/home/sam/.local
+    make install prefix=/home/sam/.local
