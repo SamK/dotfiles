@@ -7,6 +7,7 @@
 export VISUAL=vi
 export EDITOR=vi
 
+LANG=en_US.UTF-8
 
 export MOLECULE_NO_LOG=false
 export ANSIBLE_STDOUT_CALLBACK=yaml
