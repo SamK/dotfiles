@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import requests
+
+# imported vars
+gitlab_token = os.environ['GITLAB_TOKEN']
+gitlab_url = os.environ['GITLAB_URL']
+branch_filter = sys.argv[1]
+
+# app vars
+gitlab_api_url = "{}/api".format(gitlab_url)
+headers = {'PRIVATE-TOKEN': gitlab_token}
+projects_payload = {'starred': True}
+projects_url = '{}/v4/projects?starred=true'.format(gitlab_api_url)
+
+def get_projects():
+    r = requests.get(projects_url, params=projects_payload, headers=headers)
+    try:
+        return r.json()
+    except Exception:
+        print(r.text)
+        sys.exit(1)
+
+def get_branches(project_url):
+    branches_url = "{}/repository/branches".format(project_url)
+    r = requests.get(branches_url, headers=headers)
+    try:
+        return r.json()
+    except Exception:
+        print(r.text)
+        sys.exit(1)
+
+for project in get_projects():
+    project_url=project['_links']['self']
+    for branch in get_branches(project_url):
+        if branch_filter in branch['name']:
+            print("{}:{} {}".format(project['name'], branch['name'], branch['web_url']))
