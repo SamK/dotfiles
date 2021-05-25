@@ -46,7 +46,7 @@
     precommit = diff --cached --diff-algorithm=minimal -w
     root = rev-parse --show-toplevel
     diff-chars = diff --color-words --word-diff-regex=.
-    diff-words = diff --color-words
+    diff-words = diff --color-words --word-diff-regex='\\w+|.'
     refresh-remote-branches = "!for r in $(git remote) ; do git remote update $r --prune ; done"
 
     # Faster typing
