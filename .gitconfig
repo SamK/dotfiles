@@ -77,9 +77,6 @@
     mnemonicprefix = true
 [diff]
     algorithm = histogram
-# 1.7.10+
-[include]
-    path = .gitconfig.local
 # colors
 # http://blog.kmelia.net/testing/changer-les-couleurs-de-git/243
 [color]
@@ -101,4 +98,6 @@
     plain    = reverse cyan
 [grep]
     lineNumber = true
+[include]
+    path = .gitconfig.local
 ### EOF ###
