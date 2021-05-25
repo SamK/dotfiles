@@ -118,6 +118,9 @@ function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
 alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
 alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
 
+# json validation
+alias json-check='json_pp'
+
 # network 
 
 alias stracenet="strace -f -e trace=network -s 10000"
