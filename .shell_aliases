@@ -6,7 +6,8 @@
 # 1. correction aliases
 # 2. daily aliases and commands
 # 4. color support
-# 5. final
+# 5. system
+# 6. local aliases
 
 # 1. correction aliases
 alias gerp='grep'
@@ -185,7 +186,18 @@ ssh-agent-enable(){
     fi
 }
 
-# 5. Final
+# 5. System
+
+if [[ $(uname -r) == *"WSL2" ]]; then
+    # /etc/sudoers.d/wsl2:
+    # %adm ALL = NOPASSWD: /usr/sbin/service ssh *
+    # %adm ALL = NOPASSWD: /usr/sbin/service docker *
+    sudo service docker status || sudo service docker start
+    sudo service ssh status || sudo service ssh start
+fi
+
+
+# 6. local aliases
 if [ -f ~/.shell_aliases.local ]; then
     source ~/.shell_aliases.local
 fi
