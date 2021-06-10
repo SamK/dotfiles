@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Comment tester:
-    pylint --disable=C0103 --max-line-length=120 gitlab-branches
+    pylint --disable=C0103 --max-line-length=120 gitlab-cli
 """
 
 import os

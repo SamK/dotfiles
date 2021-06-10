@@ -142,7 +142,7 @@ create_dotlink .local/bin/git-branch-deletable
 create_dotlink .local/bin/git-branches-authors
 create_dotlink .local/bin/git-find-md5
 create_dotlink .local/bin/git-ls-wip
-create_dotlink .local/bin/gitlab-branches
+create_dotlink .local/bin/gitlab-cli
 
 set -e
 
