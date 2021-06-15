@@ -64,6 +64,9 @@ set formatoptions=tcqr
 " map key F10 for paste toggle
 set pastetoggle=<F10>
 
+" disable automatic end of line (be friendly with windows users)
+set nofixendofline
+
 " 2. Display
 " ------------------------
 
