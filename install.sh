@@ -162,7 +162,8 @@ title "Installing my ZSH workplace"
 create_dotlink .zshrc
 
 # LiquidPrompt
-gitget https://github.com/SamK/liquidprompt.git .zsh/liquidprompt fix/do-not-redeclare
+#gitget https://github.com/SamK/liquidprompt.git .zsh/liquidprompt fix/do-not-redeclare
+gitget https://github.com/nojhan/liquidprompt.git .zsh/liquidprompt
 create_dotlink .zsh/liquidprompt
 
 # A lot of completion features for ZSH

@@ -32,6 +32,9 @@
     branch-bydate-asc = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     branch-bydate-desc = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
+    grep-fixme = grep 'NOTE\\|OPTIMIZE\\|TODO\\|HACK\\|XXX\\|FIXME\\|BUG'
+    fixme = grep-fixme
+    authors = shortlog -s -n --all --no-merges
 
     # Human commands
     tags = tag -n9
