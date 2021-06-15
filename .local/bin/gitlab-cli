@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+"""
+Comment tester:
+    pylint --module-rgx='.*' --max-line-length=120 gitlab-cli
+    pycodestyle --max-line-length=120 --show-source --show-pep8 gitlab-cli
+"""
+import os
+import sys
+import textwrap
+import argparse
+# import pprint
+import requests
+
+__description__ = """
+Un petit client pour voir les trucs en cours sur Gitlab.
+Les variables d'environement suivantes sont requises:
+    - GITLAB_TOKEN
+    - GITLAB_URL
+"""
+
+
+class NoGitlabTokenError(Exception):
+    """Raised when the user did not provide a token"""
+
+
+class NoGitlabURLError(Exception):
+    """Raised when the user did not provide a Gitlab URL"""
+
+
+class Colors:  # pylint: disable=too-few-public-methods
+    """Une liste de couleurs"""
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    red = '\033[93m'
+    FAIL = '\033[91m'
+    END = '\033[0m'
+    end = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+def get_projects(projects_url, projects_payload, headers):
+    """ Return a list of Gitlab projects
+    """
+    response = requests.get(projects_url, params=projects_payload, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+def get_mrs(gitlab_api_url, headers):
+    """ Return a list of open MRs by me
+    """
+    url = '{}/merge_requests?state=opened'.format(gitlab_api_url)
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+def get_branches(project_url, headers):
+    """ Return a list of branches in a given project
+    """
+    url = "{}/repository/branches".format(project_url)
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+def whoami(gitlab_api_url, headers):
+    """ Return the current logged in user
+    """
+    url = "{}/user".format(gitlab_api_url)
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+def get_config():
+    """ Return the configuration
+    """
+    config = {
+        'gitlab_token': os.environ.get('GITLAB_TOKEN'),
+        'gitlab_url': os.environ.get('GITLAB_URL'),
+        'projects_payload': {'starred': True},
+        'ignored_branches': ['master']
+    }
+    # more values based on previous values
+    config['gitlab_api_url'] = "{}/api/v4".format(config['gitlab_url'])
+    config['headers'] = {'PRIVATE-TOKEN': config['gitlab_token']}
+    config['projects_url'] = '{}/projects?starred=true'.format(config['gitlab_api_url'])
+    return config
+
+
+def parse_arguments():
+    """ Parse the arguments given by the user
+    """
+
+    epilog = """
+    """
+    parser = argparse.ArgumentParser(description=__description__,
+                                     epilog=textwrap.dedent(epilog),
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("item", choices=['mr', 'branch'],
+                        help='Quoi chercher: \
+                             "mr": Affiche les merge request que tu as créé. \
+                             "branch": Affiche les branches dont tu es l\'auteur.')
+    parser.add_argument('--name', help='filter par nom')
+    # parser.add_argument('--all', action='store_true', help='not implemented')
+    return parser.parse_args()
+
+
+def gitlab_mr(gitlab_api_url, headers):
+    """ search for merge requests
+
+        See: example and return values: https://docs.gitlab.com/ee/api/merge_requests.html#list-merge-requests
+    """
+    mrs = get_mrs(gitlab_api_url, headers)
+    for m_r in mrs:
+        print('{c.OKCYAN}{mr[title]}{c.end} {mr[web_url]}'.format(mr=m_r, c=Colors))
+
+
+def gitlab_branches(projects, args, author, headers, ignored_branches):
+    """ search for branches
+    """
+
+    for project in projects:
+        project_url = project['_links']['self']
+
+        if args.name:
+            for branch in get_branches(project_url, headers):
+                if args.name in branch['name']:
+                    print("{}:{} {}".format(project['name'], branch['name'], branch['web_url']))
+                    # pprint.pprint(branch)
+        else:
+            for branch in get_branches(project_url, headers):
+                if (
+                        author['email'] == branch['commit']['author_email'] or
+                        author['name'] == branch['commit']['committer_name'] or
+                        author['name'] == branch['commit']['author_name']
+                    ) and \
+                     branch['name'] not in ignored_branches:
+                    # pprint.pprint(branch)
+                    print("{}:{} {}".format(project['name'], branch['name'], branch['web_url']))
+
+
+def validate_config(config):
+    """
+    Validate the configuration and user input
+    """
+    if not config['gitlab_token']:
+        raise NoGitlabTokenError
+    if not config['gitlab_url']:
+        raise NoGitlabURLError
+
+
+def main():
+    """ Main function
+    """
+    config = get_config()
+    args = parse_arguments()
+
+    # validate input
+    try:
+        validate_config(config)
+    except NoGitlabTokenError:
+        print("ERROR: Missing environment variable 'GITLAB_TOKEN'", file=sys.stderr)
+        sys.exit(127)
+    except NoGitlabURLError:
+        print("ERROR: Missing environment variable 'GITLAB_URL'", file=sys.stderr)
+        sys.exit(127)
+
+    # choose between "branch" and "mr"
+    if args.item == "branch":
+        author = whoami(config['gitlab_api_url'], config['headers'])
+        projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
+        gitlab_branches(projects, args, author, config['headers'], config['ignored_branches'])
+    elif args.item == "mr":
+        gitlab_mr(config['gitlab_api_url'], config['headers'])
+
+
+if __name__ == '__main__':
+    main()
