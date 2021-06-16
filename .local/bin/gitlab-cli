@@ -16,6 +16,10 @@ Un petit client pour voir les trucs en cours sur Gitlab.
 Les variables d'environement suivantes sont requises:
     - GITLAB_TOKEN
     - GITLAB_URL
+
+TODO:
+    - Ajouter les projets perso par défaut (--personal, --no--personal)
+    - Ajouter les params: --all, --no-all (impossible?!)
 """
 
 
