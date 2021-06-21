@@ -126,6 +126,9 @@ alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.
 # json validation
 alias json-check='json_pp'
 
+# virtualenv
+function activate() { . ~/.virtualenvs/$1/bin/activate || ( echo Available virtualenvs: ; ls -1 ~/.virtualenvs ); }
+
 # network 
 
 alias stracenet="strace -f -e trace=network -s 10000"
