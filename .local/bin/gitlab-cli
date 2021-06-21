@@ -9,6 +9,8 @@ import sys
 import textwrap
 import argparse
 # import pprint
+import tabulate
+
 import requests
 
 __description__ = """
@@ -106,8 +108,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description=__description__,
                                      epilog=textwrap.dedent(epilog),
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("item", choices=['mr', 'branch'],
+    parser.add_argument("item", choices=['projects', 'mr', 'branch'],
                         help='Quoi chercher: \
+                             "projects": Affiche les projets. \
                              "mr": Affiche les merge request que tu as créé. \
                              "branch": Affiche les branches dont tu es l\'auteur.')
     parser.add_argument('--name', help='filter par nom')
@@ -159,6 +162,28 @@ def validate_config(config):
         raise NoGitlabURLError
 
 
+def print_table(data, titles):
+    """
+    Print the data as a nice table
+    # available titles:
+    >>> print(data[0].keys())
+
+    btw: panda works: https://stackoverflow.com/a/53831756
+    >>> import pandas
+    >>> print(pandas.DataFrame(data).reindex(columns=titles))
+    """
+
+    # tabulate
+    dataset = []
+    for item in data:
+        item2 = {}
+        for key, value in item.items():
+            if key in titles:
+                item2[key] = value
+        dataset.append(item2)
+    print(tabulate.tabulate(dataset, headers="keys"))
+
+
 def main():
     """ Main function
     """
@@ -175,7 +200,10 @@ def main():
         print("ERROR: Missing environment variable 'GITLAB_URL'", file=sys.stderr)
         sys.exit(127)
 
-    # choose between "branch" and "mr"
+    # choose between action
+    if args.item == "projects":
+        projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
+        print_table(projects, ['id', 'name', 'web_url'])
     if args.item == "branch":
         author = whoami(config['gitlab_api_url'], config['headers'])
         projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
