@@ -118,28 +118,27 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def gitlab_mr(gitlab_api_url, headers):
+def gitlab_mr(config):
     """ search for merge requests
 
         See: example and return values: https://docs.gitlab.com/ee/api/merge_requests.html#list-merge-requests
     """
-    mrs = get_mrs(gitlab_api_url, headers)
-    for m_r in mrs:
-        print('{c.OKCYAN}{mr[title]}{c.end} {mr[web_url]}'.format(mr=m_r, c=Colors))
+    return get_mrs(config['gitlab_api_url'], config['headers'])
 
 
 def gitlab_branches(projects, args, author, headers, ignored_branches):
     """ search for branches
     """
 
+    data = []
     for project in projects:
         project_url = project['_links']['self']
 
         if args.name:
+            # filter by branch name
             for branch in get_branches(project_url, headers):
                 if args.name in branch['name']:
-                    print("{}:{} {}".format(project['name'], branch['name'], branch['web_url']))
-                    # pprint.pprint(branch)
+                    data.append({'project': project['name'], 'branch': branch['name'], 'web_url': branch['web_url']})
         else:
             for branch in get_branches(project_url, headers):
                 if (
@@ -149,7 +148,8 @@ def gitlab_branches(projects, args, author, headers, ignored_branches):
                     ) and \
                      branch['name'] not in ignored_branches:
                     # pprint.pprint(branch)
-                    print("{}:{} {}".format(project['name'], branch['name'], branch['web_url']))
+                    data.append({'project': project['name'], 'branch': branch['name'], 'web_url': branch['web_url']})
+    return data
 
 
 def validate_config(config):
@@ -162,7 +162,7 @@ def validate_config(config):
         raise NoGitlabURLError
 
 
-def print_table(data, titles):
+def print_table(data, titles=None):
     """
     Print the data as a nice table
     # available titles:
@@ -173,14 +173,21 @@ def print_table(data, titles):
     >>> print(pandas.DataFrame(data).reindex(columns=titles))
     """
 
+    # limit case where no data is provided
+    if not data:
+        return
+
     # tabulate
     dataset = []
-    for item in data:
-        item2 = {}
-        for key, value in item.items():
-            if key in titles:
-                item2[key] = value
-        dataset.append(item2)
+    if not titles:
+        dataset = data
+    else:
+        for item in data:
+            item2 = {}
+            for key, value in item.items():
+                if key in titles:
+                    item2[key] = value
+            dataset.append(item2)
     print(tabulate.tabulate(dataset, headers="keys"))
 
 
@@ -207,9 +214,11 @@ def main():
     if args.item == "branch":
         author = whoami(config['gitlab_api_url'], config['headers'])
         projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
-        gitlab_branches(projects, args, author, config['headers'], config['ignored_branches'])
+        data = gitlab_branches(projects, args, author, config['headers'], config['ignored_branches'])
+        print_table(data)
     elif args.item == "mr":
-        gitlab_mr(config['gitlab_api_url'], config['headers'])
+        data = gitlab_mr(config)
+        print_table(data, ['id', 'title', 'web_url', 'source_branch'])
 
 
 if __name__ == '__main__':
