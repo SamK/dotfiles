@@ -88,18 +88,23 @@ def parse_arguments():
     """ Parse the arguments given by the user
     """
 
-    epilog = """
-    """
+    epilog = ""
+
     parser = argparse.ArgumentParser(description=__description__,
                                      epilog=textwrap.dedent(epilog),
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("item", choices=['projects', 'mr', 'branch'],
-                        help='Quoi chercher: \
-                             "projects": Affiche les projets. \
-                             "mr": Affiche les merge request que tu as créé. \
-                             "branch": Affiche les branches dont tu es l\'auteur.')
-    parser.add_argument('--name', help='filter par nom')
-    # parser.add_argument('--all', action='store_true', help='not implemented')
+    subparsers = parser.add_subparsers(help='Quoi Chercher.', dest='item')
+
+    projects = subparsers.add_parser('projects', aliases=['pr'], help='Affiche les projets')
+    projects.set_defaults(item='projects')
+
+    merge_requests = subparsers.add_parser('merge-requests', aliases=['mr'],
+                                           help='Affiche les merge-request que tu as créé.')
+    merge_requests.set_defaults(item='merge_requests')
+
+    branches = subparsers.add_parser('branches', aliases=['br'], help='Affiche les branches dont tu es l\'auteur.')
+    branches.set_defaults(item='branches')
+    branches.add_argument('--name', help='filter par nom')
     return parser.parse_args()
 
 
@@ -201,9 +206,11 @@ def main():
         projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
         data = gitlab_branches(projects, args, author, config['headers'], config['ignored_branches'])
         print_table(data)
-    elif args.item == "mr":
+    elif args.item == "merge_requests":
         data = gitlab_mr(config)
         print_table(data, ['id', 'title', 'web_url', 'source_branch'])
+    else:
+        raise Exception(f'Unknown argument: {args.item}')
 
 
 if __name__ == '__main__':
