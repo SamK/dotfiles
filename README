@@ -41,6 +41,7 @@ Colour33\187,187,187\
 ```
 FontHeight\11\
 Font\Consolas\
+Beep\0\
 ```
 based on: https://github.com/altercation/solarized/blob/master/putty-colors-solarized/solarized_dark_puttytray.txt
 
