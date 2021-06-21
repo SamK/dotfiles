@@ -201,7 +201,7 @@ def main():
     if args.item == "projects":
         projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
         print_table(projects, ['id', 'name', 'web_url'])
-    if args.item == "branch":
+    elif args.item == "branches":
         author = whoami(config['gitlab_api_url'], config['headers'])
         projects = get_projects(config['projects_url'], config['projects_payload'], config['headers'])
         data = gitlab_branches(projects, args, author, config['headers'], config['ignored_branches'])
@@ -210,7 +210,7 @@ def main():
         data = gitlab_mr(config)
         print_table(data, ['id', 'title', 'web_url', 'source_branch'])
     else:
-        raise Exception(f'Unknown argument: {args.item}')
+        raise Exception(f'Unknown argument: "{args.item}"')
 
 
 if __name__ == '__main__':
