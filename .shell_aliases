@@ -115,9 +115,13 @@ git-diff-raw(){
 # yaml validation
 # requires a file as argument
 function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
-# reads stdin
+
+# validate yaml
 alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
+# convert from yaml to python
 alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
+# read yaml and print yaml
+alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.stdin))))"'
 
 # json validation
 alias json-check='json_pp'
