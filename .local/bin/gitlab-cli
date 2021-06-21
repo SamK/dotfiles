@@ -18,7 +18,9 @@ Un petit client pour voir les trucs en cours sur Gitlab.
 Les variables d'environement suivantes sont requises:
     - GITLAB_TOKEN
     - GITLAB_URL
+"""
 
+__epilog__ = """
 TODO:
     - Ajouter les projets perso par défaut (--personal, --no--personal)
     - Ajouter les params: --all, --no-all (impossible?!)
@@ -88,10 +90,8 @@ def parse_arguments():
     """ Parse the arguments given by the user
     """
 
-    epilog = ""
-
     parser = argparse.ArgumentParser(description=__description__,
-                                     epilog=textwrap.dedent(epilog),
+                                     epilog=textwrap.dedent(__epilog__),
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     subparsers = parser.add_subparsers(help='Quoi Chercher.', dest='item')
 
