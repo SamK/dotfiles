@@ -95,9 +95,10 @@ def parse_arguments():
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
 
     parent_parser = argparse.ArgumentParser(description="The parent parser", add_help=False)
-    parent_parser.add_argument('--name', help='Affche les branches qui contiennent ce nom')
+    parent_parser.add_argument('--name', help='Filter par nom')
 
     subparsers = parser.add_subparsers(help='Quoi Chercher.', dest='item')
+    subparsers.required = True
 
     projects = subparsers.add_parser('projects', aliases=['pr'], help='Affiche les projets' , parents=[parent_parser])
     projects.set_defaults(item='projects')
@@ -105,9 +106,12 @@ def parse_arguments():
     merge_requests = subparsers.add_parser('merge-requests', aliases=['mr'], parents=[parent_parser],
                                            help='Affiche les merge-request que tu as créé.')
     merge_requests.set_defaults(item='merge_requests')
+    merge_requests.add_argument('--columns', '-c', help='les colonnes spécifiques que tu veux afficher', nargs='*',
+                                default=['id', 'title', 'web_url', 'source_branch'])
 
     branches = subparsers.add_parser('branches', aliases=['br'], help='Affiche les branches dont tu es l\'auteur.', parents=[parent_parser])
     branches.set_defaults(item='branches')
+
     return parser.parse_args()
 
 
@@ -211,7 +215,7 @@ def main():
         print_table(data)
     elif args.item == "merge_requests":
         data = gitlab_mr(config)
-        print_table(data, ['id', 'title', 'web_url', 'source_branch'])
+        print_table(data, args.columns)
     else:
         raise Exception(f'Unknown argument: "{args.item}"')
 
