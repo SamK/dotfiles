@@ -93,18 +93,21 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description=__description__,
                                      epilog=textwrap.dedent(__epilog__),
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parent_parser = argparse.ArgumentParser(description="The parent parser", add_help=False)
+    parent_parser.add_argument('--name', help='Affche les branches qui contiennent ce nom')
+
     subparsers = parser.add_subparsers(help='Quoi Chercher.', dest='item')
 
-    projects = subparsers.add_parser('projects', aliases=['pr'], help='Affiche les projets')
+    projects = subparsers.add_parser('projects', aliases=['pr'], help='Affiche les projets' , parents=[parent_parser])
     projects.set_defaults(item='projects')
 
-    merge_requests = subparsers.add_parser('merge-requests', aliases=['mr'],
+    merge_requests = subparsers.add_parser('merge-requests', aliases=['mr'], parents=[parent_parser],
                                            help='Affiche les merge-request que tu as créé.')
     merge_requests.set_defaults(item='merge_requests')
 
-    branches = subparsers.add_parser('branches', aliases=['br'], help='Affiche les branches dont tu es l\'auteur.')
+    branches = subparsers.add_parser('branches', aliases=['br'], help='Affiche les branches dont tu es l\'auteur.', parents=[parent_parser])
     branches.set_defaults(item='branches')
-    branches.add_argument('--name', help='filter par nom')
     return parser.parse_args()
 
 
