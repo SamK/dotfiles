@@ -68,7 +68,11 @@
     # if origin/HEAD does not exist, create it like this:
     # git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
     # source: https://stackoverflow.com/a/17639471
-    ri = rebase -i origin/HEAD
+    ri = rebase -i
+    rim = rebase -i master
+    riH = rebase -i HEAD
+    riom = rebase -i origin/master
+    rioH = rebase -i origin/HEAD
 [credential]
    helper = cache --timeout=3600
 [push]
