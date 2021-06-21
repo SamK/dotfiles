@@ -152,7 +152,7 @@ def validate_config(config):
         raise NoGitlabURLError
 
 
-def print_table(data, titles=None):
+def print_table(data, columns=None):
     """
     Print the data as a nice table
     # available titles:
@@ -160,7 +160,7 @@ def print_table(data, titles=None):
 
     btw: panda works: https://stackoverflow.com/a/53831756
     >>> import pandas
-    >>> print(pandas.DataFrame(data).reindex(columns=titles))
+    >>> print(pandas.DataFrame(data).reindex(columns=columns))
     """
 
     # limit case where no data is provided
@@ -169,13 +169,13 @@ def print_table(data, titles=None):
 
     # tabulate
     dataset = []
-    if not titles:
+    if not columns:
         dataset = data
     else:
         for item in data:
             item2 = {}
             for key, value in item.items():
-                if key in titles:
+                if key in columns:
                     item2[key] = value
             dataset.append(item2)
     print(tabulate.tabulate(dataset, headers="keys"))
