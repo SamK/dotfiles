@@ -4,6 +4,23 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 EXIT_CODE=0
+OFFLINE=no
+
+
+# Parse arguments
+# https://stackoverflow.com/a/14203146
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+    --offline)
+      OFFLINE=yes
+      shift
+      ;;
+  esac
+done
+
 
 error() {
     MESSAGE="$*"
@@ -78,13 +95,22 @@ gitget() {
     git_ref=$3
 
     if [ -d $folder ]; then
-        echo "Updating from \"${url}\" into \"${folder}\"..."
-        cd $folder
-        git fetch
+        if [ "$OFFLINE" == "yes" ]; then
+            echo "Skipping update of Git repo $url"
+        else
+            echo "Updating from \"${url}\" into \"${folder}\"..."
+            cd $folder
+            git fetch
+        fi
     else
-        echo "Downloading from $url into $folder..."
-        git clone $url $folder
-        cd $folder
+        if [ "$OFFLINE" == "yes" ]; then
+            error "Cannot download $url in offline mode"
+            exit 1
+        else
+            echo "Downloading from $url into $folder..."
+            git clone $url $folder
+            cd $folder
+        fi
     fi
     if [ -n "$git_ref" ]; then
         found="no"
@@ -170,8 +196,13 @@ create_dotlink .zsh/liquidprompt
 gitget https://github.com/zsh-users/zsh-completions.git .zsh/zsh-completions
 create_dotlink .zsh/zsh-completions
 
-curl --show-error --silent https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
-> .zsh/zsh-completions/src/_borg
+if [ "$OFFLINE" == "yes" ]; then
+    echo "Skipping installation of borg completion!"
+else
+echo "Downloading borg completion..."
+    curl --show-error --silent https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
+    > .zsh/zsh-completions/src/_borg
+fi
 
 title Vim
 
@@ -183,10 +214,14 @@ echo "Installing solarized theme for Vim..."
 gitget https://github.com/altercation/solarized.git tmp/solarized
 create_dotlink .vim/colors
 
-echo VIM-Plug...
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-echo Installing Vim plugins...
-vim +PlugInstall +qall
+if [ "$OFFLINE" == "yes" ]; then
+    echo "Skipping installation of Vim plugins!"
+else
+    echo VIM-Plug...
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo Installing Vim plugins...
+    vim +PlugInstall +qall
+fi
 
 echo "Setup completed."
 
