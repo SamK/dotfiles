@@ -100,16 +100,24 @@ def parse_arguments():
     subparsers = parser.add_subparsers(help='Quoi Chercher.', dest='item')
     subparsers.required = True
 
-    projects = subparsers.add_parser('projects', aliases=['pr'], help='Affiche les projets' , parents=[parent_parser])
+    projects = subparsers.add_parser('projects', aliases=['pr'], help='Affiche les projets', parents=[parent_parser])
     projects.set_defaults(item='projects')
 
     merge_requests = subparsers.add_parser('merge-requests', aliases=['mr'], parents=[parent_parser],
                                            help='Affiche les merge-request que tu as créé.')
     merge_requests.set_defaults(item='merge_requests')
-    merge_requests.add_argument('--columns', '-c', help='les colonnes spécifiques que tu veux afficher', nargs='*',
-                                default=['id', 'title', 'web_url', 'source_branch'])
+    merge_requests.add_argument('--columns', '-c', nargs='*',
+                                default=['id', 'title', 'web_url', 'source_branch'],
+                                help='''
+                                     Les colonnes à afficher.
+                                     La liste complète est dispo ici:
+                                     https://docs.gitlab.com/ee/api/merge_requests.html#list-merge-requests
+                                     (default: %(default)s).
+                                     '''
+                                )
 
-    branches = subparsers.add_parser('branches', aliases=['br'], help='Affiche les branches dont tu es l\'auteur.', parents=[parent_parser])
+    branches = subparsers.add_parser('branches', aliases=['br'], parents=[parent_parser],
+                                     help='Affiche les branches dont tu es l\'auteur.')
     branches.set_defaults(item='branches')
 
     return parser.parse_args()
