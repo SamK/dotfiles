@@ -57,17 +57,25 @@
     br = branch
     co = checkout
     ci = commit
-    pl = pull
-    fe = fetch
+
+
+    # push aliases
     ps = push
-    re = rebase
+    psf = push --force
+
+    # fetch aliases
+    fe = fetch
     fp = fetch --prune
 
-    # even fastr
+    # pull aliases
+    pl = pull
     p = pull origin HEAD --rebase --prune --ff-only --stat
+
+    # rebase aliases
     # if origin/HEAD does not exist, create it like this:
     # git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
     # source: https://stackoverflow.com/a/17639471
+    re = rebase
     ri = rebase -i
     rim = rebase -i master
     riH = rebase -i HEAD
