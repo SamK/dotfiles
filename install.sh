@@ -168,12 +168,14 @@ create_dotlink .local/bin/git-branch-deletable
 create_dotlink .local/bin/git-branches-authors
 create_dotlink .local/bin/git-find-md5
 create_dotlink .local/bin/git-ls-wip
-create_dotlink .local/bin/gitlab-cli
 
 set -e
 
 gist "eef091d73879f8d0d5661efc834e69dc"
 create_dotlink .local/bin/git-fetch-all
+
+gist 7e4d432478074af91590f1b09c935fb7
+create_dotlink .local/bin/gitlab-samkli
 
 # git-wtf
 gitget https://github.com/DanielVartanov/willgit.git ./tmp/willgit
