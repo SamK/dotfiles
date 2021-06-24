@@ -115,4 +115,6 @@
     lineNumber = true
 [include]
     path = .gitconfig.local
+#[diff "ansible-vault"]
+#	textconv = ansible-vault view --vault-pass-file FILE1 --vault-pass-file FILE2
 ### EOF ###
