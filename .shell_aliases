@@ -112,6 +112,34 @@ git-diff-raw(){
     diff <(git show --format=raw $COMMIT1) <(git show --format=raw $COMMIT2)
 }
 
+# gitlab: execute python-gitlab
+# https://python-gitlab.readthedocs.io/en/stable/cli-usage.html
+# https://python-gitlab.readthedocs.io/en/stable/cli-objects.html
+alias  gitlab="docker run -it --rm -e GITLAB_URL=$GITLAB_URL -e GITLAB_PRIVATE_TOKEN=$GITLAB_PRIVATE_TOKEN registry.gitlab.com/python-gitlab/python-gitlab:latest"
+
+# list my open merge requests on gitlab
+function gitlab-my-mrs () {
+    # see: https://python-gitlab.readthedocs.io/en/stable/cli-objects.html#gitlab-current-user
+    MY_ID=$(gitlab -f id -o json current-user get | jq .id)
+    gitlab -f id,name,title,web_url,state,source_branch -o yaml merge-request  list  --author-id $MY_ID --state opened
+}
+
+# list my starred projects
+alias gitlab-my-projects="gitlab -f id,name,web_url -o yaml project list --starred true --per-page 100"
+
+# list all my branches
+# but much slower than "gitlab-samkli mybr"
+function gitlab-my-branches () {
+    MY_NAME=$(gitlab -o json current-user get | jq -r .name)
+    PROJECTS=$(gitlab -f id -o json project list --starred true | jq '.[].id')
+    for PROJECT_ID in $PROJECTS; do
+        gitlab -o json project-branch list --project-id $PROJECT_ID > /tmp/branches
+        jq ".[] | select(.commit.author_name==\"$MY_NAME\" and .name!=\"master\")" < /tmp/branches > /tmp/my-branches
+        jq ". | {name: .name, web_url: .web_url, project_name: \"$PROJECT_ID\"}" < /tmp/my-branches || cat /tmp/my-branches
+        #/bin/rm /tmp/branches /tmp/my-branches
+    done
+}
+
 # yaml validation
 # requires a file as argument
 function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
