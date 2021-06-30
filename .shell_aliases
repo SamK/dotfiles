@@ -156,6 +156,8 @@ alias json-check='json_pp'
 
 # virtualenv
 function activate() { . ~/.virtualenvs/$1/bin/activate || ( echo Available virtualenvs: ; ls -1 ~/.virtualenvs ); }
+_activate() { _directories  -W ~/.virtualenvs; }
+compdef _activate activate
 
 # network 
 
