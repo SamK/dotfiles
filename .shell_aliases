@@ -12,6 +12,8 @@
 # 1. correction aliases
 alias gerp='grep'
 alias iv='vi'
+alias vu='vi'
+alias vo='vi'
 alias sudp='sudo'
 
 #
