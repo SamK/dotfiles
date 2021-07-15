@@ -78,6 +78,7 @@
     re = rebase
     ri = rebase -i
     rim = rebase -i master
+    rid = rebase -i develop
     riH = rebase -i HEAD
     riom = rebase -i origin/master
     rioH = rebase -i origin/HEAD
