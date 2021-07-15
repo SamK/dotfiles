@@ -137,6 +137,7 @@ function gitlab-my-branches () {
     MY_NAME=$(gitlab -o json current-user get | jq -r .name)
     PROJECTS=$(gitlab -f id -o json project list --starred true --per-page 100| jq '.[].id')
     for PROJECT_ID in $PROJECTS; do
+        # todo: produire un json valide
         gitlab -o json project-branch list --project-id $PROJECT_ID > /tmp/branches
         jq ".[] | select(.commit.author_name==\"$MY_NAME\" and .name!=\"master\")" < /tmp/branches > /tmp/my-branches
         jq ". | {name: .name, web_url: .web_url, project_name: \"$PROJECT_ID\"}" < /tmp/my-branches || cat /tmp/my-branches
