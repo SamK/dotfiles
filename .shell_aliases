@@ -135,7 +135,7 @@ alias gitlab-my-projects="gitlab -f id,name,web_url -o yaml project list --starr
 # but much slower than "gitlab-samkli mybr"
 function gitlab-my-branches () {
     MY_NAME=$(gitlab -o json current-user get | jq -r .name)
-    PROJECTS=$(gitlab -f id -o json project list --starred true | jq '.[].id')
+    PROJECTS=$(gitlab -f id -o json project list --starred true --per-page 100| jq '.[].id')
     for PROJECT_ID in $PROJECTS; do
         gitlab -o json project-branch list --project-id $PROJECT_ID > /tmp/branches
         jq ".[] | select(.commit.author_name==\"$MY_NAME\" and .name!=\"master\")" < /tmp/branches > /tmp/my-branches
