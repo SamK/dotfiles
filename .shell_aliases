@@ -25,6 +25,8 @@ alias ll='ls -lhF'
 alias tree='LC_COLLATE=C tree --dirsfirst -F'
 alias l='ls --color=auto -hlF --group-directories-first'
 alias la='LC_COLLATE="C" l -A'
+alias cp="cp -i"
+alias mv="mv -i"
 
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
