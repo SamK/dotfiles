@@ -141,7 +141,7 @@ function gitlab-my-branches () {
         gitlab -o json project-branch list --project-id $PROJECT_ID > /tmp/branches
         jq ".[] | select(.commit.author_name==\"$MY_NAME\" and .name!=\"master\")" < /tmp/branches > /tmp/my-branches
         jq ". | {name: .name, web_url: .web_url, project_name: \"$PROJECT_ID\"}" < /tmp/my-branches || cat /tmp/my-branches
-        #/bin/rm /tmp/branches /tmp/my-branches
+        /bin/rm /tmp/branches /tmp/my-branches
     done
 }
 
