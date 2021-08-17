@@ -4,16 +4,9 @@
 # influences
 # http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
-export VISUAL=vi
-export EDITOR=vi
-
-LANG=en_US.UTF-8
-
-export MOLECULE_NO_LOG=false
-export ANSIBLE_STDOUT_CALLBACK=yaml
-
-# disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
-export KEYTIMEOUT=10
+if [ -f ~/.shell_envvars ]; then
+  source ~/.shell_envvars
+fi
 
 # disable hashing
 # https://unix.stackexchange.com/questions/5609/how-do-i-clear-bashs-cache-of-paths-to-executables/218681#218681

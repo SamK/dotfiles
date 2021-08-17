@@ -152,6 +152,7 @@ function gist() {
 title "Installing dot files..."
 
 create_dotlink .shell_aliases
+create_dotlink .shell_envvars
 create_dotlink .bashrc
 create_dotlink .gitconfig
 create_dotlink .gitignore-global
