@@ -1,5 +1,18 @@
 ## Kitty solarized
 
+Colour6 - ANSI Black:
+- fancy possible mais doit rester qd meme vachement sombre
+- barre de chiffres Vim (avec le theme Solarized)
+- espace avant le cursor dans Vim (avec le theme Solarized)
+- Barre tmux
+- Selection du terminal
+- Background du folder de la commande `ls` si o+x
+
+Colour7 - ANSI Black Bold:
+- sombre
+- fancy sombre impossible
+- Background de Vim avec le theme Solarized
+- output de ANSIBLE_DEBUG
 
 ```
 Colour0\131,148,150\
@@ -8,8 +21,8 @@ Colour2\0,43,54\
 Colour3\7,54,66\
 Colour4\0,43,54\
 Colour5\238,232,213\
-Colour6\7,54,66\
-Colour7\0,43,56\
+Colour6\0,40,50\
+Colour7\0,64,72\
 Colour8\220,50,47\
 Colour9\203,75,22\
 Colour10\72,153,0\
@@ -44,9 +57,3 @@ Font\Consolas\
 Beep\0\
 ```
 based on: https://github.com/altercation/solarized/blob/master/putty-colors-solarized/solarized_dark_puttytray.txt
-
-## tig
-
-    ./configure
-    make prefix=/home/sam/.local
-    make install prefix=/home/sam/.local

@@ -9,6 +9,11 @@
 # 5. system
 # 6. local aliases
 
+# colors https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+local RED='\033[0;31m'
+local CYAN='\033[0;36m'
+local NOCOLOR='\033[0m'
+
 # 1. correction aliases
 alias gerp='grep'
 alias iv='vi'
@@ -158,6 +163,15 @@ alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.
 
 # json validation
 alias json-check='json_pp'
+
+function ansible-playbooks-describe() {
+    alias ansible-playbook-name='python -c "import yaml,sys;y=yaml.safe_load(sys.stdin)[0]; print(y[\"name\"] if \"name\" in y else \"\")"'
+    for F in $*; do
+        echo -n "${CYAN}$F${NOCOLOR}: "
+        ansible-playbook-name < $F
+        grep --color=never '^\#.*$' < $F
+    done
+}
 
 # virtualenv
 function activate() { . ~/.virtualenvs/$1/bin/activate || ( echo Available virtualenvs: ; ls -1 ~/.virtualenvs ); }
