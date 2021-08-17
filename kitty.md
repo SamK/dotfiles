@@ -1,5 +1,19 @@
 ## Kitty solarized
 
+Colour6 - ANSI Black:
+- fancy possible mais doit rester qd meme vachement sombre
+- barre de chiffres Vim (avec le theme Solarized)
+- espace avant le cursor dans Vim (avec le theme Solarized)
+- Barre tmux
+- Selection du terminal
+- Background du folder de la commande `ls` si o+x
+
+Colour7 - ANSI Black Bold:
+- sombre
+- fancy sombre impossible
+- Background de Vim avec le theme Solarized
+- output de ANSIBLE_DEBUG
+
 ```
 Colour0\131,148,150\
 Colour1\147,161,161\
