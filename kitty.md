@@ -21,7 +21,7 @@ Colour2\0,43,54\
 Colour3\7,54,66\
 Colour4\0,43,54\
 Colour5\238,232,213\
-Colour6\7,54,66\
+Colour6\0,40,50\
 Colour7\0,64,72\
 Colour8\220,50,47\
 Colour9\203,75,22\
