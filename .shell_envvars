@@ -6,3 +6,4 @@ export EDITOR=vi
 export MOLECULE_NO_LOG=false
 export ANSIBLE_STDOUT_CALLBACK=yaml
 export ANSIBLE_COLOR_DEBUG=blue
+export ANSIBLE_FORCE_COLOR=1
