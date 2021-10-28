@@ -7,6 +7,7 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore-global
+    attributesfile = /home/eskr/.gitattributes
 [alias]
     # Log aliases
     # ###########
@@ -92,6 +93,8 @@
     textconv = odf2prettytxt
     # http://stackoverflow.com/questions/28017249/what-does-diff-mnemonicprefix-do
     mnemonicprefix = true
+[diff "json"]
+         textconv = "cat \"$1\" | json_pp --json_opt=canonical,pretty"
 [diff]
     algorithm = histogram
 # colors
