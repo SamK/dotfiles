@@ -57,10 +57,39 @@ function is_wip(){
 
 }
 
-for repo in *; do
-    if [ -d "$repo" ]; then
-        pushd "$repo" > /dev/null
-        is_wip
-        popd > /dev/null
-    fi
+if [[ $# -eq 0 ]] ; then
+        folder=.
+    else
+        folder="$1"
+fi
+
+function is_git_repo() {
+    folder=$1
+    pushd $folder > /dev/null
+    #>&2 echo "DEBUG: is_git_repo(): current location of is_git_repo: $PWD"
+    git rev-parse --is-inside-work-tree 2>/dev/null
+    return $?
+    R=$?
+    popd > /dev/null
+    return $R
+}
+
+function find_git_repos() {
+    search_folder=$1
+    for git_folder in $(find $search_folder -type d -name .git); do
+        repo=$(dirname $git_folder)
+        if $(is_git_repo "$repo"); then
+            echo $repo
+        else
+            >&2 warning "WARNING: $repo is not a git repository"
+        fi
+    done
+}
+
+for repo in $(find_git_repos $folder); do
+    pushd "$repo" > /dev/null
+    is_wip
+    popd > /dev/null
 done
+
+exit 0
