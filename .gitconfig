@@ -9,6 +9,44 @@
     excludesfile = ~/.gitignore-global
     attributesfile = /home/eskr/.gitattributes
 [alias]
+
+    # Execute un git diff sur un fichier docker-compose.yml
+    # arguments pas supportés
+    diff-docker-compose = "! \
+        GIT_PWD=$PWD/${GIT_PREFIX} && \
+        TEMPDIR=$(mktemp -d --suffix=_docker-compose-diff) && \
+        cd $GIT_PWD && \
+        git docker-compose-config-a > $TEMPDIR/a && \
+        cd $GIT_PWD && \
+        git docker-compose-config-b > $TEMPDIR/b && \
+        diff --color -u $TEMPDIR/a $TEMPDIR/b || \
+        [ \"$?\" = \"1\" ] && \
+        /bin/rm -f \"$TEMPDIR\"/a && \
+        /bin/rm -f \"$TEMPDIR\"/b && \
+        /bin/rmdir \"$TEMPDIR\""
+
+    # private
+    docker-compose-config-a = "! \
+        cd ${GIT_PREFIX} && \
+        TEMPDIR=$(mktemp -d --suffix=_docker-compose-config-a) && \
+        git show HEAD:./docker-compose.override.yml > $TEMPDIR/docker-compose.override.yml && \
+        git show HEAD:../../docker-compose.base.yml  > $TEMPDIR/docker-compose.yml && \
+        cd $TEMPDIR && \
+        docker-compose config && \
+        /bin/rm -f \"$TEMPDIR\"/*.yml && \
+        /bin/rmdir $TEMPDIR"
+
+    # private
+    docker-compose-config-b = "! \
+        cd ${GIT_PREFIX} && \
+        TEMPDIR=$(mktemp -d --suffix=_docker-compose-config-b) && \
+        cat ./docker-compose.override.yml > $TEMPDIR/docker-compose.override.yml && \
+        cat docker-compose.yml  > $TEMPDIR/docker-compose.yml && \
+        cd $TEMPDIR && \
+        docker-compose config && \
+        /bin/rm -f \"$TEMPDIR\"/*.yml && \
+        /bin/rmdir $TEMPDIR"
+
     # Log aliases
     # ###########
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
