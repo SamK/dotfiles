@@ -64,12 +64,12 @@ function is_wip(){
 
     messages_count=${#messages[@]}
     if [ "$messages_count" != "0" ]; then
-        echo "./$repo:"
+        echo "$repo:"
         for i in "${messages[@]}"; do
             warning "    $i"
         done
     else
-        echo -e "./${repo}: ${GREEN}OK${NC}"
+        echo -e "${repo}: ${GREEN}OK${NC}"
     fi
 
 }
