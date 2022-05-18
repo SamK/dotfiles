@@ -27,7 +27,6 @@ function ref_name(){
     else
         ref=$(git rev-parse --short HEAD)
     fi
-    >&2 echo $ref
 
     echo $ref
 
