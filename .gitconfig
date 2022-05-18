@@ -32,6 +32,7 @@
     branch-todel =  branch  --sort=-committerdate --merged
     branch-bydate-asc = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     branch-bydate-desc = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+    branch-by-author = for-each-ref --format=' %(authorname) %09 %(refname)' --sort=authorname
     code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
     grep-fixme = grep 'NOTE\\|OPTIMIZE\\|TODO\\|HACK\\|XXX\\|FIXME\\|BUG'
     fixme = grep-fixme
