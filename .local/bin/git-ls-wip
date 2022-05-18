@@ -14,13 +14,24 @@ function message_ok(){
     echo -e "${GREEN}${*}${NC}"
 }
 
-function branch_name(){
-    # determine the branch name (http://stackoverflow.com/a/1593487)
-    local branch
-    branch="$(git symbolic-ref HEAD 2>/dev/null)" || branch_name=$(git rev-parse --short HEAD)
-    branch=${branch##refs/heads/}
-    echo $branch
-}
+function ref_name(){
+    # determine the ref name (http://stackoverflow.com/a/1593487)
+    local ref=
+    if ref="$(git symbolic-ref HEAD 2>/dev/null)" ; then
+        # i am standing on a branch
+        # cleaning up:
+        ref=${ref##refs/heads/}
+    elif ref=$( git describe --tags --abbrev=0 --exact-match 2>/dev/null) ; then
+        # iam standing on a tag
+        :
+    else
+        ref=$(git rev-parse --short HEAD)
+    fi
+    >&2 echo $ref
+
+    echo $ref
+
+    }
 
 function list_unmerged(){
     git branch --no-merged | tr -d ' ' | grep -E -v "$UNMERGED_IGNORE"
@@ -38,12 +49,12 @@ function is_wip(){
 
     local messages=()
     local ref
-    ref=$(branch_name)
+    ref=$(ref_name)
 
 
     if [ "$WARN_DEFAULT_BRANCH" == "yes" ]; then
         if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
-            messages+=("Current branch is \"$ref\"")
+            messages+=("HEAD is checked out on ref \"$ref\"")
         fi
     fi
 
