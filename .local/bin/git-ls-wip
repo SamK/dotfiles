@@ -20,6 +20,10 @@ function branch_name(){
     echo $branch
 }
 
+function list_unmerged(){
+    git branch --no-merged
+}
+
 function is_wip(){
     # Rules:
     # default branch
@@ -43,9 +47,11 @@ function is_wip(){
         messages+=("$uncommited_count uncommited files")
     fi
 
-    unmerged_count=$(git branch --no-merged | wc -l)
+    unmerged_branches=$(list_unmerged)
+    unmerged_inline=$( echo "$unmerged_branches" | tr '\n' ' ' )
+    unmerged_count=$( echo "$unmerged_branches" | wc -l )
     if [ "$unmerged_count" != "0" ]; then
-        messages+=("$unmerged_count unmerged branches")
+        messages+=("$unmerged_count unmerged branches: $unmerged_inline")
     fi
 
     messages_count=${#messages[@]}
