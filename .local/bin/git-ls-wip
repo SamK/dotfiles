@@ -56,7 +56,7 @@ function is_wip(){
     if [ "$WARN_UNMERGED" == "yes" ]; then
         unmerged_branches=$(list_unmerged)
         unmerged_inline=$( echo "$unmerged_branches" | tr '\n' ' ' )
-        unmerged_count=$( echo "$unmerged_branches" | wc -l )
+        unmerged_count=$( echo -n "$unmerged_branches" | wc -l )
         if [ "$unmerged_count" != "0" ]; then
             messages+=("$unmerged_count unmerged branches: $unmerged_inline")
         fi
