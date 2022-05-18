@@ -5,6 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 UNMERGED_IGNORE='^(hold|paused)/'
 REPO_IGNORE='.disabled$'
+DEFAULT_BRANCH=master
 
 function warning(){
     echo -e "${RED}${*}${NC}"
@@ -33,7 +34,7 @@ function ref_name(){
     }
 
 function list_unmerged(){
-    git branch --no-merged | tr -d ' ' | grep -E -v "$UNMERGED_IGNORE"
+    git branch --no-merged $DEFAULT_BRANCH | tr -d ' ' | grep -E -v "$UNMERGED_IGNORE"
 }
 
 function is_wip(){
