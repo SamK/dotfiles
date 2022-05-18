@@ -38,20 +38,27 @@ function is_wip(){
     local ref
     ref=$(branch_name)
 
-    if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
-        messages+=("Current branch is \"$ref\"")
+
+    if [ "$WARN_DEFAULT_BRANCH" == "yes" ]; then
+        if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
+            messages+=("Current branch is \"$ref\"")
+        fi
     fi
 
-    uncommited_count=$(git status --porcelain | wc -l)
-    if [ "$uncommited_count" != "0" ]; then
-        messages+=("$uncommited_count uncommited files")
+    if [ "$WARN_UNTRACKED" == "yes" ]; then
+        uncommited_count=$(git status --porcelain | wc -l)
+        if [ "$uncommited_count" != "0" ]; then
+            messages+=("$uncommited_count uncommited files")
+        fi
     fi
 
-    unmerged_branches=$(list_unmerged)
-    unmerged_inline=$( echo "$unmerged_branches" | tr '\n' ' ' )
-    unmerged_count=$( echo "$unmerged_branches" | wc -l )
-    if [ "$unmerged_count" != "0" ]; then
-        messages+=("$unmerged_count unmerged branches: $unmerged_inline")
+    if [ "$WARN_UNMERGED" == "yes" ]; then
+        unmerged_branches=$(list_unmerged)
+        unmerged_inline=$( echo "$unmerged_branches" | tr '\n' ' ' )
+        unmerged_count=$( echo "$unmerged_branches" | wc -l )
+        if [ "$unmerged_count" != "0" ]; then
+            messages+=("$unmerged_count unmerged branches: $unmerged_inline")
+        fi
     fi
 
     messages_count=${#messages[@]}
