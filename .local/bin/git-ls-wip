@@ -1,9 +1,9 @@
 #!/bin/bash
 
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+UNMERGED_IGNORE='^hold/' # regex
 
 function warning(){
     echo -e "${RED}${*}${NC}"
@@ -21,7 +21,15 @@ function branch_name(){
     echo $branch
 }
 
+function list_unmerged(){
+    git branch --no-merged | tr -d ' ' | grep -E -v "$UNMERGED_IGNORE"
+}
+
 function is_wip(){
+    # Rules:
+    # default branch
+    # uncommited files
+    # unmerged branches
 
     if [ ! -d .git ]; then
         return
@@ -31,18 +39,27 @@ function is_wip(){
     local ref
     ref=$(branch_name)
 
-    if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
-        messages+=("Current branch is \"$ref\"")
+
+    if [ "$WARN_DEFAULT_BRANCH" == "yes" ]; then
+        if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
+            messages+=("Current branch is \"$ref\"")
+        fi
     fi
 
-    uncommited_count=$(git status --porcelain | wc -l)
-    if [ "$uncommited_count" != "0" ]; then
-        messages+=("$uncommited_count uncommited files")
+    if [ "$WARN_UNTRACKED" == "yes" ]; then
+        uncommited_count=$(git status --porcelain | wc -l)
+        if [ "$uncommited_count" != "0" ]; then
+            messages+=("$uncommited_count uncommited files")
+        fi
     fi
 
-    unmerged_count=$(git branch --no-merged | wc -l)
-    if [ "$unmerged_count" != "0" ]; then
-        messages+=("$unmerged_count unmerged branches")
+    if [ "$WARN_UNMERGED" == "yes" ]; then
+        unmerged_branches=$(list_unmerged)
+        unmerged_inline=$( echo "$unmerged_branches" | tr '\n' ' ' )
+        unmerged_count=$( echo "$unmerged_branches" | wc -l )
+        if [ "$unmerged_count" != "0" ]; then
+            messages+=("$unmerged_count unmerged branches: $unmerged_inline")
+        fi
     fi
 
     messages_count=${#messages[@]}
@@ -57,12 +74,6 @@ function is_wip(){
 
 }
 
-if [[ $# -eq 0 ]] ; then
-        folder=.
-    else
-        folder="$1"
-fi
-
 function is_git_repo() {
     folder=$1
     pushd $folder > /dev/null
@@ -75,7 +86,7 @@ function is_git_repo() {
 }
 
 function find_git_repos() {
-    search_folder=$1
+    search_folder=$@
     for git_folder in $(find $search_folder -type d -name .git); do
         repo=$(dirname $git_folder)
         if $(is_git_repo "$repo"); then
@@ -86,7 +97,56 @@ function find_git_repos() {
     done
 }
 
-for repo in $(find_git_repos $folder); do
+function print_help(){
+    cat << EOF
+$0: List the current state of the repos in the selected directory
+Usage: $0 [OPTIONS] [PATH]
+
+options:
+[PATH]                  the path to scan (default: .)
+--no-default-branch,-b  do not warn when current branch is not on default branch
+--no-untracked,-u       do not warn when untracked files exist
+--no-unmerged,-m        do not warn when unmerged branches exist
+--help,-h               print this help
+EOF
+}
+
+# https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+
+WARN_DEFAULT_BRANCH=yes
+WARN_UNTRACKED=yes
+WARN_UNMERGED=yes
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -b|--no-default-branch)
+      WARN_DEFAULT_BRANCH=no
+      shift
+      ;;
+    -u|--no-untracked)
+      WARN_UNTRACKED=no
+      shift
+      ;;
+    -m|--no-unmerged)
+      WARN_UNMERGED=no
+      shift
+      ;;
+    -h|--help)
+      print_help
+      exit 0
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      FOLDER=$1
+      shift # past argument
+      ;;
+  esac
+done
+
+
+for repo in $(find_git_repos $FOLDER); do
     pushd "$repo" > /dev/null
     is_wip
     popd > /dev/null
