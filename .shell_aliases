@@ -126,13 +126,6 @@ git-diff-raw(){
 # https://python-gitlab.readthedocs.io/en/stable/cli-objects.html
 alias  gitlab="docker run -it --rm -e GITLAB_URL=$GITLAB_URL -e GITLAB_PRIVATE_TOKEN=$GITLAB_PRIVATE_TOKEN registry.gitlab.com/python-gitlab/python-gitlab:latest"
 
-# list my open merge requests on gitlab
-function gitlab-my-mrs () {
-    # see: https://python-gitlab.readthedocs.io/en/stable/cli-objects.html#gitlab-current-user
-    MY_ID=$(gitlab -f id -o json current-user get | jq .id)
-    gitlab -f id,name,title,web_url,state,source_branch -o yaml merge-request  list  --author-id $MY_ID --state opened
-}
-
 # list my starred projects
 alias gitlab-my-projects="gitlab -f id,name,web_url -o yaml project list --starred true --per-page 100"
 
