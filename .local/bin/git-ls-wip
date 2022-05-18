@@ -3,7 +3,7 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-UNMERGED_IGNORE='^(hold|paused)/'
+UNMERGED_IGNORE='^(hold/|paused/|develop)'
 REPO_IGNORE='.disabled$'
 DEFAULT_BRANCH=master
 
