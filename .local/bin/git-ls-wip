@@ -80,8 +80,10 @@ function is_wip(){
         for i in "${messages[@]}"; do
             warning "    $i"
         done
+        return 1
     else
         echo -e "${repo}: ${GREEN}OK${NC}"
+        return 0
     fi
 
 }
@@ -160,11 +162,18 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-
+TOTAL_OK=0
+TOTAL_REPOS=0
 for repo in $(find_git_repos $FOLDER); do
     pushd "$repo" > /dev/null
     is_wip
+    if [ "$?" == "0" ]; then
+        TOTAL_OK=$((TOTAL_OK+1))
+    fi
+    TOTAL_REPOS=$((TOTAL_REPOS+1))
     popd > /dev/null
 done
+
+echo Repos OK: $TOTAL_OK/$TOTAL_REPOS
 
 exit 0
