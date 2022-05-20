@@ -157,12 +157,13 @@ alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.
 # json validation
 alias json-check='json_pp'
 
-alias ansible-playbook-name='python3 -c "import yaml,sys;y=yaml.safe_load(sys.stdin)[0]; print(y[\"name\"] if \"name\" in y else \"\")"'
 function ansible-playbooks-describe() {
+    alias ansible-playbook-name='python3 -c "import yaml,sys;y=yaml.safe_load(sys.stdin)[0]; print(y[\"name\"] if \"name\" in y else \"\")"'
     for F in $*; do
         echo -n "${CYAN}$F${NOCOLOR}: "
         ansible-playbook-name < $F
-        grep --color=never '^\#.*$' < $F
+        echo
+        grep --color=never '^\#.*$' < $F | sed  -E 's/^# ?//'
     done
 }
 
