@@ -1,6 +1,8 @@
 # zsh vi mode: disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
 export KEYTIMEOUT=10
-LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL="en_US.UTF-8"
+export LC_TIME="en_GB.UTF-8"
 export VISUAL=vi
 export EDITOR=vi
 export MOLECULE_NO_LOG=false
