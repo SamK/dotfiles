@@ -70,7 +70,7 @@ PATH=~/.local/bin:"$PATH"
 
 # History
 HISTFILE=~/.histfile
-SAVEHIST=10000
+SAVEHIST=40000
 HISTSIZE=$SAVEHIST
 
 # ZSH options index: http://zsh.sourceforge.net/Doc/Release/Options-Index.html
