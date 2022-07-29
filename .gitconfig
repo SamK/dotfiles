@@ -77,6 +77,7 @@
     authors = shortlog -s -n --all --no-merges
 
     # Human commands
+    note = notes
     tags = tag -n9
     branches = branch -a
     stashes = stash list
