@@ -2,17 +2,22 @@
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 UNMERGED_IGNORE='^(hold/|paused/|develop)'
 REPO_IGNORE='.disabled$'
 DEFAULT_BRANCH=master
 
-function warning(){
-    echo -e "${RED}${*}${NC}"
+function message_warning(){
+    echo -e "    ${RED}${*}${NC}"
+}
+
+function message_notice(){
+    echo -e "    ${BLUE}${*}${NC}"
 }
 
 function message_ok(){
-    echo -e "${GREEN}${*}${NC}"
+    echo -e "    ${GREEN}${*}${NC}"
 }
 
 function ref_name(){
@@ -47,43 +52,60 @@ function is_wip(){
         return
     fi
 
-    local messages=()
     local ref
     ref=$(ref_name)
 
 
+    local default_branch_count=0
+    local default_branch_message=""
     if [ "$WARN_DEFAULT_BRANCH" == "yes" ]; then
         if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
-            messages+=("HEAD is checked out on ref \"$ref\"")
+            default_branch_count=1
+            default_branch_message="HEAD is checked out on ref \"$ref\""
         fi
     fi
 
+    local uncommited_count=0
+    local uncommited_message=""
     if [ "$WARN_UNTRACKED" == "yes" ]; then
         uncommited_count=$(git status --porcelain | wc -l)
         if [ "$uncommited_count" != "0" ]; then
-            messages+=("$uncommited_count uncommited files")
+            uncommited_message="$uncommited_count uncommited files"
         fi
     fi
 
+    local unmerged_count=0
+    local unmerged_message=""
     if [ "$WARN_UNMERGED" == "yes" ]; then
         unmerged_branches=$(list_unmerged)
-        unmerged_count=$( echo "$unmerged_branches" | wc -l )
+        if [ -n "$unmerged_branches" ]; then
+            unmerged_count=$( echo "$unmerged_branches" | wc -l )
+        fi
         unmerged_inline=$( echo -n "$unmerged_branches" | tr '\n' ' ' )
         if [ -n "$unmerged_inline" ]; then
-            messages+=("$unmerged_count unmerged branches: $unmerged_inline")
+            unmerged_message="$unmerged_count unmerged branches: $unmerged_inline"
         fi
     fi
 
-    messages_count=${#messages[@]}
-    if [ "$messages_count" != "0" ]; then
-        echo "$repo:"
-        for i in "${messages[@]}"; do
-            warning "    $i"
-        done
-        return 1
-    else
+    total_count=$(( $default_branch_count + $uncommited_count + $unmerged_count))
+    if [ "$total_count" = "0" ]; then
         echo -e "${repo}: ${GREEN}OK${NC}"
         return 0
+    else
+        echo "$repo:"
+        if [ "$default_branch_count" != 0 ]; then
+            message_warning "$default_branch_message"
+        fi
+
+        if [ "$uncommited_count" != 0 ]; then
+            message_warning "$uncommited_message"
+        fi
+
+        if [ "$unmerged_count" != 0 ]; then
+            message_notice "$unmerged_message"
+        fi
+
+        return 1
     fi
 
 }
