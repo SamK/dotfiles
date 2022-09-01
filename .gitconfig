@@ -122,6 +122,7 @@
     rid = rebase -i develop
     riH = rebase -i HEAD
     riom = rebase -i origin/master
+    rom = rebase origin/master
     riod = rebase -i origin/develop
     rioH = rebase -i origin/HEAD
 [credential]
