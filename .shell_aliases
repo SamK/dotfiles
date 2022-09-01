@@ -167,10 +167,25 @@ function ansible-playbooks-describe() {
     done
 }
 
-# virtualenv
-function activate() { . ~/.virtualenvs/$1/bin/activate || ( echo Available virtualenvs: ; ls -1 ~/.virtualenvs ); }
-_activate() { _directories  -W ~/.virtualenvs; }
-compdef _activate activate
+function venvs-path(){
+    echo ~/.virtualenvs
+}
+
+# create virtualenv
+function venv-create (){
+    local venv_path=$(venvs-path)/"$1"
+    python3 -m venv $venv_path
+}
+# activate virtualenv
+function venv-activate() {
+    local venv_path=$(venvs-path)/"$1"
+    . $venv_path/bin/activate || ( echo Available virtualenvs: ; ls -1 $(venvs-path) )
+}
+
+alias venv-deactivate deactivate
+
+_venv_activate() { _directories  -W $(venvs-path); }
+compdef _venv_activate venv-activate
 
 # network 
 
