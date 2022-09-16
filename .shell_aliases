@@ -257,8 +257,8 @@ if [[ $(uname -r) == *"WSL2" ]]; then
     # /etc/sudoers.d/wsl2:
     # %adm ALL = NOPASSWD: /usr/sbin/service ssh *
     # %adm ALL = NOPASSWD: /usr/sbin/service docker *
-    sudo service docker status || sudo service docker start
-    sudo service ssh status || sudo service ssh start
+    service docker status || sudo service docker start
+    service ssh status || sudo service ssh start
 fi
 
 
