@@ -65,6 +65,9 @@ download https://github.com/docker/compose/releases/download/1.29.2/docker-compo
 download https://github.com/docker/compose/releases/download/v2.11.1/docker-compose-linux-x86_64 ~/.local/bin/docker-compose-2.11.1 +x
 create_symlink docker-compose-1.29.2 ~/.local/bin/docker-compose
 
+# yq
+download https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_amd64 ~/.local/bin/yq +x
+
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 create_dotlink .zshrc
