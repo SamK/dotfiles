@@ -214,6 +214,11 @@ create_symlink $PWD/tmp/willgit/bin/git-wtf ~/.local/bin/git-wtf
 gitget https://github.com/mhagger/git-when-merged.git ./tmp/git-when-merged
 create_symlink $PWD/tmp/git-when-merged/bin/git-when-merged ~/.local/bin/git-when-merged
 
+# Docker Compose
+download https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64 ~/.local/bin/docker-compose-1.29.2 +x
+download https://github.com/docker/compose/releases/download/v2.11.1/docker-compose-linux-x86_64 ~/.local/bin/docker-compose-2.11.1 +x
+create_symlink docker-compose-1.29.2 ~/.local/bin/docker-compose
+
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 create_dotlink .zshrc
