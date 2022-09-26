@@ -231,8 +231,7 @@ if [ "$OFFLINE" == "yes" ]; then
     echo "Skipping installation of borg completion!"
 else
 echo "Downloading borg completion..."
-    curl --show-error --silent https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
-    > .zsh/zsh-completions/src/_borg
+    download https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg .zsh/zsh-completions/src/_borg
 fi
 
 title Vim
