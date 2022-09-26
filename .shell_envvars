@@ -1,8 +1,8 @@
 # zsh vi mode: disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
 export KEYTIMEOUT=10
 export LANG=en_US.UTF-8
-export LC_ALL="en_US.UTF-8"
-export LC_TIME="en_GB.UTF-8"
+export LC_TIME="en_DK.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 export VISUAL=vi
 export EDITOR=vi
 export MOLECULE_NO_LOG=false
@@ -10,4 +10,5 @@ export ANSIBLE_STDOUT_CALLBACK=yaml
 export ANSIBLE_COLOR_DEBUG=blue
 export ANSIBLE_FORCE_COLOR=1
 export LESS="-RFXi"
+export LESSCHARSET=UTF-8
 export GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=~/.ssh/git_known_hosts -o StrictHostKeyChecking=no'

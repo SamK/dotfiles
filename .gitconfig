@@ -8,6 +8,7 @@
     editor = vim
     excludesfile = ~/.gitignore-global
     attributesfile = /home/eskr/.gitattributes
+    quotepath = false
 [alias]
 
     # Execute un git diff sur un fichier docker-compose.yml
