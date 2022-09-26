@@ -30,44 +30,53 @@ error() {
     EXIT_CODE=63
 }
 
-create_symlink() {
+alias mime='file --no-dereference  --mime-type  --brief'
+
+create_symlink() (
     TARGET="$1"
     SYMLINK="$2"
 
-    # Checking repo health
+    cd $(dirname $SYMLINK)
+    # step 1: fix errors and special cases
+
+    # Checking target existence
     if [ ! -e "$TARGET" ]; then
         error "\"$TARGET\" does not exist ?!"
         return 1
     fi
 
-    # Checking symlink health
-    if [ -f $SYMLINK ] && [ ! -L $SYMLINK ]; then
-        if ! diff -qr "$SYMLINK" "$TARGET" > /dev/null ; then
-            echo "WARNING: Skipping locally edited file: \"$SYMLINK\""
-            return 0
-        fi
-    fi
-
-    mime=$(file --no-dereference  --mime-type  --brief $SYMLINK)
-
-    if [ "$mime" = "inode/directory" ]; then
+    # Fail when wanted symlink is a directory.
+    # Something is wrong and requires manual intervention.
+    if [ -d "$SYMLINK" ] && [ "$(mime $SYMLINK)" = "inode/directory" ]; then
         error "ERROR creating $SYMLINK: I am not replacing a folder"
         return 1
     fi
 
-    # Install symlink
-    if [ "$mime" != "inode/symlink" ]; then
-        if [ -f $SYMLINK ]; then
-            echo "Forcing creation of $SYMLINK"
-            /bin/rm  "$SYMLINK"
+    # step 2: update symlink when necessary (=rm file)
+    if [ -f $SYMLINK ]; then
+        # special case where the wanted symlink is a plain file and
+        # different than the target
+        if [ ! -L $SYMLINK ] && ! diff -qr "$SYMLINK" "$TARGET" > /dev/null ; then
+            echo "WARNING: Skipping locally edited file: \"$SYMLINK\""
+            return 0
         fi
+
+        current_target=$(readlink -f "$SYMLINK")
+        wanted_target=$(realpath $TARGET)
+
+        if [ "$current_target" != "$wanted_target" ]; then
+            echo "Updating symlink from $current_target to $TARGET"
+            /bin/rm -v "$SYMLINK"
+        fi
+    fi
+
+    # create the symlink if necessary
+    if [ ! -e "$SYMLINK" ]; then
         ln --verbose -s "$TARGET" "$SYMLINK"
     else
         echo $SYMLINK already installed
     fi
-
-}
-
+)
 
 create_dotlink() {
     SYMLINK=$HOME/$1
@@ -149,6 +158,24 @@ function gist() {
     gitget https://gist.github.com/$gist_id.git ./tmp/$gist_id
 }
 
+function download() {
+    local src="$1"
+    local dest="$2"
+    local perms="$3"
+
+    if [ -f $dest ]; then
+        echo "File $dest already exists"
+        return 0
+    fi
+
+    echo Downloading $src
+    curl --fail --location --no-progress-meter "$src" --output "$dest"
+
+    if [ -n "$perms" ]; then
+        chmod -v "$perms" "$dest"
+    fi
+}
+
 title "Installing dot files..."
 
 create_dotlink .shell_aliases
@@ -187,6 +214,11 @@ create_symlink $PWD/tmp/willgit/bin/git-wtf ~/.local/bin/git-wtf
 gitget https://github.com/mhagger/git-when-merged.git ./tmp/git-when-merged
 create_symlink $PWD/tmp/git-when-merged/bin/git-when-merged ~/.local/bin/git-when-merged
 
+# Docker Compose
+download https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64 ~/.local/bin/docker-compose-1.29.2 +x
+download https://github.com/docker/compose/releases/download/v2.11.1/docker-compose-linux-x86_64 ~/.local/bin/docker-compose-2.11.1 +x
+create_symlink docker-compose-1.29.2 ~/.local/bin/docker-compose
+
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 create_dotlink .zshrc
@@ -204,8 +236,7 @@ if [ "$OFFLINE" == "yes" ]; then
     echo "Skipping installation of borg completion!"
 else
 echo "Downloading borg completion..."
-    curl --show-error --silent https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg \
-    > .zsh/zsh-completions/src/_borg
+    download https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg .zsh/zsh-completions/src/_borg
 fi
 
 title Vim
