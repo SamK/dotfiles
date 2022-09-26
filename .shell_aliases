@@ -32,6 +32,7 @@ alias l='ls --color=auto -hlF --group-directories-first'
 alias la='LC_COLLATE="C" l -A'
 alias cp="cp -i"
 alias mv="mv -i"
+alias cal='ncal -bM'
 
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
