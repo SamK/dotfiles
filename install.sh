@@ -30,44 +30,53 @@ error() {
     EXIT_CODE=63
 }
 
-create_symlink() {
+alias mime='file --no-dereference  --mime-type  --brief'
+
+create_symlink() (
     TARGET="$1"
     SYMLINK="$2"
 
-    # Checking repo health
+    cd $(dirname $SYMLINK)
+    # step 1: fix errors and special cases
+
+    # Checking target existence
     if [ ! -e "$TARGET" ]; then
         error "\"$TARGET\" does not exist ?!"
         return 1
     fi
 
-    # Checking symlink health
-    if [ -f $SYMLINK ] && [ ! -L $SYMLINK ]; then
-        if ! diff -qr "$SYMLINK" "$TARGET" > /dev/null ; then
-            echo "WARNING: Skipping locally edited file: \"$SYMLINK\""
-            return 0
-        fi
-    fi
-
-    mime=$(file --no-dereference  --mime-type  --brief $SYMLINK)
-
-    if [ "$mime" = "inode/directory" ]; then
+    # Fail when wanted symlink is a directory.
+    # Something is wrong and requires manual intervention.
+    if [ -d "$SYMLINK" ] && [ "$(mime $SYMLINK)" = "inode/directory" ]; then
         error "ERROR creating $SYMLINK: I am not replacing a folder"
         return 1
     fi
 
-    # Install symlink
-    if [ "$mime" != "inode/symlink" ]; then
-        if [ -f $SYMLINK ]; then
-            echo "Forcing creation of $SYMLINK"
-            /bin/rm  "$SYMLINK"
+    # step 2: update symlink when necessary (=rm file)
+    if [ -f $SYMLINK ]; then
+        # special case where the wanted symlink is a plain file and
+        # different than the target
+        if [ ! -L $SYMLINK ] && ! diff -qr "$SYMLINK" "$TARGET" > /dev/null ; then
+            echo "WARNING: Skipping locally edited file: \"$SYMLINK\""
+            return 0
         fi
+
+        current_target=$(readlink -f "$SYMLINK")
+        wanted_target=$(realpath $TARGET)
+
+        if [ "$current_target" != "$wanted_target" ]; then
+            echo "Updating symlink from $current_target to $TARGET"
+            /bin/rm -v "$SYMLINK"
+        fi
+    fi
+
+    # create the symlink if necessary
+    if [ ! -e "$SYMLINK" ]; then
         ln --verbose -s "$TARGET" "$SYMLINK"
     else
         echo $SYMLINK already installed
     fi
-
-}
-
+)
 
 create_dotlink() {
     SYMLINK=$HOME/$1
