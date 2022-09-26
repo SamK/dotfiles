@@ -158,6 +158,24 @@ function gist() {
     gitget https://gist.github.com/$gist_id.git ./tmp/$gist_id
 }
 
+function download() {
+    local src="$1"
+    local dest="$2"
+    local perms="$3"
+
+    if [ -f $dest ]; then
+        echo "File $dest already exists"
+        return 0
+    fi
+
+    echo Downloading $src
+    curl --fail --location --no-progress-meter "$src" --output "$dest"
+
+    if [ -n "$perms" ]; then
+        chmod -v "$perms" "$dest"
+    fi
+}
+
 title "Installing dot files..."
 
 create_dotlink .shell_aliases
