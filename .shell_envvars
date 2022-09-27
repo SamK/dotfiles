@@ -1,3 +1,4 @@
+export PATH=~/.local/bin:~/.go/bin:"$PATH"
 # zsh vi mode: disable ESC delay when switch to normal mode (default: 40 = 0.4sec)
 export KEYTIMEOUT=10
 export LANG=en_US.UTF-8

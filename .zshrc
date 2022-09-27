@@ -66,8 +66,6 @@ bindkey -s "^[OS" "-"
 bindkey -s "^[OR" "*"
 bindkey -s "^[OQ" "/"
 
-PATH=~/.local/bin:"$PATH"
-
 # History
 HISTFILE=~/.histfile
 SAVEHIST=40000
