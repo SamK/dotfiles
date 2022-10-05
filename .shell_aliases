@@ -32,7 +32,7 @@ alias l='ls --color=auto -hlF --group-directories-first'
 alias la='LC_COLLATE="C" l -A'
 alias cp="cp -i"
 alias mv="mv -i"
-alias cal='ncal -bM'
+alias cal='LC_TIME=fr_CH.UTF-8 ncal -bM'
 
 # cl = cd + ls
 function cl() { cd "$@" && /bin/ls -lh --color ;}
