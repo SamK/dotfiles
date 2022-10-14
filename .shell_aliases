@@ -166,6 +166,10 @@ function treeless(){
     tree -C $* | less
 }
 
+# Packer
+alias packer='docker run hashicorp/packer:light'
+alias packer-1.8.3='docker run hashicorp/packer:light-1.8.3'
+
 # yaml validation
 # requires a file as argument
 function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
