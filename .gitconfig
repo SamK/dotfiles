@@ -93,6 +93,7 @@
     diff-chars = diff --color-words --word-diff-regex=.
     diff-words = diff --color-words --word-diff-regex='\\w+|.'
     refresh-remote-branches = "!for r in $(git remote) ; do git remote update $r --prune ; done"
+    blame-no-textconv = blame --no-textconv
 
     # Faster typing
     st = status
@@ -165,3 +166,5 @@
 #[diff "ansible-vault"]
 #	textconv = ansible-vault view --vault-pass-file FILE1 --vault-pass-file FILE2
 ### EOF ###
+[init]
+	defaultBranch = master

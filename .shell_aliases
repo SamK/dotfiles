@@ -1,202 +1,25 @@
 # NE PAS EDITER
 # Source: https://github.com/SamK/dotfiles/
+# Contient les aliases et fonctions aussi
 
 # TOC:
 #
-# 1. correction aliases
-# 2. daily aliases and commands
-# 4. color support
-# 5. system
-# 6. local aliases
+# 1. color support
+# 2. correction aliases
+# 3. daily aliases and commands
+# 4. commandes métier
+# 5. Git
+# 6. system
+# 7. local aliases
+
+#
+# 1. color support
+#
 
 # colors https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 local RED='\033[0;31m'
 local CYAN='\033[0;36m'
 local NOCOLOR='\033[0m'
-
-# 1. correction aliases
-alias gerp='grep'
-alias iv='vi'
-alias vu='vi'
-alias vo='vi'
-alias sudp='sudo'
-
-#
-# 2. daily aliases and commands
-#
-
-# ls
-alias ll='ls -lhF'
-alias tree='LC_COLLATE=C tree --dirsfirst -F'
-alias l='ls --color=auto -hlF --group-directories-first'
-alias la='LC_COLLATE="C" l -A'
-alias cp="cp -i"
-alias mv="mv -i"
-alias cal='LC_TIME=fr_CH.UTF-8 ncal -bM'
-
-# cl = cd + ls
-function cl() { cd "$@" && /bin/ls -lh --color ;}
-
-alias tmux='TERM=xterm-256color /usr/bin/tmux'
-alias ack='ack-grep'
-
-tmux-reattach () {
-    AS=$(tmux ls -F '#{session_attached} #{session_name}' | grep -v '^0' | cut -d ' ' -f 2-)
-    tmux a -d -t "$AS"
-}
-
-# find
-findxsvn () {
-    local searchdir=$1
-    shift
-    find $searchdir -not -iwholename ".svn" $@
-}
-
-function dudir() {
-    du -hs $( ls -A $1 ) | sort -h
-}
-
-# When using sudo, use alias expansion (otherwise sudo ignores your aliases)
-alias sudo='sudo '
-
-# cd + ls = cl
-function cl() { cd "$@" && /bin/ls -lh --color  ;}
-
-# Remove comments from config file
-alias cleanconf="sed -e 's/[#;].*//;/^\s*$/d' "$@""
-
-# desktop application "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# nice history (zsh only)
-alias hist='fc -liD 1 | less -R +G'
-
-# subversion
-svn-diff() { svn diff "${@}" | colordiff | less -R; }
-
-# configure git selon un fichier local
-gitconfig-local () {
-    cdir=$HOME
-    prefix='.gitconfig.local'
-    current=$(readlink $cdir/$prefix)
-    if [ -z "$1" ]; then
-        for filename in $( /bin/ls -1 $cdir/${prefix}.* ); do
-            f=$( basename $filename )
-            f=$( echo "$f" | sed "s/$prefix//" | sed 's/^\.//' )
-            echo -n "$f"
-            if [[ "$filename" == "$current" ]]; then
-                echo -n '*'
-            fi
-            echo ''
-        done
-    else
-        if [ ! -f "${cdir}/${prefix}.${1}" ] ; then
-            echo "Notice: The file "${cdir}/${prefix}.${1}" does not exist." >&2
-        fi
-        ln -f  -s ${cdir}/${prefix}.${1} ${cdir}/.gitconfig.local
-    fi
-}
-
-# Git aliases
-alias g='git'
-alias qgit='git'
-alias ggit='git'
-alias gti='git'
-# initalias a git repo with an empty commit
-alias git-init='git init && git commit --allow-empty -m "Initial commit"'
-# display the current branch name
-alias git-branch='git rev-parse --abbrev-ref HEAD'
-alias gapa="git add --patch"
-alias gl="git lgl"
-# reads a string from stdin and make it compatible with a branch name
-alias git-name-branch="sed -r -e 's/[^A-Za-z0-9/\-]/ /g' -e 's/\s+/_/g' -e 's/^[^A-Za-z0-9]+//g' -e 's/[^a-zA-Z0-9]+$//g'"
-                                 # remplacer les caracteres mal aimés par des espaces
-                                                            # les espaces deviennent des underscore
-                                                                           # Nettoyer le debut de la chaine
-                                                                                                     # nettoyer la fin de la chaine
-
-git-diff-raw(){
-    COMMIT1=$1
-    COMMIT2=$2
-    diff <(git show --format=raw $COMMIT1) <(git show --format=raw $COMMIT2)
-}
-
-# gitlab: execute python-gitlab
-# https://python-gitlab.readthedocs.io/en/stable/cli-usage.html
-# https://python-gitlab.readthedocs.io/en/stable/cli-objects.html
-alias  gitlab="docker run -it --rm -e GITLAB_URL=$GITLAB_URL -e GITLAB_PRIVATE_TOKEN=$GITLAB_PRIVATE_TOKEN registry.gitlab.com/python-gitlab/python-gitlab:latest"
-
-# list my starred projects
-alias gitlab-my-projects="gitlab -f id,name,web_url -o yaml project list --starred true --per-page 100"
-
-# list all my branches
-# but much slower than "gitlab-samkli mybr"
-function gitlab-my-branches () {
-    MY_NAME=$(gitlab -o json current-user get | jq -r .name)
-    PROJECTS=$(gitlab -f id -o json project list --starred true --per-page 100| jq '.[].id')
-    for PROJECT_ID in $PROJECTS; do
-        # todo: produire un json valide
-        gitlab -o json project-branch list --project-id $PROJECT_ID > /tmp/branches
-        jq ".[] | select(.commit.author_name==\"$MY_NAME\" and .name!=\"master\")" < /tmp/branches > /tmp/my-branches
-        jq ". | {name: .name, web_url: .web_url, project_name: \"$PROJECT_ID\"}" < /tmp/my-branches || cat /tmp/my-branches
-        /bin/rm /tmp/branches /tmp/my-branches
-    done
-}
-
-# yaml validation
-# requires a file as argument
-function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
-
-# validate yaml
-alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
-# convert from yaml to python
-alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
-# read yaml and print yaml
-alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.stdin))))"'
-
-# json validation
-alias json-check='json_pp'
-
-alias _ansible-playbook-name='python3 -c "import yaml,sys;y=yaml.safe_load(sys.stdin)[0]; print(y[\"name\"] if \"name\" in y else \"\")"'
-function ansible-playbooks-describe() {
-    for F in $*; do
-        echo -n "${CYAN}$F${NOCOLOR}: "
-        _ansible-playbook-name < $F
-        echo
-        grep --color=never '^\#.*$' < $F | sed  -E 's/^# ?//'
-    done
-}
-
-function venvs-path(){
-    echo ~/.virtualenvs
-}
-
-# create virtualenv
-function venv-create (){
-    local venv_path=$(venvs-path)/"$1"
-    python3 -m venv $venv_path
-}
-# activate virtualenv
-function venv-activate() {
-    local venv_path=$(venvs-path)/"$1"
-    . $venv_path/bin/activate || ( echo Available virtualenvs: ; ls -1 $(venvs-path) )
-}
-
-alias venv-deactivate deactivate
-
-_venv_activate() { _directories  -W $(venvs-path); }
-compdef _venv_activate venv-activate
-
-# network 
-
-alias stracenet="strace -f -e trace=network -s 10000"
-alias resolveip="resolveip -s"
-alias digs="dig +search"
-
-#
-# 4. color support
-#
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -244,6 +67,209 @@ man() {
     man "$@"
 }
 
+#
+# 2. correction aliases
+#
+alias gerp='grep'
+alias iv='vi'
+alias vu='vi'
+alias vo='vi'
+alias sudp='sudo'
+
+#
+# 3. daily aliases and commands
+#
+
+alias ll='ls -lhF'
+alias tree='LC_COLLATE=C tree --dirsfirst -F'
+alias l='ls --color=auto -hlF --group-directories-first'
+alias la='LC_COLLATE="C" l -A'
+alias cp="cp -i"
+alias mv="mv -i"
+alias cal='LC_TIME=fr_CH.UTF-8 ncal -bM'
+
+# cl = cd + ls
+function cl() { cd "$@" && /bin/ls -lh --color ;}
+
+alias tmux='TERM=xterm-256color /usr/bin/tmux'
+alias ack='ack-grep'
+
+tmux-reattach () {
+    AS=$(tmux ls -F '#{session_attached} #{session_name}' | grep -v '^0' | cut -d ' ' -f 2-)
+    tmux a -d -t "$AS"
+}
+
+# find
+findxsvn () {
+    local searchdir=$1
+    shift
+    find $searchdir -not -iwholename ".svn" $@
+}
+
+function dudir() {
+    du -hs $( ls -A $1 ) | sort -h
+}
+
+# When using sudo, use alias expansion (otherwise sudo ignores your aliases)
+alias sudo='sudo '
+
+# cd + ls = cl
+function cl() { cd "$@" && /bin/ls -lh --color  ;}
+
+# Remove comments from config file
+alias cleanconf="sed -e 's/[#;].*//;/^\s*$/d' "$@""
+
+# desktop application "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# nice history (zsh only)
+alias hist='fc -liD 1 | less -R +G'
+
+#
+# 4. commandes métier
+#
+
+# subversion
+svn-diff() { svn diff "${@}" | colordiff | less -R; }
+
+# configure git selon un fichier local
+gitconfig-local () {
+    cdir=$HOME
+    prefix='.gitconfig.local'
+    current=$(readlink $cdir/$prefix)
+    if [ -z "$1" ]; then
+        for filename in $( /bin/ls -1 $cdir/${prefix}.* ); do
+            f=$( basename $filename )
+            f=$( echo "$f" | sed "s/$prefix//" | sed 's/^\.//' )
+            echo -n "$f"
+            if [[ "$filename" == "$current" ]]; then
+                echo -n '*'
+            fi
+            echo ''
+        done
+    else
+        if [ ! -f "${cdir}/${prefix}.${1}" ] ; then
+            echo "Notice: The file "${cdir}/${prefix}.${1}" does not exist." >&2
+        fi
+        ln -f  -s ${cdir}/${prefix}.${1} ${cdir}/.gitconfig.local
+    fi
+}
+
+# jq dans less
+function jqless (){
+    jq -C $* | less -R
+}
+
+# tree dans less
+function treeless(){
+    tree -C $* | less
+}
+
+# Packer
+alias packer='docker run hashicorp/packer:light'
+alias packer-1.8.3='docker run hashicorp/packer:light-1.8.3'
+
+# yaml validation
+# requires a file as argument
+function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
+
+# validate yaml
+alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
+# convert from yaml to python
+alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
+# read yaml and print yaml
+alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.stdin))))"'
+
+# json validation
+alias json-check='json_pp'
+
+alias _ansible-playbook-name='python3 -c "import yaml,sys;y=yaml.safe_load(sys.stdin)[0]; print(y[\"name\"] if \"name\" in y else \"\")"'
+function ansible-playbooks-describe() {
+    for F in $*; do
+        echo -n "${CYAN}$F${NOCOLOR}: "
+        _ansible-playbook-name < $F
+        echo
+        grep --color=never '^\#.*$' < $F | sed  -E 's/^# ?//'
+    done
+}
+
+function venvs-path(){
+    echo ~/.virtualenvs
+}
+
+# create virtualenv
+function venv-create (){
+    local venv_path=$(venvs-path)/"$1"
+    python3 -m venv $venv_path
+}
+# activate virtualenv
+function venv-activate() {
+    local venv_path=$(venvs-path)/"$1"
+    . $venv_path/bin/activate || ( echo Available virtualenvs: ; ls -1 $(venvs-path) )
+}
+
+alias venv-deactivate='deactivate'
+
+_venv_activate() { _directories  -W $(venvs-path); }
+compdef _venv_activate venv-activate
+
+#
+# 5. Git
+#
+
+alias g='git'
+alias qgit='git'
+alias ggit='git'
+alias gti='git'
+# initalias a git repo with an empty commit
+alias git-init='git init && git commit --allow-empty -m "Initial commit"'
+# display the current branch name
+alias git-branch='git rev-parse --abbrev-ref HEAD'
+alias gapa="git add --patch"
+alias gl="git lgl"
+# reads a string from stdin and make it compatible with a branch name
+alias git-name-branch="sed -r -e 's/[^A-Za-z0-9/\-]/ /g' -e 's/\s+/_/g' -e 's/^[^A-Za-z0-9]+//g' -e 's/[^a-zA-Z0-9]+$//g'"
+                                 # remplacer les caracteres mal aimés par des espaces
+                                                            # les espaces deviennent des underscore
+                                                                           # Nettoyer le debut de la chaine
+                                                                                                     # nettoyer la fin de la chaine
+
+git-diff-raw(){
+    COMMIT1=$1
+    COMMIT2=$2
+    diff <(git show --format=raw $COMMIT1) <(git show --format=raw $COMMIT2)
+}
+
+# gitlab: execute python-gitlab
+# https://python-gitlab.readthedocs.io/en/stable/cli-usage.html
+# https://python-gitlab.readthedocs.io/en/stable/cli-objects.html
+alias  gitlab="docker run -it --rm -e GITLAB_URL=$GITLAB_URL -e GITLAB_PRIVATE_TOKEN=$GITLAB_PRIVATE_TOKEN registry.gitlab.com/python-gitlab/python-gitlab:latest"
+
+# list my starred projects
+alias gitlab-my-projects="gitlab -f id,name,web_url -o yaml project list --starred true --per-page 100"
+
+# list all my branches
+# but much slower than "gitlab-samkli mybr"
+function gitlab-my-branches () {
+    MY_NAME=$(gitlab -o json current-user get | jq -r .name)
+    PROJECTS=$(gitlab -f id -o json project list --starred true --per-page 100| jq '.[].id')
+    for PROJECT_ID in $PROJECTS; do
+        # todo: produire un json valide
+        gitlab -o json project-branch list --project-id $PROJECT_ID > /tmp/branches
+        jq ".[] | select(.commit.author_name==\"$MY_NAME\" and .name!=\"master\")" < /tmp/branches > /tmp/my-branches
+        jq ". | {name: .name, web_url: .web_url, project_name: \"$PROJECT_ID\"}" < /tmp/my-branches || cat /tmp/my-branches
+        /bin/rm /tmp/branches /tmp/my-branches
+    done
+}
+
+
+# network
+
+alias stracenet="strace -f -e trace=network -s 10000"
+alias resolveip="resolveip -s"
+alias digs="dig +search"
+
 ssh-agent-enable(){
     if ! ssh-add -l; then
         [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_rsa
@@ -252,7 +278,9 @@ ssh-agent-enable(){
     fi
 }
 
-# 5. System
+#
+# 6. System
+#
 
 if [[ $(uname -r) == *"WSL2" ]]; then
     # /etc/sudoers.d/wsl2:
@@ -262,8 +290,10 @@ if [[ $(uname -r) == *"WSL2" ]]; then
     service ssh status || sudo service ssh start
 fi
 
+#
+# 7. local aliases
+#
 
-# 6. local aliases
 if [ -f ~/.shell_aliases.local ]; then
     source ~/.shell_aliases.local
 fi
@@ -271,6 +301,3 @@ fi
 #
 # END
 #
-
-
-
