@@ -97,7 +97,12 @@ gitget() {
             exit 1
         else
             echo "Downloading from $url into $folder..."
-            git clone $url $folder
+            set -x
+            BRANCH=""
+            if [ -n "$git_ref" ]; then
+                BRANCH="--BRANCH $git_ref"
+            fi
+            git clone --depth 1 $BRANCH $url $folder
             cd $folder
         fi
     fi
