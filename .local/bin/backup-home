@@ -1,0 +1,223 @@
+#!/bin/bash
+# https://borgbackup.readthedocs.io/en/1.2.2/installation.html
+set -o pipefail
+
+set -e
+
+export BORG_REPO=/mnt/backup/borgbackup-eskr
+export BORG_PASSPHRASE=''
+
+DATA_DIR=$HOME
+PREFIX='{hostname}-eskr-'
+
+EXPORT_PATH=/mnt/c/Users/eskr/wsl2-backup
+EXPORT_FILENAME=wsl2-backup-tar.gz
+
+CHECK_MAX_AGE=3
+CHECK_FILENAME=~/.cache/backup-home.verify
+
+LOCK_FILENAME=~/.cache/backup-home.lock
+
+LOCKFD=99
+
+# create 10GB file:
+# IMAGE=/mnt/c/Users/$USER/linux-backup.iso
+# dd if=/dev/zero of=$IMAGE bs=102400 count=102400
+# mkfs.ext4 $IMAGE
+# sudo mkdir /mnt/backup
+# sudo chown $USER /mnt/backup
+# borg init --encryption=repokey /mnt/backup/borgbackup-eskr
+# touch ~/.backup-home.exclude
+# echo 'Signature: 8a477f597d28d172789f06886806bc55' > ~/.tmp/CACHEDIR.TAG
+# touch ~/.cache/CACHEDIR.TAG
+# echo 'Signature: 8a477f597d28d172789f06886806bc55' > ~/.virtualenvs/CACHEDIR.TAG
+# sudo mount  -o loop $IMAGE /mnt/backup
+# sudo umount  /mnt/backup
+#
+# cat /etc/fstab
+#     /mnt/c/Users/eskr/linux-backup.iso  /mnt/backup ext4 defaults 0 0
+# crontab -l
+#     PATH=/home/eskr/.local/bin:/usr/bin:/bin
+#     0 5 * * * /home/eskr/.local/bin/backup-home 2>&1 | logger -t backup-home
+
+# lock management:
+# see: https://stackoverflow.com/a/1985512/238913
+_flock() {
+    flock "$@" $LOCKFD
+}
+
+unlock () {
+    _flock --unlock
+}
+
+setup_lock()  {
+    eval "exec $LOCKFD>\"$LOCK_FILENAME\"";
+    trap unlock EXIT;
+}
+
+lock (){
+    _flock --exclusive --nonblock
+}
+
+
+# some helpers and error handling:
+print_formatted() { printf "[%s] %s\n" "$( date )" "$*" >&2; }
+info () { print_formatted "[INFO] $*" ; }
+warn() { print_formatted "[WARN] $*" ; }
+fatal() { print_formatted "[FATAL] $*" ; }
+trap 'fatal $( date ) Backup interrupted >&2; exit 2' INT TERM
+
+borg_backup(){
+
+    borg create                         \
+        --verbose                       \
+        --list                          \
+        --filter AME                    \
+        --stats                         \
+        --show-rc                       \
+        --compression lz4               \
+        --one-file-system \
+        --comment crontab \
+        --exclude-caches                \
+        --exclude-from ~/.backup-home.exclude \
+        --exclude '/home/*/tmp/*'     \
+        --exclude '/home/*/.tmp/*'     \
+        --exclude '/home/*/.cache/*'     \
+        ::"${PREFIX}{now}"            \
+        "${DATA_DIR}"
+    return $?
+
+}
+
+borg_prune(){
+
+    # Use the `prune` subcommand to maintain 7 daily, 4 weekly and 6 monthly
+    # archives of THIS machine. The '{hostname}-' prefix is very important to
+    # limit prune's operation to this machine's archives and not apply to
+    # other machines' archives also:
+
+    borg prune                          \
+        --list                          \
+        --glob-archives "$PREFIX" \
+        --show-rc                       \
+        --keep-last     5               \
+        --keep-daily    7               \
+        --keep-weekly   4               \
+        --keep-monthly  6
+
+    return $?
+
+}
+
+borg_list(){
+borg list --glob-archives "$PREFIX"
+}
+
+borg_info_last(){
+    borg info --glob-archives "${PREFIX}*"  --last 1 "$@"
+}
+
+borg_export(){
+
+    # what is the archive name
+    ARCHIVE_NAME=$(borg_info_last --json | jq --raw-output '.archives[0].name')
+
+    info "Exporting archive \"${ARCHIVE_NAME}\" to \"${EXPORT_PATH}\"..."
+
+    borg_info_last  > $EXPORT_PATH/$EXPORT_FILENAME.txt
+
+    mkdir -p $EXPORT_PATH
+    borg export-tar "::${ARCHIVE_NAME}"  $EXPORT_PATH/$EXPORT_FILENAME
+
+}
+
+# age of file in days
+file_age(){
+    local filename
+    local now
+    local modified=0
+
+    filename="$1"
+    now=$(date +%s)
+
+    if [ -f "$filename" ]; then
+        modified=$(date -r "$filename" "+%s")
+    fi
+
+    delta=$(( now - modified ))
+    echo $(( delta / 86400 ))
+}
+
+borg_check(){
+
+    local age
+    age=$(file_age $CHECK_FILENAME)
+
+    if [ "$age" -ge "$CHECK_MAX_AGE" ]; then
+        info "Verifying data..."
+        borg check --verify-data
+        touch "$CHECK_FILENAME"
+    fi
+}
+
+get_rc(){
+
+    # use highest exit code as global exit code
+    global_exit=$(( backup_exit > prune_exit ? backup_exit : prune_exit ))
+    global_exit=$(( compact_exit > global_exit ? compact_exit : global_exit ))
+    global_exit=$(( list_exit > global_exit ? list_exit : global_exit ))
+    return $global_exit
+
+}
+
+print_exit_message(){
+    if [ ${global_exit} -eq 0 ]; then
+        info "Backup of $DATA_DIR finished successfully"
+    elif [ ${global_exit} -eq 1 ]; then
+        warn "Backup, Prune, and/or Compact finished with warnings"
+    else
+        crit "Backup, Prune, and/or Compact finished with errors"
+    fi
+}
+
+
+main(){
+
+    setup_lock
+
+    if ! lock ; then
+        fatal locking failed
+        exit 4
+    fi
+
+    info Starting backup of "$DATA_DIR" to borg repo $BORG_REPO.
+    info "Starting backup"
+    borg_backup
+    backup_exit=$?
+
+    info "Pruning repository"
+    borg_prune
+    prune_exit=$?
+
+
+    info "Compacting repository"
+    borg compact
+    compact_exit=$?
+
+    borg_check
+
+    info "Listing repositories"
+    borg_list
+    list_exit=$?
+
+    info "Exporting repositoriy"
+    borg_export
+
+    get_rc
+    print_exit_message
+
+}
+
+main
+
+exit ${global_exit}
