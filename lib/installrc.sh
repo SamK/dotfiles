@@ -10,7 +10,6 @@ error() {
     EXIT_CODE=63
 }
 
-alias mime='file --no-dereference  --mime-type  --brief'
 
 create_symlink() (
     TARGET="$1"
@@ -27,7 +26,7 @@ create_symlink() (
 
     # Fail when wanted symlink is a directory.
     # Something is wrong and requires manual intervention.
-    if [ -d "$SYMLINK" ] && [ "$(mime $SYMLINK)" = "inode/directory" ]; then
+    if [ -d "$SYMLINK" ] && [ "$(mime file --no-dereference  --mime-type  --brief $SYMLINK)" = "inode/directory" ]; then
         error "ERROR creating $SYMLINK: I am not replacing a folder"
         return 1
     fi
@@ -90,7 +89,7 @@ gitget() {
             echo "Updating from \"${url}\" into \"${folder}\"..."
             cd $folder
             git fetch
-            git checkout origin/HEAD
+            git -c advice.detachedHead=false checkout origin/HEAD
         fi
     else
         if [ "$OFFLINE" == "yes" ]; then
@@ -98,7 +97,12 @@ gitget() {
             exit 1
         else
             echo "Downloading from $url into $folder..."
-            git clone $url $folder
+            set -x
+            BRANCH=""
+            if [ -n "$git_ref" ]; then
+                BRANCH="--BRANCH $git_ref"
+            fi
+            git clone --depth 1 $BRANCH $url $folder
             cd $folder
         fi
     fi
