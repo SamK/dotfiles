@@ -202,6 +202,7 @@ function venvs-path(){
 function venv-create (){
     local venv_path=$(venvs-path)/"$1"
     python3 -m venv $venv_path
+    [ -f "${venv_path}/CACHEDIR.TAG" ] || echo 'Signature: 8a477f597d28d172789f06886806bc55' > "$(venvs-path)/CACHEDIR.TAG"
 }
 # activate virtualenv
 function venv-activate() {
