@@ -89,7 +89,7 @@ gitget() {
             echo "Updating from \"${url}\" into \"${folder}\"..."
             cd $folder
             git fetch
-            git checkout origin/HEAD
+            git -c advice.detachedHead=false checkout origin/HEAD
         fi
     else
         if [ "$OFFLINE" == "yes" ]; then
