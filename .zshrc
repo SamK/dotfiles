@@ -132,7 +132,7 @@ setopt promptpercent
 # liquidprompt:
 # Only load Liquid Prompt in interactive shells
 [ -d ~/.zsh/liquidprompt ] && [[ $- = *i* ]] && source ~/.zsh/liquidprompt/liquidprompt
-LP_ENABLE_ERR=1
+
 # This is required for the [VI] tag and must be after liquidprompt
 setopt promptsubst
 
