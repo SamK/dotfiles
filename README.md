@@ -7,3 +7,5 @@ Voir [kitty.md]
     ./configure
     make prefix=/home/sam/.local
     make install prefix=/home/sam/.local
+
+## Kitty Fonts

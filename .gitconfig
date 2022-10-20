@@ -84,7 +84,7 @@
     stashes = stash list
     uncommit = reset --soft HEAD~1
     unmerge = reset --merge ORIG_HEAD
-    unstage = reset -q HEAD --
+    unstage = reset -q HEAD
     commti = commit
     # Merge with all log messages
     merge-log = merge --log=100 --no-ff --edit
