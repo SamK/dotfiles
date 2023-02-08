@@ -88,6 +88,7 @@
     unmerge = reset --merge ORIG_HEAD
     unstage = reset -q HEAD
     commti = commit
+    status-ignored = status --ignored
     # Merge with all log messages
     merge-log = merge --log=100 --no-ff --edit
     precommit = diff --cached --diff-algorithm=minimal -w
