@@ -19,6 +19,7 @@
 " Annuel la compat. avec l'ancetre Vi.
 set nocompatible
 
+set encoding=utf-8
 " recherche
 set ignorecase " Ignore la casse lors d’une recherche
 set smartcase  " Si une recherche contient une majuscule,
