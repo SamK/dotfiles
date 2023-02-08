@@ -62,8 +62,8 @@
     lg3 = log --graph --abbrev-commit --decorate --date=relative --color --all
     # Log all commits between wo days
     log-day = "!f() { git log --after=\"$1 00:00\" --before=\"$1 23:59\"; }; f"
-    # Display a changelog
-    changelog = log  --no-merges --format='  * %s (%an)'
+    # Keep a changelog
+    keep-a-changelog = log  --no-merges --format='  * %s (%an)'
     # historic graph of last 10 commits
     graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
 
