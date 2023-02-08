@@ -98,7 +98,7 @@ borg_prune(){
 
     borg prune                          \
         --list                          \
-        --glob-archives "$PREFIX" \
+        --glob-archives "${PREFIX}*"    \
         --show-rc                       \
         --keep-last     5               \
         --keep-daily    7               \
@@ -110,7 +110,7 @@ borg_prune(){
 }
 
 borg_list(){
-borg list --glob-archives "$PREFIX"
+borg list --glob-archives "$PREFIX*"
 }
 
 borg_info_last(){
