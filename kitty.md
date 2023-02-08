@@ -57,5 +57,5 @@ Font\Inconsolata-g%20for%20Powerline\
 Beep\0\
 ```
 
-* Powerline Fonts: https://github.com/powerline/fonts
+* Powerline Fonts: https://github.com/powerline/fonts ou alors NerdFonts en test
 * based on: https://github.com/altercation/solarized/blob/master/putty-colors-solarized/solarized_dark_puttytray.txt
