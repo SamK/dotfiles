@@ -306,13 +306,5 @@ if [[ $(uname -r) == *"WSL2" ]]; then
 fi
 
 #
-# 7. local aliases
-#
-
-if [ -f ~/.shell_aliases.local ]; then
-    source ~/.shell_aliases.local
-fi
-
-#
 # END
 #
