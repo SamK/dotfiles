@@ -215,6 +215,16 @@ alias venv-deactivate='deactivate'
 _venv_activate() { _directories  -W $(venvs-path); }
 compdef _venv_activate venv-activate
 
+function mitogen-activate(){
+    export ANSIBLE_STRATEGY_PLUGINS=${VIRTUAL_ENV}/lib/python3.8/site-packages/ansible_mitogen/plugins/strategy
+    export ANSIBLE_STRATEGY=mitogen_linear
+}
+
+function mitogen-deactivate(){
+    unset ANSIBLE_STRATEGY_PLUGINS
+    unset ANSIBLE_STRATEGY
+}
+
 #
 # 5. Git
 #
