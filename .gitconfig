@@ -77,7 +77,7 @@
     code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
     grep-fixme = grep 'NOTE\\|OPTIMIZE\\|TODO\\|HACK\\|XXX\\|FIXME\\|BUG'
     fixme = grep-fixme
-    authors = shortlog -s -n --all --no-merges
+    authors-by-commits = shortlog -s -n --all --no-merges
 
     # Human commands
     note = notes
