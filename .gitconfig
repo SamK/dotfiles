@@ -171,3 +171,5 @@
 ### EOF ###
 [init]
 	defaultBranch = master
+[advice]
+	skippedCherryPicks = false
