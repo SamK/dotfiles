@@ -8,6 +8,10 @@ if [ -f ~/.shell_envvars ]; then
   source ~/.shell_envvars
 fi
 
+if [ -f ~/.shell_secrets ]; then
+  source ~/.shell_secrets
+fi
+
 # disable hashing
 # https://unix.stackexchange.com/questions/5609/how-do-i-clear-bashs-cache-of-paths-to-executables/218681#218681
 set +h
