@@ -66,6 +66,8 @@
     keep-a-changelog = log  --no-merges --format='  * %s (%an)'
     # historic graph of last 10 commits
     graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+    # reflog with date
+    reflog-date = reflog --date=iso
 
     branch-todo =  branch  --sort=-committerdate --no-merged
     branch-todel =  branch  --sort=-committerdate --merged
