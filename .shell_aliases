@@ -274,6 +274,11 @@ function gitlab-my-branches () {
     done
 }
 
+function git-search-and-replace(){
+    local from=$1
+    local to=$2
+    git grep -l "$1"| xargs sed -i "s/$1/$2/g"
+}
 
 # network
 
