@@ -45,6 +45,11 @@ create_dotlink .local/bin/git-branches-authors
 create_dotlink .local/bin/git-find-md5
 create_dotlink .local/bin/git-ls-wip
 
+title "Install files in .local/share"
+
+mkdir -p .local/share/konsole
+create_dotlink .local/share/konsole/sam.profile
+
 set -e
 
 gist "eef091d73879f8d0d5661efc834e69dc"
