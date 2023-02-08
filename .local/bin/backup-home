@@ -100,10 +100,11 @@ borg_prune(){
         --list                          \
         --glob-archives "${PREFIX}*"    \
         --show-rc                       \
-        --keep-last     5               \
+        --keep-last     1               \
         --keep-daily    7               \
         --keep-weekly   4               \
-        --keep-monthly  6
+        --keep-monthly  6               \
+        --keep-yearly   5
 
     return $?
 
