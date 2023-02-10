@@ -75,6 +75,9 @@ create_symlink docker-compose-1.29.2 ~/.local/bin/docker-compose
 # yq
 download https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_amd64 ~/.local/bin/yq +x
 
+# borg
+download https://github.com/borgbackup/borg/releases/download/1.2.2/borg-linux64 ~/.local/bin/borg +x
+
 title "Installing my ZSH workplace"
 [ ! -d ~/.zsh ] && mkdir -p ~/.zsh
 create_dotlink .zshrc
