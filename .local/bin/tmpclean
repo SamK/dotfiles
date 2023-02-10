@@ -1,0 +1,131 @@
+#!/bin/bash
+
+set -e
+FOLDER=~/.tmp/
+DAYS=60
+DRY_RUN=no
+
+_DELETE="-delete"
+_PRINT="-print"
+VERBOSE=1
+
+function echo_warn () {
+    # echo warnings
+    >&2 echo "[WARN] $*"
+}
+
+function echo_info () {
+    # print things on screen
+    if [ "$VERBOSE" -ge "1" ]; then
+        echo "[INFO] $*"
+    fi
+}
+
+function echo_verbose () {
+    # echo when verbose
+    if [ "$VERBOSE" -ge "2" ]; then
+        echo "[DEBUG] $*"
+    fi
+}
+
+
+function display_help(){
+    cat <<EOF
+tmpclean - cleanup your tmp folder
+
+    Usage: $(basename $0) [OPTIONS]
+
+    Options:
+
+    -h,--help           Show this help and exit
+    -d,--days DAYS      Cleanup files older than DAYS days (default: $DAYS)
+    -f,--folder FOLDER  The folder to cleanup (default: $FOLDER)
+    -n,--dry-run        Enable dry-run
+    -q,--quiet          Quiet mode
+    -v,--verbose        Verbose mode
+
+EOF
+
+}
+
+# is a positive integer
+function is_pos_int () {
+    return [ "$1" -ge 0 ] 2>/dev/null
+}
+
+function parse_arguments () {
+
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+        -h|--help)
+          display_help
+          exit 0
+          ;;
+        -d|--days)
+          DAYS="$2"
+          shift
+          shift
+          ;;
+        -q|--quiet)
+          VERBOSE=0
+          _PRINT=""
+          shift
+          ;;
+        -v|--verbose)
+          VERBOSE=2
+          shift
+          ;;
+        -f|--folder)
+          FOLDER="$2"
+          shift
+          ;;
+        -n|--dry-run)
+          DRY_RUN=yes
+          _DELETE=""
+          shift
+          ;;
+        -*|--*)
+          echo "Unknown option: \"$1\""
+          exit 127
+          ;;
+        *)
+          FOLDER="$1" # save positional arg
+          shift # past argument
+          ;;
+      esac
+    done
+
+    # validation
+    # DAYS: int
+    # folder: existe
+}
+
+function clean_tmp () {
+
+    echo_info "Search for files in root of $FOLDER:"
+    find $FOLDER -maxdepth 1 -mindepth 1 -type f -mtime +$DAYS $_PRINT $_DELETE
+
+    echo_info "Searching for directories older than $DAYS days:"
+
+    for element in $(find $FOLDER -maxdepth 1 -mindepth 1 -type d -mtime +$DAYS); do
+        echo_info "Analysing ${element}..."
+        R=$(find "$element"  -mtime -$DAYS| wc -l)
+        if [ "$R" = "0" ]; then
+            echo_info "Deleting ${element}..."
+            find $element -mtime +$DAYS $_PRINT $_DELETE
+        else
+            echo_info "Skipping ${element}"
+        fi
+    done
+}
+
+function main(){
+    parse_arguments $*
+    echo_verbose VERBOSITY: $VERBOSE
+    echo_verbose FOLDER: $FOLDER
+    echo_verbose DAYS: $DAYS
+    echo_verbose DRY-RUN: $DRY_RUN
+    clean_tmp
+}
+
+main $*
