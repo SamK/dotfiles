@@ -1,0 +1,4 @@
+* 0 * * * tmpclean ~/.tmp
+* 0 * * * tmpclean ~/.cache
+* 0 * * * tmpclean ~/.ansible_async --days 2
+* 0 * * * rmdir --ignore-fail-on-non-empty  ~/.ansible_async

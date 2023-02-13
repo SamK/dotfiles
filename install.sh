@@ -98,6 +98,12 @@ echo "Downloading borg completion..."
     download https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg .zsh/zsh-completions/src/_borg
 fi
 
+
+title Crontab
+
+./lib/set-crontab.sh ./crontab
+
+
 title Vim
 
 create_dotlink .vimrc
