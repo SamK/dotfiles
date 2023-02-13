@@ -101,8 +101,7 @@ fi
 
 title Crontab
 
-./lib/set-crontab.sh ./crontab
-
+install_crontab ./crontab
 
 title Vim
 
