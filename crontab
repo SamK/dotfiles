@@ -1,0 +1,3 @@
+* 0 * * * tmpclean ~/.tmp
+* 0 * * * tmpclean ~/.cache --parent
+* 0 * * * tmpclean ~/.ansible_async --days 2 --parent

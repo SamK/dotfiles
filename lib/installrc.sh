@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 error() {
     MESSAGE="$*"
@@ -158,4 +158,21 @@ function download() {
     if [ -n "$perms" ]; then
         chmod -v "$perms" "$dest"
     fi
+}
+
+
+function install_crontab() {
+
+    if [ -z "$1" ] || [ ! -f "$1" ]; then
+        error "wtf crontab faile"
+        exit 2
+    fi
+
+    local CRONTAB_LOCAL=$( cat $1 )
+    local CRONTAB_START='# dotlib Crontab start'
+    local CRONTAB_END='# dotlib Crontab end'
+    local CRONTAB_CLEAN=$( crontab -l | sed "/$CRONTAB_START/,/$CRONTAB_EID/d"  )
+
+    echo -e "$CRONTAB_CLEAN\n\n$CRONTAB_START\n$CRONTAB_LOCAL\n$CRONTAB_END" | crontab -
+
 }
