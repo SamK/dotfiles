@@ -4,6 +4,7 @@ set -e
 FOLDER=~/.tmp/
 DAYS=60
 DRY_RUN=no
+DELETE_PARENT=no
 
 _DELETE="-delete"
 _PRINT="-print"
@@ -40,6 +41,7 @@ tmpclean - cleanup your tmp folder
     -h,--help           Show this help and exit
     -d,--days DAYS      Cleanup files older than DAYS days (default: $DAYS)
     -f,--folder FOLDER  The folder to cleanup (default: $FOLDER)
+    -p,--parent         Delete the tmp folder too when possible
     -n,--dry-run        Enable dry-run
     -q,--quiet          Quiet mode
     -v,--verbose        Verbose mode
@@ -77,6 +79,10 @@ function parse_arguments () {
           ;;
         -f|--folder)
           FOLDER="$2"
+          shift
+          ;;
+        -p|--parent)
+          PARENT=yes
           shift
           ;;
         -n|--dry-run)
@@ -117,6 +123,11 @@ function clean_tmp () {
             echo_info "Skipping ${element}"
         fi
     done
+
+    if [ "$PARENT" = "yes" ]; then
+        echo "Searching for parent folder..."
+        find $FOLDER -maxdepth 0 -mindepth 0 -type d -empty -mtime +$DAYS $_PRINT $_DELETE
+    fi
 }
 
 function main(){
