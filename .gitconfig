@@ -99,7 +99,7 @@
     blame-no-textconv = blame --no-textconv
 
     # Faster typing
-    st = status
+    st = -c "advice.statusHints=off" status
     br = branch
     co = checkout
     ci = commit
