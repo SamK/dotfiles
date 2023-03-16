@@ -197,6 +197,10 @@ function venvs-path(){
     echo ~/.virtualenvs
 }
 
+function venvs-list(){
+    find $(venvs-path) -mindepth 1 -maxdepth 1 -type d -exec basename {} \;
+}
+
 # create virtualenv
 function venv-create (){
     local venv_path=$(venvs-path)/"$1"
@@ -206,13 +210,21 @@ function venv-create (){
 # activate virtualenv
 function venv-activate() {
     local venv_path=$(venvs-path)/"$1"
-    . $venv_path/bin/activate || ( echo Available virtualenvs: ; ls -1 $(venvs-path) )
+    . $venv_path/bin/activate || ( echo ; echo Available virtualenvs: ; venvs-list ; return 1)
+}
+
+function venv-delete() {
+    local venv_path=$(venvs-path)/"$1"
+    [ -n "$1" ] && [ -d "$venv_path" ] && /bin/rm -rf $venv_path ||
+    ( echo Available virtualenvs: ; venvs-list ; return 1 )
 }
 
 alias venv-deactivate='deactivate'
 
 _venv_activate() { _directories  -W $(venvs-path); }
+_venv_delete() { _directories  -W $(venvs-path); }
 compdef _venv_activate venv-activate
+compdef _venv_delete venv-delete
 
 function mitogen-activate(){
     export ANSIBLE_STRATEGY_PLUGINS=${VIRTUAL_ENV}/lib/python3.8/site-packages/ansible_mitogen/plugins/strategy
