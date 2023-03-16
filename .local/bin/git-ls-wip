@@ -115,6 +115,11 @@ function is_git_repo() {
     if [ -n "$REPO_IGNORE" ] && [[ "$(basename $folder)" =~ "$REPO_IGNORE" ]]; then
         return 1
     fi
+
+    if [ -f $folder/.git-ls-wip.ignore ]; then
+        return 1
+    fi
+
     pushd $folder > /dev/null
     #>&2 echo "DEBUG: is_git_repo(): current location of is_git_repo: $PWD"
     git rev-parse --is-inside-work-tree 2>/dev/null
