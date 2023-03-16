@@ -1,0 +1,197 @@
+#!/usr/bin/env python
+
+class WipRepo(object):
+    def __init__(self, path):
+        self.path = path
+
+    def analyse(self):
+        pass
+"""
+set -e
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+UNMERGED_IGNORE='^(hold/|paused/|aborted/|develop)'
+REPO_IGNORE='.disabled$'
+FILE_IGNORE='git-ls-files.ignore'
+DEFAULT_BRANCH=master
+
+function message_warning(){
+    echo -e "    ${RED}${*}${NC}"
+}
+
+function message_notice(){
+    echo -e "    ${BLUE}${*}${NC}"
+}
+
+function message_ok(){
+    echo -e "    ${GREEN}${*}${NC}"
+}
+
+function ref_name(){
+    # determine the ref name (http://stackoverflow.com/a/1593487)
+    local ref=
+    if ref="$(git symbolic-ref HEAD 2>/dev/null)" ; then
+        # i am standing on a branch
+        # cleaning up:
+        ref=${ref##refs/heads/}
+    elif ref=$( git describe --tags --abbrev=0 --exact-match 2>/dev/null) ; then
+        # iam standing on a tag
+        :
+    else
+        ref=$(git rev-parse --short HEAD)
+    fi
+
+    echo $ref
+
+    }
+
+function list_unmerged(){
+    git branch --no-merged $DEFAULT_BRANCH | tr -d ' ' | grep -E -v "$UNMERGED_IGNORE"
+}
+
+function is_wip(){
+    # Rules:
+    # default branch
+    # uncommited files
+    # unmerged branches
+
+    if [ ! -d .git ]; then
+        return
+    fi
+
+
+    if [ -f $FILE_IGNORE ]; then
+        return
+    fi
+
+    local ref
+    ref=$(ref_name)
+
+
+    local default_branch_count=0
+    local default_branch_message=""
+    if [ "$WARN_DEFAULT_BRANCH" == "yes" ]; then
+        if [ "$ref" != "master" ] && [ "$ref" != "develop" ] ; then
+            default_branch_count=1
+            default_branch_message="HEAD is checked out on ref \"$ref\""
+        fi
+    fi
+
+    local uncommited_count=0
+    local uncommited_message=""
+    if [ "$WARN_UNTRACKED" == "yes" ]; then
+        uncommited_count=$(git status --porcelain | wc -l)
+        if [ "$uncommited_count" != "0" ]; then
+            uncommited_message="$uncommited_count uncommited files"
+        fi
+    fi
+
+    local unmerged_count=0
+    local unmerged_message=""
+    if [ "$WARN_UNMERGED" == "yes" ]; then
+        unmerged_branches=$(list_unmerged)
+        if [ -n "$unmerged_branches" ]; then
+            unmerged_count=$( echo "$unmerged_branches" | wc -l )
+        fi
+        unmerged_inline=$( echo -n "$unmerged_branches" | tr '\n' ' ' )
+        if [ -n "$unmerged_inline" ]; then
+            unmerged_message="$unmerged_count unmerged branches: $unmerged_inline"
+        fi
+    fi
+
+    total_count=$(( $default_branch_count + $uncommited_count + $unmerged_count))
+    if [ "$total_count" = "0" ]; then
+        echo -e "${repo}: ${GREEN}OK${NC}"
+        return 0
+    else
+        echo "$repo:"
+        if [ "$default_branch_count" != 0 ]; then
+            message_warning "$default_branch_message"
+        fi
+
+        if [ "$uncommited_count" != 0 ]; then
+            message_warning "$uncommited_message"
+        fi
+
+        if [ "$unmerged_count" != 0 ]; then
+            message_notice "$unmerged_message"
+        fi
+
+        return 1
+    fi
+
+}
+
+
+"""
+
+import os
+import subprocess
+def find_git_repos(search_folder):
+    """Return all the folders that are a Git repository
+    """
+    repos = []
+    output=subprocess.check_output('find {} -type d -name .git'.format(search_folder).split(), text=True)
+    found_folders = output.split("\n")
+    for found_folder in found_folders:
+        # get parent dir
+        git_folder = os.path.dirname(found_folder)
+        if git_folder:
+            repos.append(git_folder)
+    return(repos)
+import argparse
+import logging
+def parse_arguments():
+    """
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="count",
+        default=0,
+        help="verbose mode; use -vv for debug mode",
+    )
+
+    return parser.parse_args()
+
+
+def setup_logging(args):
+    """Setup the logging system"""
+    log_levels = ["WARNING", "INFO", "DEBUG"]
+    log_level = log_levels[args.verbose]
+    logging.getLogger().setLevel(log_level)
+
+def verbose1(message):
+    """INFO"""
+    logging.info(message)
+
+
+def verbose2(message):
+    """DEBUG"""
+    logging.debug(message)
+
+
+def warning(message):
+    """WARNING"""
+    logging.warning(message)
+
+
+def main():
+    args = parse_arguments()
+    setup_logging(args)
+    verbose1(args)
+
+    repos = find_git_repos(".")
+    print(repos)
+    for repo_path in repos:
+        repo = WipRepo(repo_path)
+        repo.analyse()
+
+
+
+
+if __name__ == "__main__":
+    main()
