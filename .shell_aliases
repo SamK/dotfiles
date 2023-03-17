@@ -105,6 +105,12 @@ findxsvn () {
     find $searchdir ! \( -path '*/.svn' -o -path '*/.svn/*' \) $@
 }
 
+findxgit () {
+    local searchdir=$1
+    shift
+    find $searchdir ! \( -path '*/.git' -o -path '*/.git/*' \) $@
+}
+
 function dudir() {
     du -hs $( ls -A $1 ) | sort -h
 }
