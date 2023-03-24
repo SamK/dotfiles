@@ -13,6 +13,7 @@ zsh
 shellcheck
 ncdu
 git
+moreutils
 "
 
 package_present () {
