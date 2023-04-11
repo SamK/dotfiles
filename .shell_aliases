@@ -297,6 +297,35 @@ function git-search-and-replace(){
     git grep -l "$1"| xargs sed -i "s/$1/$2/g"
 }
 
+function git-prefetch(){
+    # Do a git fetch --dry-run with no specific output
+    # Return values:
+    # 0: the remote branch must be upated
+    # 1: the remote branch is up-to-date or maybe Git error
+    # anything else: error
+
+    local remote=${1:-origin}
+    local branch=${2:-master}
+
+    git fetch \
+        --dry-run $remote $branch 2>/tmp/git-fetch-dry-run
+    E=$?
+
+    if [ "$E" != "0" ]; then
+        >&2 cat /tmp/git-fetch-dry-run
+        /bin/rm -f /tmp/git-fetch-dry-run
+        return $E
+    fi
+
+    grep -q -E --color " ${remote}\/${branch}" /tmp/git-fetch-dry-run
+    E=$?
+
+    /bin/rm -f /tmp/git-fetch-dry-run
+
+    [ "$E" = "0" ]
+
+}
+
 # network
 
 alias stracenet="strace -f -e trace=network -s 10000"
