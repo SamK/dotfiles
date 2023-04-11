@@ -6,6 +6,7 @@ diffutils
 dos2unix
 python3-venv
 ack
+bats
 lynx
 jq
 gzip
