@@ -131,6 +131,8 @@
     rom = rebase origin/master
     riod = rebase -i origin/develop
     rioH = rebase -i origin/HEAD
+[commit]
+    verbose = true
 [credential]
    helper = cache --timeout=3600
 [push]
