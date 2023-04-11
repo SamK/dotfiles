@@ -115,6 +115,7 @@ au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.pp set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 au BufRead,BufNewFile *.{yaml,yml} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 au BufRead,BufNewFile *.json set foldmethod=syntax
+"au BufRead,BufNewFile *.bats set filetype=bash
 "au BufRead,BufNewFile {Jenkinsfile,*.jenkinsfile,*.jenkins,*.jk} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 
 " folding
