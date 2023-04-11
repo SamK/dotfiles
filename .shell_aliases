@@ -172,8 +172,8 @@ function treeless(){
 }
 
 # Packer
-alias packer='docker run hashicorp/packer:light'
-alias packer-1.8.3='docker run hashicorp/packer:light-1.8.3'
+alias packer="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:light"
+alias packer-1.8.3="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:1.8.3"
 
 # yaml validation
 # requires a file as argument
