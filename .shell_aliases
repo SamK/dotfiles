@@ -101,13 +101,13 @@ tmux-reattach () {
 # find
 findxsvn () {
     local searchdir=$1
-    shift
+    [ -n "$searchdir" ] && shift
     find $searchdir ! \( -path '*/.svn' -o -path '*/.svn/*' \) $@
 }
 
 findxgit () {
     local searchdir=$1
-    shift
+    [ -n "$searchdir" ] && shift
     find $searchdir ! \( -path '*/.git' -o -path '*/.git/*' \) $@
 }
 
