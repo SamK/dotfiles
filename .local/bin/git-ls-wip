@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 UNMERGED_IGNORE='^(hold/|paused/|aborted/|develop)'
-REPO_IGNORE='.disabled$'
+REPO_IGNORE_SUFFIX='.disabled$'
 DEFAULT_BRANCH=master
 
 function message_warning(){
@@ -112,7 +112,7 @@ function is_wip(){
 
 function is_git_repo() {
     folder=$1
-    if [ -n "$REPO_IGNORE" ] && [[ "$(basename $folder)" =~ "$REPO_IGNORE" ]]; then
+    if [ -n "$REPO_IGNORE_SUFFIX" ] && [[ "$(basename $folder)" =~ "$REPO_IGNORE_SUFFIX" ]]; then
         return 1
     fi
 
