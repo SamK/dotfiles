@@ -5,8 +5,9 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 UNMERGED_IGNORE='^(hold/|paused/|aborted/|develop)'
-REPO_IGNORE='.disabled$'
+REPO_IGNORE_SUFFIX='.disabled$'
 DEFAULT_BRANCH=master
+REPO_IGNORE_FILE="git-ls-wip.ignore"
 
 function message_warning(){
     echo -e "    ${RED}${*}${NC}"
@@ -112,11 +113,11 @@ function is_wip(){
 
 function is_git_repo() {
     folder=$1
-    if [ -n "$REPO_IGNORE" ] && [[ "$(basename $folder)" =~ "$REPO_IGNORE" ]]; then
+    if [ -n "$REPO_IGNORE_SUFFIX" ] && [[ "$(basename $folder)" =~ "$REPO_IGNORE_SUFFIX" ]]; then
         return 1
     fi
 
-    if [ -f $folder/.git-ls-wip.ignore ]; then
+    if [ -f $folder/${REPO_IGNORE_FILE} ]; then
         return 1
     fi
 
@@ -144,6 +145,7 @@ function find_git_repos() {
 function print_help(){
     cat << EOF
 $0: List the current state of the repos in the selected directory
+
 Usage: $0 [OPTIONS] [PATH]
 
 options:
@@ -152,6 +154,10 @@ options:
 --no-untracked,-u       do not warn when untracked files exist
 --no-unmerged,-m        do not warn when unmerged branches exist
 --help,-h               print this help
+
+Repositories where the folder name matches the regex "${REPO_IGNORE_SUFFIX}" are ignored.
+Repositories that contain a file named "${REPO_IGNORE_FILE}" are ignored.
+
 EOF
 }
 
