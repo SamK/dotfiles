@@ -145,6 +145,7 @@ function find_git_repos() {
 function print_help(){
     cat << EOF
 $0: List the current state of the repos in the selected directory
+
 Usage: $0 [OPTIONS] [PATH]
 
 options:
@@ -153,6 +154,10 @@ options:
 --no-untracked,-u       do not warn when untracked files exist
 --no-unmerged,-m        do not warn when unmerged branches exist
 --help,-h               print this help
+
+Repositories where the folder name matches the regex "${REPO_IGNORE_SUFFIX}" are ignored.
+Repositories that contain a file named "${REPO_IGNORE_FILE}" are ignored.
+
 EOF
 }
 
