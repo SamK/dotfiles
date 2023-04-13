@@ -15,6 +15,7 @@ shellcheck
 ncdu
 git
 moreutils
+ruby
 "
 
 package_present () {
