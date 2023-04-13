@@ -33,9 +33,9 @@ create_dotlink .ssh/config
 create_dotlink .tmux.conf
 create_dotlink .ackrc
 create_dotlink .curlrc
-## For nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
-create_dotlink .dircolors
-#set +e # ignore jinja2 import errors
+## dircolors for nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
+gitget https://github.com/seebi/dircolors-solarized ./tmp/dircolors-solarized
+create_symlink $PWD/tmp/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
 
 title "Install files in .local/bin"
 
