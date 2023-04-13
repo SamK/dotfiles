@@ -137,7 +137,7 @@ function find_git_repos() {
         if $(is_git_repo "$repo"); then
             echo $repo
         else
-            >&2 warning "WARNING: $repo is not a git repository"
+            >&2 message_notice "NOTICE: ignoring $repo"
         fi
     done
 }
