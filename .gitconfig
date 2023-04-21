@@ -68,7 +68,7 @@
     graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
     # reflog with date
     reflog-date = reflog --date=iso
-    log-mr = "log origin/master.. --format=format:\"## %s%n%n%b\""
+    log-mr = "log origin/master.. --format=format:\"## %s (%h)%n%n%b\""
 
     branch-todo =  branch  --sort=-committerdate --no-merged
     branch-todel =  branch  --sort=-committerdate --merged
