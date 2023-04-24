@@ -24,11 +24,14 @@ done
 
 title "Installing dot files..."
 
+mkdir -p ~/.config/git
+
 create_dotlink .shell_aliases
 create_dotlink .shell_envvars
 create_dotlink .bashrc
 create_dotlink .gitconfig
-create_dotlink .gitignore-global
+create_dotlink .config/git/ignore
+create_dotlink .config/git/attributes
 create_dotlink .ssh/config
 create_dotlink .tmux.conf
 create_dotlink .ackrc

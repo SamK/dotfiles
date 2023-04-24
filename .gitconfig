@@ -6,8 +6,8 @@
 #
 [core]
     editor = vim
-    excludesfile = ~/.gitignore-global
-    attributesfile = /home/eskr/.gitattributes
+    excludesfile = ~/.config/git/ignore
+    attributesfile = ~/.config/git/attributes
     quotepath = false
 [alias]
 
