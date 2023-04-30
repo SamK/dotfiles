@@ -173,6 +173,23 @@ function treeless(){
     tree -C $* | less
 }
 
+# lcad
+function lcad()(
+    local LCAD_DIR=~/Code/github.samk/lcad
+    local VENV_DIR=~/.virtualenvs/python3
+
+    local LCAD_BIN=${LCAD_DIR}/bin/lcad_bin.py
+    . $VENV_DIR/bin/activate || return $?
+    PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=$LCAD_DIR python $LCAD_BIN $*
+)
+
+alias python2json="lcad convert --from python --to json"
+alias python2yaml="lcad convert --from python --to yaml"
+alias json2python="lcad convert --from json --to python"
+alias json2yaml="lcad convert --from json --to yaml"
+alias yaml2json="lcad convert --from yaml --to json"
+alias yaml2python="lcad convert --from yaml --to python"
+
 # Packer
 alias packer="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:light"
 alias packer-1.8.3="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:1.8.3"
