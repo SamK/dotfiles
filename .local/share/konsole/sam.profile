@@ -1,5 +1,5 @@
 [Appearance]
-ColorScheme=Solarized
+ColorScheme=Solarized-sam
 Font=Hack,13,-1,5,50,0,0,0,0,0
 LineSpacing=0
 

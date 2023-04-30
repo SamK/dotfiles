@@ -53,6 +53,7 @@ title "Install files in .local/share"
 
 mkdir -p .local/share/konsole
 create_dotlink .local/share/konsole/sam.profile
+create_dotlink .local/share/konsole/Solarized-sam.colorscheme
 
 set -e
 
