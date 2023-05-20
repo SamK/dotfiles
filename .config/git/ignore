@@ -4,6 +4,7 @@
 # Editors #
 ###########
 .*.swp
+.*.kate-swp
 
 # Compiled source #
 ###################
