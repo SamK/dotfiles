@@ -145,6 +145,7 @@ Plug 'pearofducks/ansible-vim'
 " Python syntax highlight
 Plug 'hdima/python-syntax'
 Plug 'samk/vim-puppet', { 'branch': 'colon-is-not-a-keyword' }
+Plug 'kaarmu/typst.vim'
 call plug#end()
 
 :set list
