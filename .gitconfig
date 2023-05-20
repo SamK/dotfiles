@@ -5,7 +5,7 @@
 # - http://gggritso.com/human-git-aliases
 #
 [core]
-    editor = vim
+
     excludesfile = ~/.config/git/ignore
     attributesfile = ~/.config/git/attributes
     quotepath = false
