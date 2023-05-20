@@ -21,6 +21,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 . ./lib/installrc.sh
+installrc_setup || exit $?
 
 title "Installing dot files..."
 
