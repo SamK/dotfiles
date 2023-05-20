@@ -10,6 +10,7 @@ error() {
     EXIT_CODE=63
 }
 
+alias mime='file --no-dereference  --mime-type  --brief'
 
 create_symlink() (
     TARGET="$1"
@@ -26,7 +27,7 @@ create_symlink() (
 
     # Fail when wanted symlink is a directory.
     # Something is wrong and requires manual intervention.
-    if [ -d "$SYMLINK" ] && [ "$(mime file --no-dereference  --mime-type  --brief $SYMLINK)" = "inode/directory" ]; then
+    if [ -d "$SYMLINK" ] && [ "$(mime $SYMLINK)" = "inode/directory" ]; then
         error "ERROR creating $SYMLINK: I am not replacing a folder"
         return 1
     fi
