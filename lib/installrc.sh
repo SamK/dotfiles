@@ -1,6 +1,9 @@
 #!/bin/bash
 
-#set -e
+shopt -s expand_aliases
+set -e
+
+alias mime='file --no-dereference  --mime-type  --brief'
 
 error() {
     MESSAGE="$*"
@@ -10,6 +13,26 @@ error() {
     EXIT_CODE=63
 }
 
+commands_exist(){
+    R=0
+    for COMM in $* ; do
+        echo $COMM
+        if ! command -v $COMM; then
+            R=1
+            command $COMM not found!
+        else
+            echo Command $COMM found: OK
+        fi
+    done
+    echo return : $R
+    return $R
+}
+
+installrc_setup(){
+    commands_exist file mime
+    R=$?
+    return $R
+}
 
 create_symlink() (
     TARGET="$1"
@@ -26,7 +49,7 @@ create_symlink() (
 
     # Fail when wanted symlink is a directory.
     # Something is wrong and requires manual intervention.
-    if [ -d "$SYMLINK" ] && [ "$(mime file --no-dereference  --mime-type  --brief $SYMLINK)" = "inode/directory" ]; then
+    if [ -d "$SYMLINK" ] && [ "$(mime $SYMLINK)" = "inode/directory" ]; then
         error "ERROR creating $SYMLINK: I am not replacing a folder"
         return 1
     fi
