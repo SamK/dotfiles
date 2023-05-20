@@ -1,5 +1,6 @@
 [Appearance]
 ColorScheme=Solarized-sam
+DimmValue=42
 Font=Hack,13,-1,5,50,0,0,0,0,0
 LineSpacing=0
 
