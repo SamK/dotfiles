@@ -106,7 +106,9 @@ fi
 
 title Crontab
 
-install_crontab ./crontab
+if [ $(dnsdomainname) != "cid.dom" ]; then
+    install_crontab ./crontab
+fi
 
 title Vim
 
