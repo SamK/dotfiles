@@ -25,7 +25,8 @@ installrc_setup || exit $?
 
 title "Installing dot files..."
 
-mkdir -p ~/.config/git
+mkdir -p ~/.config/git ~/.ssh
+chmod --changes 0700 ~/.ssh
 
 create_dotlink .shell_aliases
 create_dotlink .shell_envvars
