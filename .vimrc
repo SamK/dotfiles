@@ -43,6 +43,8 @@ autocmd FileType yml,yaml,python,c,cpp,java,php autocmd BufWritePre <buffer> :%s
 " note trailing space at end of next line
 set showbreak=>\ \ \
 
+" Remove trailing spaces with "F5"
+nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 " 2. Insertion
 " ------------------------
