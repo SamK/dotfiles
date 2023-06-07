@@ -4,8 +4,13 @@ Voir [kitty.md]
 
 ## tig
 
+Trouver une release sur https://github.com/jonas/tig/releases
+
+Installer:
+
     ./configure
-    make prefix=/home/sam/.local
-    make install prefix=/home/sam/.local
+    make prefix=$HOME/.local
+    make install prefix=$HOME/.local
+    make install-doc prefix=$HOME/.local
 
 ## Kitty Fonts

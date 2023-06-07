@@ -204,4 +204,9 @@ fpath=(~/.zsh/zsh-completions/src $fpath)
 # compinit must be executed after definition of fpath
 compinit
 
+S=/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f "$S" ] && source "$S"
+
+true
+
 ### EOF ###

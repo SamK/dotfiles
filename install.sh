@@ -25,7 +25,8 @@ installrc_setup || exit $?
 
 title "Installing dot files..."
 
-mkdir -p ~/.config/git
+mkdir -p ~/.config/git ~/.ssh
+chmod --changes 0700 ~/.ssh
 
 create_dotlink .shell_aliases
 create_dotlink .shell_envvars
@@ -52,7 +53,7 @@ create_dotlink .local/bin/tmpclean
 
 title "Install files in .local/share"
 
-mkdir -p .local/share/konsole
+mkdir -p ~/.local/share/konsole
 create_dotlink .local/share/konsole/sam.profile
 create_dotlink .local/share/konsole/Solarized-sam.colorscheme
 
@@ -106,7 +107,9 @@ fi
 
 title Crontab
 
-install_crontab ./crontab
+if [ $(dnsdomainname) != "cid.dom" ]; then
+    install_crontab ./crontab
+fi
 
 title Vim
 
