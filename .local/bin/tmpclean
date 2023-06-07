@@ -4,7 +4,7 @@ set -e
 FOLDER=~/.tmp/
 DAYS=60
 DRY_RUN=no
-DELETE_PARENT=no
+PARENT=no
 
 _DELETE="-delete"
 _PRINT="-print"
@@ -34,7 +34,7 @@ function display_help(){
     cat <<EOF
 tmpclean - cleanup your tmp folder
 
-    Usage: $(basename $0) [OPTIONS]
+    Usage: $(basename "$0") [OPTIONS]
 
     Options:
 
@@ -48,11 +48,6 @@ tmpclean - cleanup your tmp folder
 
 EOF
 
-}
-
-# is a positive integer
-function is_pos_int () {
-    return [ "$1" -ge 0 ] 2>/dev/null
 }
 
 function parse_arguments () {
@@ -132,10 +127,10 @@ function clean_tmp () {
 
 function main(){
     parse_arguments $*
-    echo_verbose VERBOSITY: $VERBOSE
-    echo_verbose FOLDER: $FOLDER
-    echo_verbose DAYS: $DAYS
-    echo_verbose DRY-RUN: $DRY_RUN
+    echo_verbose "VERBOSITY: $VERBOSE"
+    echo_verbose "FOLDER: $FOLDER"
+    echo_verbose "DAYS: $DAYS"
+    echo_verbose "DRY-RUN: $DRY_RUN"
     clean_tmp
 }
 
