@@ -59,10 +59,10 @@ create_dotlink .local/share/konsole/Solarized-sam.colorscheme
 
 set -e
 
-gist "eef091d73879f8d0d5661efc834e69dc"
+gist samk eef091d73879f8d0d5661efc834e69dc
 create_dotlink .local/bin/git-fetch-all
 
-gist 7e4d432478074af91590f1b09c935fb7
+gist samk 7e4d432478074af91590f1b09c935fb7
 create_dotlink .local/bin/gitlab-samkli
 
 # git-wtf

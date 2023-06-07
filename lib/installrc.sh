@@ -34,6 +34,9 @@ installrc_setup(){
     return $R
 }
 
+# params
+# 1: the target of the symlink
+# 2: the path of the symlink
 create_symlink() (
     TARGET="$1"
     SYMLINK="$2"
@@ -150,19 +153,17 @@ gitget() {
     cd $DIR
 }
 
-# Clone a Gist file (from Github") into the tmp directory
+# Download a Gist file (from Github) into the tmp directory using curl
 # Arguments:
+# - the Gist username
 # - The Gist ID
 function gist() {
-    gist_id=$1
-    if [ -n "$2" ]; then
-        echo "wtf gist \"$2\" ( $* )"
-        return 1
-    fi
+    gist_username=$1
+    gist_id=$2
 
-    echo Downloading Gist $gist_id
-    mkdir -p ./tmp
-    gitget https://gist.github.com/$gist_id.git ./tmp/$gist_id
+    [ -n "$gist_username" ] && [ -n "$gist_id" ] || { error "wtf gist() wrong call" ; return 127; }
+    echo Downloading Gist $gist_username/$gist_id into ./tmp/$gist_id
+    curl -sS --fail "https://gist.githubusercontent.com/${gist_username}/${gist_id}/raw" > ./tmp/$gist_id
 }
 
 function download() {
