@@ -150,7 +150,10 @@ call plug#end()
 
 "
 " 7. Git commits
-"
+
+" do not remember last cursor position https://stackoverflow.com/a/26808971
+autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+
 "  Git commit Summary
 "  ---------------------
 "highlight commit subject
