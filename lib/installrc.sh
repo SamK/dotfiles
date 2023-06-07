@@ -177,7 +177,7 @@ function download() {
     fi
 
     echo Downloading $src
-    curl --fail --location --no-progress-meter "$src" --output "$dest"
+    curl --fail --location "$src" --output "$dest"
 
     if [ -n "$perms" ]; then
         chmod -v "$perms" "$dest"
