@@ -120,7 +120,6 @@ function clean_tmp () {
     done
 
     if [ "$PARENT" = "yes" ]; then
-        echo "Searching for parent folder..."
         find $FOLDER -maxdepth 0 -mindepth 0 -type d -empty -mtime +$DAYS $_PRINT $_DELETE
     fi
 }
