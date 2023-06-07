@@ -17,9 +17,9 @@
 #
 
 # colors https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
-local RED='\033[0;31m'
-local CYAN='\033[0;36m'
-local NOCOLOR='\033[0m'
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+NOCOLOR='\033[0m'
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
