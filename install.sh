@@ -107,7 +107,7 @@ fi
 
 title Crontab
 
-if [ $(dnsdomainname) != "cid.dom" ]; then
+if [ "$(dnsdomainname)" != "cid.dom" ]; then
     install_crontab ./crontab
 fi
 
