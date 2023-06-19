@@ -121,7 +121,7 @@ echo "Installing solarized theme for Vim..."
 gitget https://github.com/altercation/solarized.git tmp/solarized
 create_dotlink .vim/colors
 
-if [ "$OFFLINE" == "yes" ]; then
+if [ -n "$SKIP_VIM_PLUGINS" ] || [ "$OFFLINE" == "yes" ]; then
     echo "Skipping installation of Vim plugins!"
 else
     echo VIM-Plug...
