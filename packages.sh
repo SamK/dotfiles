@@ -9,6 +9,7 @@ ack
 bats
 lynx
 jq
+bat
 gzip
 zsh
 shellcheck
