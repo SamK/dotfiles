@@ -133,8 +133,6 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" git commits
-au FileType gitcommit set tw=72
 
 " 6. Plugins
 " ------------------------
@@ -149,6 +147,28 @@ Plug 'hdima/python-syntax'
 Plug 'samk/vim-puppet', { 'branch': 'colon-is-not-a-keyword' }
 Plug 'kaarmu/typst.vim'
 call plug#end()
+
+"
+" 7. Git commits
+
+" do not remember last cursor position https://stackoverflow.com/a/26808971
+autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+
+"  Git commit Summary
+"  ---------------------
+"highlight commit subject
+highlight gitcommitSummary ctermfg=darkblue
+"wrap subject at 72 characters
+autocmd FileType gitcommitSummary set textwidth=72
+" highlight if longer than 50
+autocmd FileType gitcommitSummary set colorcolumn=50
+
+" Git commit message
+
+"wrap message at 72 characters
+autocmd FileType gitcommit set textwidth=72
+" highlight if longer
+autocmd FileType gitcommit set colorcolumn=73
 
 :set list
 :set listchars=tab:>-,trail:~,extends:>,precedes:<
