@@ -37,7 +37,7 @@ set history=100 " Keep 100 undo
 
 " Remove trailing spaces on save
 "http://vim.wikia.com/wiki/Remove_unwanted_spaces
-autocmd FileType yml,yaml,python,c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
+"autocmd FileType yml,yaml,python,c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 "set linebreak
 " note trailing space at end of next line
