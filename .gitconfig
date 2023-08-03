@@ -182,3 +182,4 @@
 	defaultBranch = master
 [advice]
 	skippedCherryPicks = false
+	detachedHead = false
