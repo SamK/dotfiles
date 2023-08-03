@@ -177,7 +177,6 @@
     path = .gitconfig.local
 [diff "ansible-vault"]
     textconv = ansible-vault view
-### EOF ###
 [init]
 	defaultBranch = master
 [advice]
