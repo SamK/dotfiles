@@ -110,7 +110,7 @@ function clean_tmp () {
 
     for element in $(find $FOLDER -maxdepth 1 -mindepth 1 -type d -mtime +$DAYS); do
         echo_info "Analysing ${element}..."
-        R=$(find "$element"  -mtime -$DAYS| wc -l)
+        R=$(find "$element"  -mtime -$DAYS -o -mtime $DAYS | wc -l)
         if [ "$R" = "0" ]; then
             echo_info "Deleting ${element}..."
             find $element -mtime +$DAYS $_PRINT $_DELETE
