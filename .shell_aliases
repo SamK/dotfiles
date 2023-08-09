@@ -129,7 +129,7 @@ alias xalert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || ech
 # nice history (zsh only)
 alias hist='fc -liD 1 | less -R +G'
 
-which batcat > /dev/null && alias bat=batcat || true
+which batcat 2>/dev/null > /dev/null && alias bat=batcat || true
 
 #
 # 4. commandes métier
