@@ -352,10 +352,15 @@ alias stracenet="strace -f -e trace=network -s 10000"
 alias resolveip="resolveip -s"
 alias digs="dig +search"
 
+
+
+# https://unix.stackexchange.com/a/132117
 ssh-agent-enable(){
-    if ! ssh-add -l; then
-        [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_rsa
-        eval $(ssh-agent)
+    export SSH_AUTH_SOCK=~/.tmp/ssh-agent.$HOSTNAME.sock
+    [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_rsa
+    ssh-add -l 2>/dev/null >/dev/null
+    if [ $? -ge 2 ]; then
+        eval $(ssh-agent -a "$SSH_AUTH_SOCK")
         ssh-add $KEY
     fi
 }
