@@ -33,6 +33,7 @@
 # Disk files #
 ##############
 *.qcow2
+*.img
 
 # Logs and databases #
 ######################
