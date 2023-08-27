@@ -1,3 +1,4 @@
 15 */12 * * * tmpclean ~/.tmp --days 30
 30 */2 * * * tmpclean ~/.cache --parent
 45 */2 * * * tmpclean ~/.ansible_async --days 2 --parent
+@daily        /usr/local/bin/borgbackupsam ~/.borgbackupsam-sam@s76@borgbase | logger --tag "borgbackupsam-borgbase"

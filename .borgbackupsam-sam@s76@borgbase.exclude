@@ -1,0 +1,20 @@
+./Games
+*.pyc
+.directory
+./.cache
+./.local
+./Downloads
+./.wine
+./VirtualBox VMs
+./.local/bin/VaudTax-bin
+./.local/bin/terraform*
+./.local/bin/docker-compose*
+./snap
+./tmp
+*/node_modules/*
+./Code/github.samk/dotfiles.git/tmp/
+*/.bundle/gems/*
+./Media/Films
+./Media/Music
+*/.terraform
+./snap/firefox

@@ -42,6 +42,10 @@ create_dotlink .curlrc
 gitget https://github.com/seebi/dircolors-solarized ./tmp/dircolors-solarized
 create_symlink $PWD/tmp/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
 
+create_dotlink .borgbackupsam-sam@s76@borgbase
+create_dotlink .borgbackupsam-sam@s76@borgbase.exclude
+create_dotlink .borgbackupsam-sam@s76@borgbase.include
+
 title "Install files in .local/bin"
 
 mkdir -p ~/.local/bin
