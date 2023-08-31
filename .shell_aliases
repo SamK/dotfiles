@@ -81,7 +81,7 @@ alias sudp='sudo'
 alias ll='ls -lhF'
 alias tree='LC_COLLATE=C tree --dirsfirst -F'
 alias l='ls --color=auto -hlF --group-directories-first'
-alias la='LC_COLLATE="C" l -A'
+alias la='LC_COLLATE="C" /bin/ls --color=auto -AhlF --group-directories-first'
 alias cp="cp -i"
 alias mv="mv -i"
 alias cal='LC_TIME=fr_CH.UTF-8 ncal -bM'
