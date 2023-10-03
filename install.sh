@@ -80,6 +80,7 @@ create_symlink $PWD/tmp/git-when-merged/bin/git-when-merged ~/.local/bin/git-whe
 # Docker Compose
 download https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64 ~/.local/bin/docker-compose-1.29.2 +x
 download https://github.com/docker/compose/releases/download/v2.11.1/docker-compose-linux-x86_64 ~/.local/bin/docker-compose-2.11.1 +x
+download https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 ~/.local/bin/docker-compose-2.21.0 +x
 create_symlink docker-compose-1.29.2 ~/.local/bin/docker-compose
 
 # yq
