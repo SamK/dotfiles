@@ -113,6 +113,16 @@ function dudir() {
     du -hs $( ls -A $1 ) | sort -h
 }
 
+# do-until-succeed ping -c 1 hostname
+function do-until-succeed(){
+  while
+    $*
+    E=$?
+  do
+    [ "$E" = "0" ] && break || sleep 1
+  done
+}
+
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
 
