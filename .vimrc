@@ -146,6 +146,7 @@ Plug 'pearofducks/ansible-vim'
 Plug 'hdima/python-syntax'
 Plug 'samk/vim-puppet', { 'branch': 'colon-is-not-a-keyword' }
 Plug 'kaarmu/typst.vim'
+Plug 'terrastruct/d2-vim'
 call plug#end()
 
 "
