@@ -6,7 +6,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 UNMERGED_IGNORE='^(hold/|paused/|aborted/|develop)'
 REPO_IGNORE_SUFFIX='.disabled$'
-DEFAULT_BRANCH=main
+ALLOWED_BRANCHES=(master main develop)
 REPO_IGNORE_FILE="git-ls-wip.ignore"
 
 function message_warning(){
@@ -39,6 +39,34 @@ function ref_name(){
 
     }
 
+function list_branches() {
+    git for-each-ref --format '%(refname:short)' refs/heads/
+}
+
+function string_in_array(){
+
+    local string=$1
+    shift # Shift all arguments to the left (original $1 gets lost)
+    local array=("$@") #
+
+    for element in "${array[@]}"; do
+        if [[ "$element" == "$string" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+function guess_default_branch() {
+    # try to guess the default branch
+    for attempt in $ALLOWED_BRANCHES; do
+        if string_in_array $attempt $(list_branches); then
+            echo $attempt
+            return
+        fi
+    done
+}
+
 function list_unmerged(){
     git branch --no-merged $DEFAULT_BRANCH | tr -d ' ' | grep -E -v "$UNMERGED_IGNORE"
 }
@@ -57,10 +85,11 @@ function is_wip(){
     ref=$(ref_name)
 
 
+    local default_branch=$(guess_default_branch)
     local default_branch_count=0
     local default_branch_message=""
     if [ "$WARN_DEFAULT_BRANCH" == "yes" ]; then
-        if [ "$ref" != "$DEFAULT_BRANCH" ] && [ "$ref" != "develop" ] ; then
+        if [ "$ref" != "$default_branch" ]; then
             default_branch_count=1
             default_branch_message="HEAD is checked out on ref \"$ref\""
         fi
