@@ -2,4 +2,4 @@ RUN_AS=sam
 PREFIX="sam@s76"
 INCLUDE=$HOME/.borgbackupsam-sam@s76@borgbase.include
 EXCLUDE=$HOME/.borgbackupsam-sam@s76@borgbase.exclude
-source ~/.secrets/borgbase.com
+source ~/.secrets/borgbackup/borgbase.com
