@@ -12,7 +12,7 @@
 ./snap
 ./tmp
 */node_modules/*
-./Code/github.samk/dotfiles.git/tmp/
+/home/sam/Code/github.samk/dotfiles.git/tmp/
 */.bundle/gems/*
 ./Media/Films
 ./Media/Music
