@@ -108,6 +108,7 @@ function clean_tmp () {
 
     echo_info "Searching for directories older than $DAYS days:"
 
+    IFS=$(echo -en "\n\b")
     for element in $(find $FOLDER -maxdepth 1 -mindepth 1 -type d -mtime +$DAYS); do
         echo_info "Analysing ${element}..."
         R=$(find "$element"  -mtime -$DAYS -o -mtime $DAYS | wc -l)
