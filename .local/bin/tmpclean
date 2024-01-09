@@ -10,9 +10,19 @@ _DELETE="-delete"
 _PRINT="-print"
 VERBOSE=1
 
+# errors
+E_OK=0
+E_ERR=1
+E_ARG=2
+
 function echo_warn () {
     # echo warnings
     >&2 echo "[WARN] $*"
+}
+
+function echo_fatal() {
+    # echo fatalities
+    >&2 echo "[FATAL] $*"
 }
 
 function echo_info () {
@@ -102,6 +112,19 @@ function parse_arguments () {
 }
 
 function clean_tmp () {
+
+    if ! test -d "$FOLDER" ; then
+        # There is no such folder
+        # if --parent is set, then it is not a problem
+        # else it IS a problem and exit.
+        if [ "$PARENT" = "yes" ]; then
+            echo_info "Skipping cleannig of absent folder \"${FOLDER}\"."
+            return $E_OK
+        else
+            echo_fatal "Cannot clean \"${FOLDER}\": No such directory."
+            return $E_ARG
+        fi
+    fi
 
     echo_info "Search for files in root of $FOLDER:"
     find $FOLDER -maxdepth 1 -mindepth 1 -type f -mtime +$DAYS $_PRINT $_DELETE
