@@ -1,3 +1,5 @@
+./Archives/Takeout
+home/sam/Archives/Takeout
 ./Games
 *.pyc
 .directory
@@ -9,10 +11,13 @@
 ./.local/bin/VaudTax-bin
 ./.local/bin/terraform*
 ./.local/bin/docker-compose*
+./.local/bin/yq
+./.local/bin/aws-vault
+./.local/bin/borg
+./Code/github.samk/dotfiles.git/tmp/
 ./snap
 ./tmp
 */node_modules/*
-/home/sam/Code/github.samk/dotfiles.git/tmp/
 */.bundle/gems/*
 ./Media/Films
 ./Media/Music
