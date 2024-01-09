@@ -50,7 +50,8 @@ tmpclean - cleanup your tmp folder
 
     -h,--help           Show this help and exit
     -d,--days DAYS      Cleanup files older than DAYS days (default: $DAYS)
-    -f,--folder FOLDER  The folder to cleanup (default: $FOLDER)
+    -f,--folder FOLDER  The folder to cleanup (default: $FOLDER). If multiple folders are given
+                        as arguments, only the last one is taken into account.
     -p,--parent         Delete the tmp folder too when possible
     -n,--dry-run        Enable dry-run
     -q,--quiet          Quiet mode
