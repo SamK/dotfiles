@@ -4,9 +4,11 @@ Voir [kitty.md]
 
 ## tig
 
+Needs `gcc libncurses-dev make`.
+
 Trouver une release sur https://github.com/jonas/tig/releases
 
-Installer:
+Voir: https://github.com/jonas/tig/blob/master/INSTALL.adoc
 
     ./configure
     make prefix=$HOME/.local
