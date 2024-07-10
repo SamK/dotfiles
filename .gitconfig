@@ -4,8 +4,7 @@
 # - http://nuclearsquid.com/writings/git-tricks-tips-workflows/
 # - http://gggritso.com/human-git-aliases
 #
-[tig]
-  line-graphics = utf-8
+
 [core]
 
     excludesfile = ~/.config/git/ignore
