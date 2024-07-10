@@ -1,0 +1,14 @@
+# https://jonas.github.io/tig/doc/tigrc.5.html
+
+# line-graphics (mixed) [
+# ascii c'est le seul valide si on a pas DejaVu
+# default c'est comme ascii mais avec les corner joli
+# utf-8 c'est très moche avec Incosolata powerline
+# auto c'est comme utf-8
+# <bool>
+# ]
+
+# pour Kitty:
+#set line-graphics = default
+# Pour Konsole:
+set line-graphics = utf-8
