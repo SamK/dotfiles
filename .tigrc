@@ -9,6 +9,6 @@
 # ]
 
 # pour Kitty:
-#set line-graphics = default
+set line-graphics = default
 # Pour Konsole:
-set line-graphics = utf-8
+#set line-graphics = utf-8
