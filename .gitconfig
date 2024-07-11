@@ -133,9 +133,11 @@
     re = rebase
     ri = rebase -i
     rim = rebase -i master
+    rip = rebase -i prod
     rid = rebase -i develop
     riH = rebase -i HEAD
     riom = rebase -i origin/master
+    riop = rebase -i origin/prod
     rom = rebase origin/master
     riod = rebase -i origin/develop
     rioH = rebase -i origin/HEAD
