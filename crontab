@@ -1,5 +1,5 @@
 PATH=/home/sam/.local/bin:/home/sam/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-15 */12 * * * tmpclean ~/.tmp --days 30 2>&1 | logger --stderr --tag tmpclean
-30 */2 * * * tmpclean ~/.cache --parent 2>&1 | logger --stderr --tag tmpclean
-45 */2 * * * tmpclean ~/.ansible_async --days 2 --parent 2>&1 | logger --stderr --tag tmpclean
-@daily       /usr/local/bin/borgbackupsam ~/.borgbackupsam-sam@s76@borgbase 2>&1 | logger --stderr --tag "borgbackupsam-borgbase"
+15 */12 * * * tmpclean ~/.tmp --days 30 2>&1 | logger --tag tmpclean
+30 */2 * * * tmpclean ~/.cache --parent 2>&1 | logger --tag tmpclean
+45 */2 * * * tmpclean ~/.ansible_async --days 2 --parent 2>&1 | logger --tag tmpclean
+@daily       /usr/local/bin/borgbackupsam ~/.borgbackupsam-sam@s76@borgbase 2>&1 | logger --tag "borgbackupsam-borgbase"

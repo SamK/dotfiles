@@ -12,6 +12,12 @@ Parent=FALLBACK/
 TerminalCenter=false
 TerminalMargin=0
 
+[Interaction Options]
+AutoCopySelectedText=true
+CopyTextAsHTML=false
+TrimLeadingSpacesInSelectedText=false
+TrimTrailingSpacesInSelectedText=true
+
 [Keyboard]
 KeyBindings=default
 

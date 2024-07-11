@@ -10,10 +10,14 @@ home/sam/Archives/Takeout
 ./VirtualBox VMs
 ./.local/bin/VaudTax-bin
 ./.local/bin/terraform*
+./.local/bin/terraform-1.5.5
 ./.local/bin/docker-compose*
 ./.local/bin/yq
 ./.local/bin/aws-vault
+./.local/bin/tflint
 ./.local/bin/borg
+./.local/bin/aws-vault
+./.local/bin/swarm-app
 ./Code/github.samk/dotfiles.git/tmp/
 ./snap
 ./tmp
