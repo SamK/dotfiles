@@ -265,6 +265,8 @@ function mitogen-deactivate(){
     unset ANSIBLE_STRATEGY
 }
 
+alias k='kubectl'
+
 #
 # 5. Git
 #

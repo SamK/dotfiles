@@ -106,6 +106,9 @@ zstyle ':completion:*' menu select
 hosts=($((( [ -r .ssh/known_hosts ] && awk '{print $1}' .ssh/known_hosts | tr , '\n'); ) | sort -u) )
 zstyle ':completion:*' hosts $hosts
 
+# kubectl
+source <(kubectl completion zsh)
+
 #########
 # aliases
 #########
