@@ -191,8 +191,7 @@ alias yaml2json="lcad convert --from yaml --to json"
 alias yaml2python="lcad convert --from yaml --to python"
 
 # Packer
-alias packer="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:light"
-alias packer-1.8.3="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:1.8.3"
+alias packer=packer-1.10.3
 
 # Terraform
 alias tf=terraform
