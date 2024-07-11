@@ -361,7 +361,7 @@ alias digs="dig +search"
 # https://unix.stackexchange.com/a/132117
 ssh-agent-enable(){
     export SSH_AUTH_SOCK=~/.tmp/ssh-agent.$HOSTNAME.sock
-    [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_rsa
+    [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_ed25519
     ssh-add -l 2>/dev/null >/dev/null
     if [ $? -ge 2 ]; then
         eval $(ssh-agent -a "$SSH_AUTH_SOCK")
