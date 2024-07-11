@@ -145,7 +145,7 @@ which batcat 2>/dev/null > /dev/null && alias bat=batcat || true
 # 4. commandes métier
 #
 
-alias typst='docker run -w /mnt -v /usr/share/fonts:/usr/share/fonts -v $(pwd):/mnt -it ghcr.io/typst/typst:v0.8.0 typst'
+alias typst='docker run -u "$(id -u):$(id -g)" -w /mnt -v /etc/fonts:/etc/fonts -v /usr/share/fonts:/usr/share/fonts -v "$(pwd)":/mnt -it ghcr.io/typst/typst:v0.10.0 typst'
 
 # subversion
 svn-diff() { svn diff "${@}" | colordiff | less -R; }
@@ -191,8 +191,7 @@ alias yaml2json="lcad convert --from yaml --to json"
 alias yaml2python="lcad convert --from yaml --to python"
 
 # Packer
-alias packer="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:light"
-alias packer-1.8.3="docker run -v `pwd`:/workspace -w /workspace -e PACKER_PLUGIN_PATH=/workspace/.packer.d/plugins hashicorp/packer:1.8.3"
+alias packer=packer-1.10.3
 
 # Terraform
 alias tf=terraform
@@ -264,6 +263,8 @@ function mitogen-deactivate(){
     unset ANSIBLE_STRATEGY_PLUGINS
     unset ANSIBLE_STRATEGY
 }
+
+alias k='kubectl'
 
 #
 # 5. Git
@@ -360,7 +361,7 @@ alias digs="dig +search"
 # https://unix.stackexchange.com/a/132117
 ssh-agent-enable(){
     export SSH_AUTH_SOCK=~/.tmp/ssh-agent.$HOSTNAME.sock
-    [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_rsa
+    [ -n "$1" ] && KEY=$1 || KEY=~/.ssh/id_ed25519
     ssh-add -l 2>/dev/null >/dev/null
     if [ $? -ge 2 ]; then
         eval $(ssh-agent -a "$SSH_AUTH_SOCK")
