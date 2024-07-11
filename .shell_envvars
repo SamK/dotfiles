@@ -12,7 +12,7 @@ export ANSIBLE_COLOR_DEBUG=blue
 export ANSIBLE_FORCE_COLOR=1
 export LESS="-RFXi"
 export LESSCHARSET=UTF-8
-export GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=~/.ssh/git_known_hosts -o StrictHostKeyChecking=no'
+export GIT_SSH_COMMAND='ssh -o UserKnownHostsFile=~/.ssh/git_known_hosts -o StrictHostKeyChecking=no'
 export LP_ENABLE_TERRAFORM=1
 
 # system76 hybdrid mode
