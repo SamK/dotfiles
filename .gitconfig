@@ -188,3 +188,6 @@
 	detachedHead = false
 [safe]
 	directory = /home/sam/Infra/gollum-wiki
+[merge]
+	branchdesc = true
+    #conflictStyle = zdiff3
