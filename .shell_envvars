@@ -15,6 +15,11 @@ export LESSCHARSET=UTF-8
 export GIT_SSH_COMMAND='ssh -o UserKnownHostsFile=~/.ssh/git_known_hosts -o StrictHostKeyChecking=no'
 export LP_ENABLE_TERRAFORM=1
 
+# LiquidPrompt
+LP_ENABLE_SUDO=1
+LP_ENABLE_KUBE_NAMESPACE=1
+LP_ENABLE_KUBECONTEXT=1
+
 # system76 hybdrid mode
 #export __NV_PRIME_RENDER_OFFLOAD=1
 #export __GLX_VENDOR_LIBRARY_NAME=nvidia
