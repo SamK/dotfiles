@@ -53,7 +53,9 @@
     # ###########
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     # Git tree style 1 (compact)
-    lg = log --graph --abbrev-commit --decorate --date=iso --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset)' --all
+    lg = log --graph --abbrev-commit --decorate --date=iso \
+        --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset) %N' \
+        --exclude='refs/notes/*' --all
     # git tree without remotes
     lgl = log --graph --abbrev-commit --decorate --date=iso --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset)'  --branches=*
     lgb = "!git lg --first-parent  $(gitrev-parse --abbrev-ref HEAD)"
@@ -191,3 +193,5 @@
 [merge]
 	branchdesc = true
     #conflictStyle = zdiff3
+[notes]
+	rewriteRef = refs/notes/commits
