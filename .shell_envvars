@@ -16,7 +16,6 @@ export GIT_SSH_COMMAND='ssh -o UserKnownHostsFile=~/.ssh/git_known_hosts -o Stri
 export LP_ENABLE_TERRAFORM=1
 
 # LiquidPrompt
-LP_ENABLE_SUDO=1
 LP_ENABLE_KUBE_NAMESPACE=1
 LP_ENABLE_KUBECONTEXT=1
 
