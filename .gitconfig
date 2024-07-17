@@ -57,7 +57,9 @@
         --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset) %N' \
         --exclude='refs/notes/*' --all
     # git tree without remotes
-    lgl = log --graph --abbrev-commit --decorate --date=iso --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset)'  --branches=*
+    lgl = log --graph --abbrev-commit --decorate --date=iso \
+        --format=format:'%C(yellow)%h%C(reset) - %C(green)(%ad)%C(reset) %C(white)%s%C(reset) %C(blue)[%an]%C(reset)%C(red)%d%C(reset) %N' \
+        --branches=*
     lgb = "!git lg --first-parent  $(gitrev-parse --abbrev-ref HEAD)"
     # git tree style 2 (aero)
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
