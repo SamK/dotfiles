@@ -103,7 +103,7 @@ zstyle ':completion:*' menu select
 
 # ssh known_hosts completion: http://www.masterzen.fr/2009/04/19/in-love-with-zsh-part-one/
 # The directive HashKnownHosts must be No
-hosts=($((( [ -r .ssh/known_hosts ] && awk '{print $1}' .ssh/known_hosts | tr , '\n'); ) | sort -u) )
+hosts=($( ( ( [ -r .ssh/known_hosts ] && awk '{print $1}' .ssh/known_hosts | tr , '\n'); ) | sort -u) )
 zstyle ':completion:*' hosts $hosts
 
 # kubectl
