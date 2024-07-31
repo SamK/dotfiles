@@ -107,7 +107,9 @@ hosts=($((( [ -r .ssh/known_hosts ] && awk '{print $1}' .ssh/known_hosts | tr , 
 zstyle ':completion:*' hosts $hosts
 
 # kubectl
-source <(kubectl completion zsh)
+if ! command -v kubectl &> /dev/null; then
+    source <(kubectl completion zsh)
+fi
 
 #########
 # aliases
