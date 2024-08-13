@@ -145,7 +145,7 @@ which batcat 2>/dev/null > /dev/null && alias bat=batcat || true
 # 4. commandes métier
 #
 
-alias typst='docker run -u "$(id -u):$(id -g)" -w /mnt -v /etc/fonts:/etc/fonts -v /usr/share/fonts:/usr/share/fonts -v "$(pwd)":/mnt -it ghcr.io/typst/typst:v0.10.0 typst'
+alias typst-docker='docker run -u "$(id -u):$(id -g)" -w /mnt -v /etc/fonts:/etc/fonts -v /usr/share/fonts:/usr/share/fonts -v "$(pwd)":/mnt -it ghcr.io/typst/typst:v0.10.0 typst'
 
 # subversion
 svn-diff() { svn diff "${@}" | colordiff | less -R; }
