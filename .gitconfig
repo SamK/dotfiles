@@ -100,7 +100,7 @@
     status-ignored = status --ignored
     # Merge with all log messages
     merge-log = merge --log=100 --no-ff --edit
-    merge-log-d = "!git merge --log=100 --no-ff --edit \"$1\" && git branch -d \"$1\" || git merge --abort #"
+    merge-log-d = "!git merge --log=100 --no-ff --edit \"$1\" && git branch -D \"$1\" || git merge --abort #"
 
     precommit = diff --cached --diff-algorithm=minimal -w
     root = rev-parse --show-toplevel
