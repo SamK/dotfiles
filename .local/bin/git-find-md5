@@ -3,33 +3,36 @@
 CHECKSUM=$1
 FILE=$2
 
-if [ -z "$CHECKSUM" ]; then
+print_usage(){
+    echo "Find which Git revision has a file with a specific md5 hash."
     echo "Usage: $0 md5 file"
     exit 1
-elif [ -z "$FILE" ]; then
-    echo "Usage: $0 md5 file"
-    exit 1
+}
+
+if [ -z "$CHECKSUM" ] || [ -z "$FILE" ]; then
+    print_usage
 fi
 
 # Check if valid git repo
-git status &> /dev/null
 
-if [ $? -ne 0 ]; then
+if ! git status &> /dev/null; then
     echo "Not a valid git repo."
     exit 1
 fi
 
 # git revision for file
-REVS=`git log --pretty=%H -- $FILE`
+REVS=$(git log --pretty=%H -- "$FILE")
 
 # check each revision for checksum
 for rev in $REVS; do
-    git show $rev:$FILE > _file_to_check
-    #md5sum _file_to_check
-    # if you are on a Linux system, change md5 to md5sum
-    if [  `md5sum _file_to_check | grep -q $CHECKSUM` ]; then
-        echo "found in " $rev
-    fi
-    rm _file_to_check
-done
+    git show "$rev:$FILE" > _file_to_check
 
+    if md5sum _file_to_check | grep -q "$CHECKSUM" ; then
+        echo "File $FILE has md5sum $CHECKSUM in commit ${rev}."
+        /bin/rm _file_to_check
+        exit 0
+    fi
+
+    /bin/rm _file_to_check
+done
+exit 1
