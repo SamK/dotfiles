@@ -115,10 +115,14 @@ match OverLength /\%120v.\+/   " 120
 " configure expanding of tabs 
 au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.pp set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
-au BufRead,BufNewFile *.{yaml,yml} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
 au BufRead,BufNewFile *.json set foldmethod=syntax
 "au BufRead,BufNewFile *.bats set filetype=bash
 "au BufRead,BufNewFile {Jenkinsfile,*.jenkinsfile,*.jenkins,*.jk} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
+
+" yaml
+au BufRead,BufNewFile *.{yaml,yml} set expandtab tabstop=2 softtabstop=2 shiftwidth=2 smarttab
+" indentLine plugin
+"let g:indentLine_char = '·' # smal dot
 
 " folding
 set nofoldenable
@@ -134,6 +138,14 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_text_changed = 'never'
+" funny cursor
+highlight ALEWarning ctermbg=DarkMagenta
+
+
 " 6. Plugins
 " ------------------------
 
@@ -147,6 +159,11 @@ Plug 'hdima/python-syntax'
 Plug 'samk/vim-puppet', { 'branch': 'colon-is-not-a-keyword' }
 Plug 'kaarmu/typst.vim'
 Plug 'terrastruct/d2-vim'
+Plug 'Yggdroot/indentLine'
+" https://www.arthurkoziel.com/setting-up-vim-for-yaml/
+" https://github.com/dense-analysis/ale
+Plug 'dense-analysis/ale'
+
 call plug#end()
 
 "
