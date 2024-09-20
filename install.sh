@@ -25,7 +25,7 @@ installrc_setup || exit $?
 
 title "Installing dot files..."
 
-mkdir -p ~/.config/git ~/.ssh
+mkdir -p ~/.config/{git,yamllint} ~/.ssh
 chmod --changes 0700 ~/.ssh
 
 create_dotlink .shell_aliases
@@ -39,6 +39,7 @@ create_dotlink .tmux.conf
 create_dotlink .ackrc
 create_dotlink .curlrc
 create_dotlink .tigrc
+create_dotlink .config/yamllint/config
 ## dircolors for nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
 gitget https://github.com/seebi/dircolors-solarized ./tmp/dircolors-solarized
 create_symlink $PWD/tmp/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
