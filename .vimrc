@@ -46,6 +46,9 @@ set showbreak=>\ \ \
 " Remove trailing spaces with "F5"
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
+" jump to the last position when reopening a file
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
 " 2. Insertion
 " ------------------------
 
