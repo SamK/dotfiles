@@ -127,6 +127,11 @@ au BufRead,BufNewFile *.{yaml,yml} set expandtab tabstop=2 softtabstop=2 shiftwi
 " indentLine plugin
 "let g:indentLine_char = '·' # smal dot
 
+" Désactive la feature "conceal" qui cache du texte.
+" C'est hyper désorientant, notamment parce ça cache les double quotes (genre
+" dans le json)
+let g:indentLine_conceallevel = 0
+
 " folding
 set nofoldenable
 "set foldmethod=indent
