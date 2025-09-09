@@ -19,7 +19,7 @@ TrimLeadingSpacesInSelectedText=false
 TrimTrailingSpacesInSelectedText=true
 
 [Keyboard]
-KeyBindings=default
+KeyBindings=linux
 
 [Scrolling]
 HistorySize=50000
