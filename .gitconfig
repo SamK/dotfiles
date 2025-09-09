@@ -170,7 +170,7 @@
     # http://stackoverflow.com/questions/28017249/what-does-diff-mnemonicprefix-do
     mnemonicprefix = true
 [diff "json"]
-         textconv = "cat \"$1\" | json_pp --json_opt=canonical,pretty"
+         textconv = jq -S .
 [diff]
     algorithm = histogram
 # colors
