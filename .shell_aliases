@@ -202,11 +202,11 @@ function yaml-check-rby { ruby -e "require 'yaml'; YAML.load_file('$1')"; }
 
 alias yamllint-validate='yamllint -d "rules: {}"'
 # validate yaml
-alias yaml-check='python -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
+alias yaml-check='python3 -c "import yaml,sys;yaml.safe_load(sys.stdin)"'
 # convert from yaml to python
-alias yaml-pprint='python -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
+alias yaml-pprint='python3 -c "import yaml,pprint,sys;pprint.pprint(yaml.safe_load(sys.stdin))"'
 # read yaml and print yaml
-alias yaml-dump='python -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.stdin))))"'
+alias yaml-dump='python3 -c "import yaml,sys;print(yaml.dump((yaml.safe_load(sys.stdin))))"'
 
 # json validation
 alias json-check='json_pp'
