@@ -146,6 +146,18 @@
     rom = rebase origin/master
     riod = rebase -i origin/develop
     rioH = rebase -i origin/HEAD
+
+    # description
+    description-edit = branch --edit-description
+    description-show = "!git config branch.$(git rev-parse --abbrev-ref HEAD).description"
+    descriptions = "!git for-each-ref --format='%(refname:short)' refs/heads/ | \
+        while read branch; do \
+        D=$(git config branch.$branch.description); \
+        if [ -n \"$D\" ]; then \
+        echo \"[$branch]: $D\"; \
+        fi \
+        done"
+
 [commit]
     verbose = true
 [credential]
