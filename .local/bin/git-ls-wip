@@ -4,9 +4,9 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
-UNMERGED_IGNORE='^(hold/|paused/|aborted/|develop)'
+UNMERGED_IGNORE='^(hold/|paused/|aborted/|archive/develop)'
 REPO_IGNORE_SUFFIX='.disabled$'
-ALLOWED_BRANCHES=(master main develop)
+ALLOWED_BRANCHES=(master main develop stable)
 REPO_IGNORE_FILE="git-ls-wip.ignore"
 
 function message_warning(){
@@ -160,8 +160,17 @@ function is_git_repo() {
 }
 
 function find_git_repos() {
+    # params
     search_folder=$@
-    for git_folder in $(find $search_folder -type d -name .git); do
+
+    # set search options
+    search_options=""
+
+    if [ "$FOLLOW" == "yes" ]; then
+      search_options="-follow"
+    fi
+
+    for git_folder in $(find $search_folder $search_options -type d -name .git); do
         repo=$(dirname $git_folder)
         if $(is_git_repo "$repo"); then
             echo $repo
@@ -179,6 +188,7 @@ Usage: $0 [OPTIONS] [PATH]
 
 options:
 [PATH]                  the path to scan (default: .)
+--no-follow,-N          do not follow symbolic links
 --no-default-branch,-b  do not warn when current branch is not on default branch
 --no-untracked,-u       do not warn when untracked files exist
 --no-unmerged,-m        do not warn when unmerged branches exist
@@ -195,6 +205,7 @@ EOF
 WARN_DEFAULT_BRANCH=yes
 WARN_UNTRACKED=yes
 WARN_UNMERGED=yes
+FOLLOW=yes
 while [[ $# -gt 0 ]]; do
   case $1 in
     -b|--no-default-branch)
@@ -207,6 +218,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -m|--no-unmerged)
       WARN_UNMERGED=no
+      shift
+      ;;
+    -N|--no-follow)
+      FOLLOW=no
       shift
       ;;
     -h|--help)
