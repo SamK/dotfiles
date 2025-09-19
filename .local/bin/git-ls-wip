@@ -59,12 +59,20 @@ function string_in_array(){
 
 function guess_default_branch() {
     # try to guess the default branch
-    for attempt in $ALLOWED_BRANCHES; do
-        if string_in_array $attempt $(list_branches); then
-            echo $attempt
-            return
+
+    # Merci Claude 4!
+    local branches_array
+    readarray -t branches_array < <(list_branches)
+
+    for attempt in "${ALLOWED_BRANCHES[@]}"; do
+        if string_in_array "$attempt" "${branches_array[@]}"; then
+            echo "$attempt"
+            return 0
         fi
     done
+
+    # No default branch found
+    return 1
 }
 
 function list_unmerged(){
