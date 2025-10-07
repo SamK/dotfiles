@@ -264,7 +264,15 @@ function mitogen-deactivate(){
     unset ANSIBLE_STRATEGY
 }
 
+# kubectl
+
 alias k='kubectl'
+function kubectl-set-namespace(){
+  NS=$1
+  CMD="kubectl config set-context --current --namespace=$NS"
+  echo "+ ${CYAN}$CMD${NOCOLOR}"
+  $CMD
+}
 
 # https://github.com/josephburnett/jd
 jd(){ docker run --rm -i -v $PWD:$PWD -w $PWD josephburnett/jd "$@"; }
