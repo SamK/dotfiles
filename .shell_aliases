@@ -385,6 +385,8 @@ ssh-agent-enable(){
 # 6. System
 #
 
+alias top-20-cpu="top -c -o %CPU -b -n1 -w 200 | head -n 27"
+
 if [[ $(uname -r) == *"WSL2" ]]; then
     # sudo -e -f /etc/sudoers.d/wsl2:
     # %adm ALL = NOPASSWD: /usr/sbin/service ssh *
