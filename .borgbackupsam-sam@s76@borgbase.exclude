@@ -2,6 +2,8 @@
 home/sam/Archives/Takeout
 ./Games
 *.pyc
+*.qcow2
+*.swp
 .directory
 ./.cache
 ./.local
@@ -19,6 +21,9 @@ home/sam/Archives/Takeout
 ./.local/bin/aws-vault
 ./.local/bin/swarm-app
 ./Code/github.samk/dotfiles.git/tmp/
+./Code/github.samk/wefunk_dl/*.mp3
+./Code/github.samk/lcad/build
+./Code/github.samk/lcad/dist
 ./snap
 ./tmp
 */node_modules/*

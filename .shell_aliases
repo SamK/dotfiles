@@ -141,6 +141,10 @@ alias hist='fc -liD 1 | less -R +G'
 
 which batcat 2>/dev/null > /dev/null && alias bat=batcat || true
 
+# date ISO 8601!
+alias date-iso-8601="date -Is"
+alias date-iso-8601-utc0="TZ=UTC date -Is"
+
 #
 # 4. commandes métier
 #
@@ -189,9 +193,6 @@ alias json2python="lcad convert --from json --to python"
 alias json2yaml="lcad convert --from json --to yaml"
 alias yaml2json="lcad convert --from yaml --to json"
 alias yaml2python="lcad convert --from yaml --to python"
-
-# Packer
-alias packer=packer-1.10.3
 
 # Terraform
 alias tf=terraform
@@ -264,7 +265,15 @@ function mitogen-deactivate(){
     unset ANSIBLE_STRATEGY
 }
 
+# kubectl
+
 alias k='kubectl'
+function kubectl-set-namespace(){
+  NS=$1
+  CMD="kubectl config set-context --current --namespace=$NS"
+  echo "+ ${CYAN}$CMD${NOCOLOR}"
+  $CMD
+}
 
 # https://github.com/josephburnett/jd
 jd(){ docker run --rm -i -v $PWD:$PWD -w $PWD josephburnett/jd "$@"; }
@@ -379,6 +388,8 @@ ssh-agent-enable(){
 #
 # 6. System
 #
+
+alias top-20-cpu="top -c -o %CPU -b -n1 -w 200 | head -n 27"
 
 if [[ $(uname -r) == *"WSL2" ]]; then
     # sudo -e -f /etc/sudoers.d/wsl2:
