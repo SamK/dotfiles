@@ -190,9 +190,6 @@ alias json2yaml="lcad convert --from json --to yaml"
 alias yaml2json="lcad convert --from yaml --to json"
 alias yaml2python="lcad convert --from yaml --to python"
 
-# Packer
-alias packer=packer-1.10.3
-
 # Terraform
 alias tf=terraform
 
