@@ -141,6 +141,10 @@ alias hist='fc -liD 1 | less -R +G'
 
 which batcat 2>/dev/null > /dev/null && alias bat=batcat || true
 
+# date ISO 8601!
+alias date-iso-8601="date -Is"
+alias date-iso-8601-utc0="TZ=UTC date -Is"
+
 #
 # 4. commandes métier
 #
