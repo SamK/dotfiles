@@ -281,8 +281,6 @@ jd(){ docker run --rm -i -v $PWD:$PWD -w $PWD josephburnett/jd "$@"; }
 alias yaml-diff="jd -yaml -set"
 alias json-diff="jd -set"
 
-alias oras='docker run -it --rm -v /etc/ssl/certs:/etc/ssl/certs -v /usr/share/ca-certificates:/usr/share/ca-certificates -v /usr/local/share/ca-certificates:/usr/local/share/ca-certificates/ -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.2'
-
 #
 # 5. Git
 #
