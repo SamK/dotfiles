@@ -9,3 +9,15 @@
 
 # add markdown, textile, and reStructuredText
 --type-set=plaintext=.md,.mdown,.markdown,.mkdn,.textile,.rst,.txt
+
+--ignore-file=is:.viminfo
+--ignore-dir=.virtualenvs
+--ignore-dir=.vscode-server
+--ignore-dir=snap
+--ignore-dir=/home/skrieg/Perso
+--ignore-dir=.vim
+--ignore-dir=/home/skrieg/go
+--ignore-dir=/home/skrieg/.cargo
+--ignore-dir=.tmp
+--ignore-dir=/home/skrieg/Forks
+--ignore-dir=/home/skrieg/.local
