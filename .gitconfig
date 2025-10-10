@@ -138,6 +138,7 @@
     re = rebase
     ri = rebase -i
     rim = rebase -i master
+    rimain = rebase -i main
     rip = rebase -i prod
     rid = rebase -i develop
     riH = rebase -i HEAD

@@ -82,6 +82,7 @@ alias ll='ls -lhF'
 alias tree='LC_COLLATE=C tree --dirsfirst -F'
 alias l='ls --color=auto -hlF --group-directories-first'
 alias la='LC_COLLATE="C" /bin/ls --color=auto -AhlF --group-directories-first'
+alias L=la
 alias cp="cp -i"
 alias mv="mv -i"
 alias cal='LC_TIME=fr_CH.UTF-8 ncal -bM'
@@ -279,8 +280,6 @@ function kubectl-set-namespace(){
 jd(){ docker run --rm -i -v $PWD:$PWD -w $PWD josephburnett/jd "$@"; }
 alias yaml-diff="jd -yaml -set"
 alias json-diff="jd -set"
-
-alias oras='docker run -it --rm -v /etc/ssl/certs:/etc/ssl/certs -v /usr/share/ca-certificates:/usr/share/ca-certificates -v /usr/local/share/ca-certificates:/usr/local/share/ca-certificates/ -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.2'
 
 #
 # 5. Git
