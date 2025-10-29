@@ -1,5 +1,6 @@
 #!/bin/bash
 
+VERSION="1.0.0"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -188,6 +189,10 @@ function find_git_repos() {
     done
 }
 
+function print_version(){
+    echo $VERSION
+}
+
 function print_help(){
     cat << EOF
 $0: List the current state of the repos in the selected directory
@@ -231,6 +236,10 @@ while [[ $# -gt 0 ]]; do
     -N|--no-follow)
       FOLLOW=no
       shift
+      ;;
+    -V|--version)
+      print_version
+      exit 0
       ;;
     -h|--help)
       print_help
