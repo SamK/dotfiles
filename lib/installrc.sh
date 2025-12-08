@@ -115,6 +115,8 @@ gitget() {
             echo "Updating from \"${url}\" into \"${folder}\"..."
             cd $folder
             git fetch
+            git reset --hard HEAD
+            git clean -fdx
             git -c advice.detachedHead=false checkout origin/HEAD
         fi
     else
