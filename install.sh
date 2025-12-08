@@ -42,6 +42,8 @@ create_dotlink .tigrc
 create_dotlink .config/yamllint/config
 ## dircolors for nice colors with the ls command ( https://github.com/seebi/dircolors-solarized )
 gitget https://github.com/seebi/dircolors-solarized ./tmp/dircolors-solarized
+# cleanup useless shit
+sed -i '/^\.com /d' "$PWD/tmp/dircolors-solarized/dircolors.ansi-dark"
 create_symlink $PWD/tmp/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
 
 create_dotlink .borgbackupsam-sam@s76@borgbase
