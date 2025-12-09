@@ -107,10 +107,11 @@ gitget https://github.com/zsh-users/zsh-completions.git .zsh/zsh-completions
 create_dotlink .zsh/zsh-completions
 
 if [ "$OFFLINE" == "yes" ]; then
-    echo "Skipping installation of borg completion!"
+    echo "Skipping installation of extra completions!"
 else
-echo "Downloading borg completion..."
+    echo "Downloading extra completions..."
     download https://raw.githubusercontent.com/borgbackup/borg/1.1.5/scripts/shell_completions/zsh/_borg .zsh/zsh-completions/src/_borg
+    download https://raw.githubusercontent.com/go-task/task/refs/tags/v3.45.5/completion/zsh/_task .zsh/zsh-completions/src/_task
 fi
 
 
