@@ -271,11 +271,18 @@ function mitogen-deactivate(){
 # kubectl
 
 alias k='kubectl'
+# Print the config to do
 function kubectl-set-namespace(){
-  NS=$1
   CMD="kubectl config set-context --current --namespace=$NS"
   echo "+ ${CYAN}$CMD${NOCOLOR}"
-  $CMD
+}
+function kubectl-get-context(){
+  CMD='kubectl config get-contexts $(kubectl config current-context)'
+  echo "+ ${CYAN}$CMD${NOCOLOR}"
+}
+function kubectl-get-namespace(){
+  CMD="kubectl config view --minify --output 'jsonpath={..namespace}{\"\\\n\"}'"
+  echo "+ ${CYAN}$CMD${NOCOLOR}"
 }
 
 # https://github.com/josephburnett/jd
